@@ -2,7 +2,7 @@
     "databaseChangeLog": [
         {
             "changeSet": {
-                "id": "Jobs-2",
+                "id": "ZZ-1",
                 "author": "matt (generated)",
                 "changes": [
                     {
@@ -23,7 +23,7 @@
         },
         {
             "changeSet": {
-                "id": "ZZ-1",
+                "id": "ZZ-2",
                 "author": "matt (generated)",
                 "changes": [
                     {

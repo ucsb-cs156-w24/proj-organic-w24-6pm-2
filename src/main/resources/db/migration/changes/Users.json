@@ -1,0 +1,111 @@
+{ "databaseChangeLog": [
+    {
+        "changeSet": {
+          "id": "Users-1",
+          "author": "matt (generated)",
+          "preConditions": [
+            {
+              "onFail": "MARK_RAN"
+            },
+            {
+              "not": [
+                {
+                  "tableExists": {
+                    "tableName": "USERS"
+                  }
+                }
+              ]
+            }
+          ],
+          "changes": [
+            {
+              "createTable": {
+                "columns": [
+                  {
+                    "column": {
+                      "autoIncrement": true,
+                      "constraints": {
+                        "primaryKey": true,
+                        "primaryKeyName": "CONSTRAINT_4"
+                      },
+                      "name": "ID",
+                      "type": "BIGINT"
+                    }
+                  },
+                  {
+                    "column": {
+                      "constraints": {
+                        "nullable": false
+                      },
+                      "name": "ADMIN",
+                      "type": "BOOLEAN"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "EMAIL",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "constraints": {
+                        "nullable": false
+                      },
+                      "name": "EMAIL_VERIFIED",
+                      "type": "BOOLEAN"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "FAMILY_NAME",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "FULL_NAME",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "GIVEN_NAME",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "constraints": {
+                        "nullable": false
+                      },
+                      "name": "INSTRUCTOR",
+                      "type": "BOOLEAN"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "LAST_ONLINE",
+                      "type": "TIMESTAMP"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "LOCALE",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "PICTURE_URL",
+                      "type": "VARCHAR(255)"
+                    }
+                  }]
+                ,
+                "tableName": "USERS"
+              }
+            }]
+          
+        }
+      }
+]}

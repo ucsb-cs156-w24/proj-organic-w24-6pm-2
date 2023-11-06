@@ -124,6 +124,12 @@
             <version>1.10.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>3.8.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -253,6 +259,15 @@
                             org.springframework.security.core.context.SecurityContextHolder</avoidCallsTo>
                     </avoidCallsTo>
                     <timestampedReports>false</timestampedReports>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <propertyFile>liquibase.properties</propertyFile>
                 </configuration>
             </plugin>
 

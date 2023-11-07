@@ -31,24 +31,10 @@ public class UsersControllerTests extends ControllerTestCase {
   @MockBean
   UserRepository userRepository;
 
-  // @Test
-  // public void users__logged_out() throws Exception {
-  //   mockMvc.perform(get("/api/admin/users"))
-  //       .andExpect(status().is(403));
-  // }
-
-  // @WithMockUser(roles = { "USER" })
-  // @Test
-  // public void users__user_logged_in() throws Exception {
-  //   mockMvc.perform(get("/api/admin/users"))
-  //       .andExpect(status().is(403));
-  // }
-
   @WithMockUser(roles = { "ADMIN" })
   @Test
   public void users__admin_logged_in() throws Exception {
 
-    
     // arrange
 
     User u1 = User.builder().id(1L).build();

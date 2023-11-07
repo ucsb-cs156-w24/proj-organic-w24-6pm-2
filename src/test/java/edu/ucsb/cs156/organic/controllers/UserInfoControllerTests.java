@@ -37,12 +37,6 @@ public class UserInfoControllerTests extends ControllerTestCase {
   @MockBean
   UserRepository userRepository;
 
-  // @Test
-  // public void currentUser__logged_out() throws Exception {
-  //   mockMvc.perform(get("/api/currentUser"))
-  //       .andExpect(status().is(403));
-  // }
-
   @Test
   public void currentUser__last_online__logged_out() throws Exception {
     mockMvc.perform(post("/api/currentUser/last-online"))

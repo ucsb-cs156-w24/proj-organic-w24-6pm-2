@@ -22,19 +22,19 @@ public abstract class ApiController {
     return currentUserService.getCurrentUser();
   }
   
-  protected Object genericMessage(String message) {
-    return Map.of("message", message);
-  }
+  // protected Object genericMessage(String message) {
+  //   return Map.of("message", message);
+  // }
 
-  @ExceptionHandler({ EntityNotFoundException.class })
-  @ResponseStatus(HttpStatus.NOT_FOUND)
-  public Object handleGenericException(Throwable e) {
-    log.error("EntityNotFoundException: {}", e.getMessage());
-    return Map.of(
-      "type", e.getClass().getSimpleName(),
-      "message", e.getMessage()
-    );
-  }
+  // @ExceptionHandler({ EntityNotFoundException.class })
+  // @ResponseStatus(HttpStatus.NOT_FOUND)
+  // public Object handleEntityNotFoundException(Throwable e) {
+  //   log.error("EntityNotFoundException: {}", e.getMessage());
+  //   return Map.of(
+  //     "type", e.getClass().getSimpleName(),
+  //     "message", e.getMessage()
+  //   );
+  // }
 
   @ExceptionHandler({ RuntimeException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -46,14 +46,14 @@ public abstract class ApiController {
     );
   }
 
-  @ExceptionHandler({ Exception.class})
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Object handleException(Throwable e) {
-    log.error("Exception: {}", e.getMessage());
-    return Map.of(
-      "type", e.getClass().getSimpleName(),
-      "message", e.getMessage()
-    );
-  }
+  // @ExceptionHandler({ Exception.class})
+  // @ResponseStatus(HttpStatus.BAD_REQUEST)
+  // public Object handleException(Throwable e) {
+  //   log.error("Exception: {}", e.getMessage());
+  //   return Map.of(
+  //     "type", e.getClass().getSimpleName(),
+  //     "message", e.getMessage()
+  //   );
+  // }
 
 }

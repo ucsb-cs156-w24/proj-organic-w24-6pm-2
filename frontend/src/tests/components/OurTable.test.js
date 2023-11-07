@@ -37,7 +37,7 @@ describe("OurTable tests", () => {
         ButtonColumn("Click", "primary", clickMeCallback, "testId"),
         DateColumn("Date", (cell) => cell.row.original.createdAt),
         PlaintextColumn("Log", (cell) => cell.row.original.log),
-        HrefButtonColumn("TestHrefButtonColumn", "primary", "/test/", "testId")
+        HrefButtonColumn("TestHrefButtonColumn", "primary", "/test", "testId")
     ];
 
     test("renders an empty table without crashing", () => {
@@ -46,12 +46,13 @@ describe("OurTable tests", () => {
         );
     });
 
-    test("renders a table with two rows without crashing", async () => {
+    test("TestHrefButtonColumn works as it should", async () => {
         render(
             <OurTable columns={columns} data={threeRows} />
         );
         expect(await screen.findByTestId("testId-cell-row-0-col-TestHrefButtonColumn-button")).toBeInTheDocument();
-
+        const button = screen.getByTestId("testId-cell-row-0-col-TestHrefButtonColumn-button");
+        expect(button).toHaveAttribute("href", "/test");
     });
 
     test("The button appears in the table", async () => {

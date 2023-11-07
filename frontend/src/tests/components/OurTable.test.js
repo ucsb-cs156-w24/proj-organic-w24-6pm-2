@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import OurTable, { ButtonColumn, DateColumn, PlaintextColumn} from "main/components/OurTable";
+import OurTable, { ButtonColumn, DateColumn, HrefButtonColumn, PlaintextColumn} from "main/components/OurTable";
 
 describe("OurTable tests", () => {
     const threeRows = [
@@ -37,6 +37,7 @@ describe("OurTable tests", () => {
         ButtonColumn("Click", "primary", clickMeCallback, "testId"),
         DateColumn("Date", (cell) => cell.row.original.createdAt),
         PlaintextColumn("Log", (cell) => cell.row.original.log),
+        HrefButtonColumn("TestHrefButtonColumn", "primary", "/test/", "testId")
     ];
 
     test("renders an empty table without crashing", () => {
@@ -45,10 +46,12 @@ describe("OurTable tests", () => {
         );
     });
 
-    test("renders a table with two rows without crashing", () => {
+    test("renders a table with two rows without crashing", async () => {
         render(
             <OurTable columns={columns} data={threeRows} />
         );
+        expect(await screen.findByTestId("testId-cell-row-0-col-TestHrefButtonColumn-button")).toBeInTheDocument();
+
     });
 
     test("The button appears in the table", async () => {

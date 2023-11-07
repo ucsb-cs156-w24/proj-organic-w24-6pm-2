@@ -1,6 +1,5 @@
 package edu.ucsb.cs156.organic.controllers;
 
-import edu.ucsb.cs156.organic.errors.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.ucsb.cs156.organic.models.CurrentUser;

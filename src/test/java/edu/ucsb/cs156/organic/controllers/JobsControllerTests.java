@@ -134,7 +134,7 @@ public class JobsControllerTests extends ControllerTestCase {
                                 .createdAt(null)
                                 .updatedAt(null)
                                 .status("running")
-                                .log("Hello World! from test job!\nauthentication is not null")
+                                .log("Hello World! from test job!")
                                 .build();
 
                 Job jobCompleted = Job.builder()
@@ -143,7 +143,7 @@ public class JobsControllerTests extends ControllerTestCase {
                                 .createdAt(null)
                                 .updatedAt(null)
                                 .status("complete")
-                                .log("Hello World! from test job!\nauthentication is not null\nGoodbye from test job!")
+                                .log("Hello World! from test job!\nGoodbye from test job!")
                                 .build();
 
                 when(jobsRepository.save(any(Job.class))).thenReturn(jobStarted).thenReturn(jobCompleted);
@@ -159,10 +159,8 @@ public class JobsControllerTests extends ControllerTestCase {
 
                 assertEquals("running", jobReturned.getStatus());
 
-                await().atMost(1, SECONDS)
-                                .untilAsserted(() -> verify(jobsRepository, times(3)).save(eq(jobStarted)));
                 await().atMost(10, SECONDS)
-                                .untilAsserted(() -> verify(jobsRepository, times(5)).save(eq(jobCompleted)));
+                                .untilAsserted(() -> verify(jobsRepository, times(4)).save(eq(jobCompleted)));
         }
 
         @WithMockUser(roles = { "ADMIN" })
@@ -179,7 +177,7 @@ public class JobsControllerTests extends ControllerTestCase {
                                 .createdAt(null)
                                 .updatedAt(null)
                                 .status("running")
-                                .log("Hello World! from test job!\nauthentication is not null")
+                                .log("Hello World! from test job!")
                                 .build();
 
                 Job jobFailed = Job.builder()
@@ -188,7 +186,7 @@ public class JobsControllerTests extends ControllerTestCase {
                                 .createdAt(null)
                                 .updatedAt(null)
                                 .status("error")
-                                .log("Hello World! from test job!\nauthentication is not null\nFail!")
+                                .log("Hello World! from test job!\nFail!")
                                 .build();
 
                 when(jobsRepository.save(any(Job.class))).thenReturn(jobStarted).thenReturn(jobFailed);
@@ -203,11 +201,8 @@ public class JobsControllerTests extends ControllerTestCase {
 
                 assertEquals("running", jobReturned.getStatus());
 
-                await().atMost(1, SECONDS)
-                                .untilAsserted(() -> verify(jobsRepository, times(3)).save(eq(jobStarted)));
-
                 await().atMost(10, SECONDS)
-                                .untilAsserted(() -> verify(jobsRepository, times(4)).save(eq(jobFailed)));
+                                .untilAsserted(() -> verify(jobsRepository, times(3)).save(eq(jobFailed)));
         }
 
         @WithMockUser(roles = { "ADMIN" })

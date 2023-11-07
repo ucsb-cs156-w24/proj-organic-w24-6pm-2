@@ -12,8 +12,8 @@ public abstract class CurrentUserService {
   public abstract CurrentUser getCurrentUser();
   public abstract Collection<? extends GrantedAuthority> getRoles();
 
-  public final boolean isLoggedIn() {
-    return getUser() != null;
-  }
+  // public final boolean isLoggedIn() {
+  //   return getUser() != null;
+  // }
 
 }

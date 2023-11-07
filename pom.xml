@@ -137,7 +137,7 @@
                         <exclude>**/edu/ucsb/cs156/organic/controllers/FrontendController.*</exclude>
                         <exclude>**/edu/ucsb/cs156/organic/controllers/FrontendProxyController.*</exclude>
                         <exclude>**/edu/ucsb/cs156/organic/services/CurrentUserServiceImpl.*</exclude>
-                        <exclude>**/edu/ucsb/cs156/organic/organicApplication.*</exclude>
+                        <exclude>**/edu/ucsb/cs156/organic/OrganicApplication.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

@@ -20,11 +20,6 @@ public class TestJob implements JobContextConsumer {
             Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
 
             ctx.log("Hello World! from test job!");
-            if (authentication == null) {
-                ctx.log("authentication is null");
-            } else {
-                ctx.log("authentication is not null");
-            }
             Thread.sleep(sleepMs);
             if (fail) {
                 throw new Exception("Fail!");

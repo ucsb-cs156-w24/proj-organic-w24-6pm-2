@@ -7,7 +7,6 @@ export default function HomePage() {
   const firstName = (currentUser?.root?.user?.givenName) || "";
   // Stryker restore all
 
-  //create a list of commons that the user hasn't joined for use in the "Join a New Commons" list.
   
   // Stryker disable all : TODO: restructure this code to avoid the need for this disable
   return (

@@ -17,6 +17,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -207,16 +208,37 @@ public class JobsControllerTests extends ControllerTestCase {
 
         @WithMockUser(roles = { "ADMIN" })
         @Test
-        public void admin_launch_test_job_with_invalid_parameter() throws Exception {
+        public void admin_launch_test_job_with_invalid_parameter_minus_1() throws Exception {
+                Map<String, String> expectedMap = Map.of(
+                                "type", "IllegalArgumentException",
+                                "message", "sleepMs must be between 0 and 60000");
+                String expected = mapper.writeValueAsString(expectedMap);       
                 MvcResult response = mockMvc
                                 .perform(post("/api/jobs/launch/testjob?fail=false&sleepMs=-1").with(csrf()))
                                 .andExpect(status().isBadRequest()).andReturn();
                 assertInstanceOf(IllegalArgumentException.class, response.getResolvedException());
+                assertEquals(expected, response.getResponse().getContentAsString());
+        }
 
-                response = mockMvc
+        /**
+         * This test is to test one of the boundaries of the sleepMs parameter.
+         * A value of 60001 should throw an IllegalArgumentException, which is
+         * resolved by the @ExceptionHandler in ApiController.java
+         * 
+         * @throws Exception
+         */
+        @WithMockUser(roles = { "ADMIN" })
+        @Test
+        public void admin_launch_test_job_with_invalid_parameter_60001() throws Exception {
+                Map<String, String> expectedMap = Map.of(
+                                "type", "IllegalArgumentException",
+                                "message", "sleepMs must be between 0 and 60000");
+                String expected = mapper.writeValueAsString(expectedMap);       
+                MvcResult response = mockMvc
                                 .perform(post("/api/jobs/launch/testjob?fail=false&sleepMs=60001").with(csrf()))
                                 .andExpect(status().isBadRequest()).andReturn();
                 assertInstanceOf(IllegalArgumentException.class, response.getResolvedException());
+                assertEquals(expected, response.getResponse().getContentAsString());
         }
 
         @WithMockUser(roles = { "ADMIN" })

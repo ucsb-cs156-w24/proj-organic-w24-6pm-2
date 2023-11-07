@@ -21,38 +21,15 @@ public abstract class ApiController {
     return currentUserService.getCurrentUser();
   }
   
-  // protected Object genericMessage(String message) {
-  //   return Map.of("message", message);
-  // }
-
-  // @ExceptionHandler({ EntityNotFoundException.class })
-  // @ResponseStatus(HttpStatus.NOT_FOUND)
-  // public Object handleEntityNotFoundException(Throwable e) {
-  //   log.error("EntityNotFoundException: {}", e.getMessage());
-  //   return Map.of(
-  //     "type", e.getClass().getSimpleName(),
-  //     "message", e.getMessage()
-  //   );
-  // }
-
-  @ExceptionHandler({ RuntimeException.class})
+  @ExceptionHandler({ IllegalArgumentException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Object handleBadRequest(Throwable e) {
-    log.error("RuntimeException: {}", e.getMessage());
-    return Map.of(
+  public Object handleIllegalArgumentException(Throwable e) {
+    Map<String,String> map =  Map.of(
       "type", e.getClass().getSimpleName(),
       "message", e.getMessage()
     );
+    log.error("Exception thrown: {}", map);
+    return map;
   }
-
-  // @ExceptionHandler({ Exception.class})
-  // @ResponseStatus(HttpStatus.BAD_REQUEST)
-  // public Object handleException(Throwable e) {
-  //   log.error("Exception: {}", e.getMessage());
-  //   return Map.of(
-  //     "type", e.getClass().getSimpleName(),
-  //     "message", e.getMessage()
-  //   );
-  // }
 
 }

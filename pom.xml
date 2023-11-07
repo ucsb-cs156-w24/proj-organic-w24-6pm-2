@@ -221,7 +221,7 @@
                         <param>edu.ucsb.cs156.organic.controllers.FrontendController</param>
                         <param>edu.ucsb.cs156.organic.controllers.FrontendProxyController</param>
                         <param>edu.ucsb.cs156.organic.services.CurrentUserServiceImpl</param>
-                        <param>edu.ucsb.cs156.organic.organicApplication</param>
+                        <param>edu.ucsb.cs156.organic.OrganicApplication</param>
                         <param>edu.ucsb.cs156.organic.config.SecurityConfig</param>
                         <param>edu.ucsb.cs156.organic.config.SecurityConfig.MyCsrfRequestMatcher</param>
                         <param>edu.ucsb.cs156.organic.config.SpringFoxConfig</param>

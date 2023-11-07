@@ -29,6 +29,7 @@
     "web-vitals": "^1.1.1"
   },
   "devDependencies": {
+    "@babel/plugin-transform-private-property-in-object": "^7.22.11",
     "@storybook/addon-actions": "^6.2.7",
     "@storybook/addon-essentials": "^6.2.7",
     "@storybook/addon-links": "^6.2.7",
@@ -88,5 +89,8 @@
       "text",
       "lcov"
     ]
+  },
+  "overrides": {
+    "autoprefixer": "10.4.5"
   }
 }

@@ -21,8 +21,6 @@ const LoginCard = () => {
 }
 
 export default function LoginPage() {
-
-  const time = new Date().getHours();
   
   return (
     <div> 

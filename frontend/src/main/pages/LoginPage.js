@@ -2,7 +2,6 @@ import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import getBackgroundImage from "main/components/Utils/HomePageBackground";
 
 const LoginCard = () => {
   return (
@@ -11,7 +10,7 @@ const LoginCard = () => {
       { width: '18rem' }
     }>
       <Card.Body>
-        <Card.Title data-testid="loginPage-cardTitle">Welcome to Happy Cows!</Card.Title>
+        <Card.Title data-testid="loginPage-cardTitle">Welcome to Organic!</Card.Title>
         <Card.Text>
           To access features, please login with your Github account.
         </Card.Text>
@@ -22,14 +21,9 @@ const LoginCard = () => {
 }
 
 export default function LoginPage() {
-
-  const time = new Date().getHours();
-  const Background = getBackgroundImage(time);
   
   return (
-    <div  style={
-      // Stryker disable next-line all : no need to unit test CSS
-      { backgroundSize: 'cover', backgroundImage: `url(${Background})` }}>
+    <div> 
       <BasicLayout>
         <Container style={
           // Stryker disable next-line all : no need to unit test CSS

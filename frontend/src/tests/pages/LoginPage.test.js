@@ -32,7 +32,7 @@ describe("LoginPage tests", () => {
         const title = screen.getByTestId("loginPage-cardTitle");
         expect(title).toBeInTheDocument();
         expect(typeof (title.textContent)).toBe('string');
-        expect(title.textContent).toEqual('Welcome to Happy Cows!');
+        expect(title.textContent).toEqual('Welcome to Organic!');
     });
 
     test("renders html elements", () => {

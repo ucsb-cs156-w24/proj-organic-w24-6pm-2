@@ -44,8 +44,8 @@ Each of these three steps is explained in more detail below.
 
    * For localhost, enter: `http://localhost:8080/login/oauth2/code/github`
      - Note that this *must* be `http` not `https`
-   * For Heroku, enter: `https://myappname.herokuapp.com/login/oauth2/code/github`
-     - Note that you should substitute in *your* app name in place of `my-app-name`
+   * For Dokku, enter: `https://myappname.dokku-xx.cs.ucsb.edu/login/oauth2/code/github`
+     - Note that you should substitute in *your* app name in place of `my-app-name` and your dokku number for `xx`
      - Note that this *must* be `https` not `http`
 
    ![image](https://user-images.githubusercontent.com/1119017/149854295-8e1c4c63-929c-4706-972d-1962c644a40a.png)
@@ -89,50 +89,11 @@ ADMIN_EMAILS=phtcon@ucsb.edu,cgaucho@ucsb.edu,ldelplaya@ucsb.edu
 
 With this done, you should be all set to run on localhost.
 
-For Heroku, there is one more step.
+For Dokku, there is one more step.
 
-## Step 3: Copying `.env` values to Heroku
+## Step 3: Copying `.env` values to Dokku
 
-The easy way, using the Heroku CLI:
-
-(Note: if you don't access to the Heroku CLI, scroll down to "the tedious way")
-
-1.  Make sure you have the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install) installed.
-2.  Login with `heroku login`
-3.  Use this command, with the name of your app in place of `my-heroku-app`
-
-    ```
-    heroku config:set --app my-heroku-app  `cat .env` 
-    ```
-
-    You should get output like this:
-
-    ```
-    Setting GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, ADMIN_EMAILS and restarting ⬢ demo-spring-react-example... done, v6
-    ```
-
-    You can check the values by visiting the `Settings` tab 
-    in the Heroku Dashboard, and clicking `Reveal Config Vars`
-
-    If the command fails with the following error:
-
-    ```
-     is invalid. Must be in the format FOO=bar.
-    ```
-
-    Ensure that your `.env` file does not have any empty lines, then retry the command.
-
-The slightly more tedious way: 
-
-1. In the Heroku Dashboard, visit the `Settings` tab 
-   then click `Reveal Config Vars`.
-2. For each variable in `.env`, create a Config Var entry
-   with the corresponding name and value.  
-   
-   Be sure that you preserve case: if it's `CLIENT_SECRET`, you must use `CLIENT_SECRET` not `client_secret`.
-
-3. When finished, restart the application by going to the 
-   `Deploy` tab and clicking `Deploy Branch`.
+See: <https://ucsb-cs156.github.io/topics/dokku/environment_variables.html>
 
 ## Troubleshooting
 
@@ -140,11 +101,9 @@ If you see this:
 
 <img src="https://user-images.githubusercontent.com/1119017/149856156-575fb638-7db8-460a-a344-9069145aa242.png" alt="Redirect URI Mismatch" width="600" />
 
-
 Try clicking the little arrow to open up the additional message:
 
 <img src="https://user-images.githubusercontent.com/1119017/149856193-512acb25-2bfc-4e53-991b-f61de37f1ed6.png" alt="Request Details" width="600" />
-
 
 Now, you'll see  the Redirect URI that the app is expecting.
 
@@ -154,13 +113,11 @@ For example, when I was getting this error message, it's because I put in this f
 
 ![image](https://user-images.githubusercontent.com/1119017/149856340-98acd5e4-8712-4723-a899-e3bf2f06d3fa.png)
 
-Rookie mistake!  I literally had `my-heroku-app` instead of `demo-spring-react-example`. 
+Rookie mistake!  I literally had `myappname` instead of `demo-spring-react-example`. 
 
 Change it to the correct URI, click save.  Then go back to the URL for the home page of your app and refresh the page (you don't need to restart the Heroku backend; just refresh your browser page.)  Click login again, and you should get something like this:
 
-
 <img src="https://user-images.githubusercontent.com/1119017/149856532-b1cda813-bd3f-4fd1-a79e-630e5929d7be.png" alt="Choose an Account" width="600" />
-
 
 Success!
   

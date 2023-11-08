@@ -1,11 +1,6 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import { useCurrentUser } from "main/utils/currentUser";
 
 export default function HomePage() {
-  // Stryker disable all: it is acceptable to exclude useState calls from mutation testing
-  const { data: currentUser } = useCurrentUser();
-  // Stryker restore all
-
   
   // Stryker disable all : TODO: restructure this code to avoid the need for this disable
   return (

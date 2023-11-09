@@ -51,7 +51,7 @@ public class CurrentUserServiceImpl extends CurrentUserService {
     String fullName = oAuthUser.getAttribute("name");
     String givenName = oAuthUser.getAttribute("given_name");
     String familyName = oAuthUser.getAttribute("family_name");
-    boolean emailVerified = oAuthUser.getAttribute("email_verified");
+    // boolean emailVerified = oAuthUser.getAttribute("email_verified");
     String locale = oAuthUser.getAttribute("locale");
 
     java.util.Map<java.lang.String,java.lang.Object> attrs = oAuthUser.getAttributes();
@@ -73,7 +73,6 @@ public class CurrentUserServiceImpl extends CurrentUserService {
         .fullName(fullName)
         .givenName(givenName)
         .familyName(familyName)
-        .emailVerified(emailVerified)
         .locale(locale)
         .admin(adminEmails.contains(email))
         .build();

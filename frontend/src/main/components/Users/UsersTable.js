@@ -4,16 +4,16 @@ import { formatTime } from "main/utils/dateUtils";
 
 const columns = [
     {
-        Header: 'id',
-        accessor: 'id', // accessor is the "key" in the data
+        Header: 'githubId',
+        accessor: 'githubId', // accessor is the "key" in the data
     },
     {
-        Header: 'First Name',
-        accessor: 'givenName',
+        Header: 'githubLogin',
+        accessor: 'githubLogin', // accessor is the "key" in the data
     },
     {
-        Header: 'Last Name',
-        accessor: 'familyName',
+        Header: 'fullName',
+        accessor: 'fullName',
     },
     {
         Header: 'Email',

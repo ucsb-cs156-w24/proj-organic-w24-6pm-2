@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  * This class is used to configure Spring Security.
  * 
  * Among other things, this class is partially responsible for
- * the implementation of the ADMIN_EMAILS feature.
+ * the implementation of the ADMIN_GITHUB_LOGINS feature.
  */
 
 @Configuration
@@ -89,13 +89,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
           log.trace("********** userAttributes={}", userAttributes);
 
-          String email = (String) userAttributes.get("email");
-          if (isAdmin(email)) {
+          String githubLogin = (String) userAttributes.get("login");
+          boolean userIsAdmin = updateAdmin(githubLogin);
+          if (userIsAdmin) {
             mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-          }
-
-          if (email != null && email.endsWith("@ucsb.edu")) {
-            mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
           }
         }
 
@@ -104,11 +101,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
   }
 
-  public boolean isAdmin(String githubLogin) {
+  public boolean updateAdmin(String githubLogin) {
     if (adminGithubLogins.contains(githubLogin)) {
       return true;
     }
     Optional<User> u = userRepository.findByGithubLogin(githubLogin);
-    return u.isPresent() && u.get().isAdmin();
+    boolean result = u.isPresent() && u.get().isAdmin();
+    if (result) {
+      User user = u.get();
+      user.setAdmin(true);
+      userRepository.save(user);
+    }
+    return result;
   }
 }

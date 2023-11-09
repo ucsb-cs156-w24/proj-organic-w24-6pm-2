@@ -76,15 +76,15 @@ After copying, the file `.env` looks like this:
 ```
 GITHUB_CLIENT_ID=see-instructions
 GITHUB_CLIENT_SECRET=see-instructions
-ADMIN_EMAILS=phtcon@ucsb.edu
+ADMIN_GITHUB_LOGINS=pconrad,phtcon
 ```
 
 Replace `see-instructions` with the appropriate values.
 
-For ADMIN_EMAILS, add your own email and any teammates you are collaborating with after phtcon.ucsb.edu; you can separate multiple emails with commas, e.g.
+For ADMIN_GITHUB_LOGINS, add your own github login and any teammates you are collaborating with after phtcon.ucsb.edu; you can separate multiple emails with commas, e.g.
 
 ```
-ADMIN_EMAILS=phtcon@ucsb.edu,cgaucho@ucsb.edu,ldelplaya@ucsb.edu
+ADMIN_GITHUB_LOGINS=pconrad,phtcon,cgaucho,ldelplaya
 ```
 
 With this done, you should be all set to run on localhost.

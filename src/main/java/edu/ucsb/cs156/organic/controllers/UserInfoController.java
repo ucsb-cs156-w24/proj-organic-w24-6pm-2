@@ -38,12 +38,6 @@ public class UserInfoController extends ApiController {
   @Autowired
   private UserRepository userRepository;
 
-  // @Autowired
-  // private UserEmailRepository userEmailRepository;
-
-  // @Autowired
-  // OAuth2AuthorizedClientService clientService;
-
   @Operation(summary = "Get information about current user")
   @PreAuthorize("hasRole('ROLE_USER')")
   @GetMapping("")
@@ -59,6 +53,7 @@ public class UserInfoController extends ApiController {
     Instant timeNow = Instant.now();
     if (user != null) {
       user.setLastOnline(timeNow);
+      userRepository.save(user);
     }
     return ResponseEntity.ok().body(timeNow);
   }

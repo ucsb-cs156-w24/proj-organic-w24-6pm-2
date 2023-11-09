@@ -37,8 +37,8 @@ public class UsersControllerTests extends ControllerTestCase {
 
     // arrange
 
-    User u1 = User.builder().id(1L).build();
-    User u2 = User.builder().id(2L).build();
+    User u1 = User.builder().githubId(1).build();
+    User u2 = User.builder().githubId(2).build();
     User u = currentUserService.getCurrentUser().getUser();
 
     ArrayList<User> expectedUsers = new ArrayList<>();

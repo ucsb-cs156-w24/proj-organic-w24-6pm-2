@@ -28,9 +28,9 @@ import edu.ucsb.cs156.organic.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * This class is used to configure Spring Security. 
+ * This class is used to configure Spring Security.
  * 
- * Among other things, this class is partially responsible for 
+ * Among other things, this class is partially responsible for
  * the implementation of the ADMIN_EMAILS feature.
  */
 
@@ -40,16 +40,26 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Value("${app.admin.emails}")
-  private final List<String> adminEmails = new ArrayList<String>();
+  @Value("${app.admin.githubLogins}")
+  private final List<String> adminGithubLogins = new ArrayList<String>();
+
+  @Value("${spring.security.oauth2.client.registration.github.client-id}")
+  private String clientId;
+
+  @Value("${spring.security.oauth2.client.registration.github.client-secret}")
+  private String clientSecret;
 
   @Autowired
   UserRepository userRepository;
 
+  // @Autowired
+  // private LoginSuccessHandler loginSuccessHandler;
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests(authorize -> authorize
-        .anyRequest().permitAll())
+        .anyRequest()
+        .permitAll())
         .exceptionHandling(handlingConfigurer -> handlingConfigurer
             .authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
         .oauth2Login(
@@ -71,20 +81,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
 
       authorities.forEach(authority -> {
-        log.info("********** authority={}", authority);
+        log.trace("********** authority={}", authority);
         mappedAuthorities.add(authority);
         if (OAuth2UserAuthority.class.isInstance(authority)) {
           OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority) authority;
 
           Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
-          log.info("********** userAttributes={}", userAttributes);
+          log.trace("********** userAttributes={}", userAttributes);
 
           String email = (String) userAttributes.get("email");
           if (isAdmin(email)) {
             mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
           }
 
-          if (email!=null && email.endsWith("@ucsb.edu")) {
+          if (email != null && email.endsWith("@ucsb.edu")) {
             mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
           }
         }
@@ -94,11 +104,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
   }
 
-  public boolean isAdmin(String email) {
-    if (adminEmails.contains(email)) {
+  public boolean isAdmin(String githubLogin) {
+    if (adminGithubLogins.contains(githubLogin)) {
       return true;
     }
-    Optional<User> u = userRepository.findByEmail(email);
+    Optional<User> u = userRepository.findByGithubLogin(githubLogin);
     return u.isPresent() && u.get().isAdmin();
   }
 }

@@ -27,7 +27,7 @@ spring.security.oauth2.client.registration.GITHUB.client-id=${GITHUB_CLIENT_ID:$
 spring.security.oauth2.client.registration.GITHUB.client-secret=${GITHUB_CLIENT_SECRET:${env.GITHUB_CLIENT_SECRET:client_secret_unset}}
 spring.security.oauth2.client.registration.GITHUB.scope=email,profile
 ...
-app.admin.emails=${ADMIN_EMAILS:${env.ADMIN_EMAILS:phtcon@ucsb.edu}}
+app.admin.githubLogins=${ADMIN_GITHUB_LOGINS:${env.ADMIN_GITHUB_LOGINS:pconrad,phtcon}}
 ```
 
 The fallback values, in this case being:

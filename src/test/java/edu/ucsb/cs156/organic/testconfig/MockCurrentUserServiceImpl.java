@@ -22,10 +22,7 @@ public class MockCurrentUserServiceImpl extends CurrentUserServiceImpl {
     String email = "user@example.org";
     String pictureUrl = "https://example.org/fake.jpg";
     String fullName = "Fake User";
-    String givenName = "Fake";
-    String familyName = "User";
     boolean emailVerified = true;
-    String locale="";
     boolean admin=false;
     Instant lastOnline = Instant.ofEpochSecond(100);
 
@@ -38,10 +35,7 @@ public class MockCurrentUserServiceImpl extends CurrentUserServiceImpl {
       email = user.getUsername() + "@example.org";
       pictureUrl = "https://example.org/" +  user.getUsername() + ".jpg";
       fullName = "Fake " + user.getUsername();
-      givenName = "Fake";
-      familyName = user.getUsername();
       emailVerified = true;
-      locale="";
       admin= (user.getUsername().equals("admin"));
     }
 
@@ -49,12 +43,9 @@ public class MockCurrentUserServiceImpl extends CurrentUserServiceImpl {
     .email(email)
     .pictureUrl(pictureUrl)
     .fullName(fullName)
-    .givenName(givenName)
-    .familyName(familyName)
     .emailVerified(emailVerified)
-    .locale(locale)
     .admin(admin)
-    .id(1L)
+    .githubId(123456)
     .lastOnline(lastOnline)
     .build();
     

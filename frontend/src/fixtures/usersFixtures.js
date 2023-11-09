@@ -1,46 +1,99 @@
 const usersFixtures = {
     threeUsers: [
         {
-            "id": 1,
-            "email": "phtcon@ucsb.edu",
-            "googleSub": "115856948234298493496",
-            "pictureUrl": "https://lh3.googleusercontent.com/-bQynVrzVIrU/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmkGuVsELD1ZeV5iDUAUfe6_K-p8w/s96-c/photo.jpg",
+            "githubId": 11111,
+            "githubNodeId": "MDQ6VXNlcjExMTkwMTc=",
+            "githubLogin": "pconrad",
+            "email": "pconrad@cs.ucsb.edu",
+            "pictureUrl": "https://avatars.githubusercontent.com/u/11111?v=4",
             "fullName": "Phill Conrad",
-            "givenName": "Phill",
-            "familyName": "Conrad",
             "emailVerified": true,
-            "locale": "en",
-            "hostedDomain": "ucsb.edu",
             "admin": true,
-            "lastOnline": "2023-06-04T18:45:16.014490Z",
+            "instructor": false,
+            "accessToken": "ghu_DuFAKERska1w9SuT",
+            "emails": [
+                {
+                    "email": "pconrad@cs.ucsb.edu",
+                    "githubId": 11111
+                },
+                {
+                    "email": "pconrad.cis@gmail.com",
+                    "githubId": 11111
+                },
+                {
+                    "email": "pconrad@engineering.ucsb.edu",
+                    "githubId": 33333
+                },
+                {
+                    "email": "pconrad@engr.ucsb.edu",
+                    "githubId": 33333
+                }
+            ],
+            "lastOnline": "2023-11-09T21:06:11.131913Z"
         },
         {
-            "id": 2,
-            "email": "pconrad.cis@gmail.com",
-            "googleSub": "102656447703889917227",
-            "pictureUrl": "https://lh3.googleusercontent.com/a-/AOh14GhpDBUt8eCEqiRT45hrFbcimsX_h1ONn0dc3HV8Bp8=s96-c",
-            "fullName": "Phillip Conrad",
-            "givenName": "Phillip",
-            "familyName": "Conrad",
+            "githubId": 22222,
+            "githubNodeId": "MDQ6VXNlcjExMTkwMTc=",
+            "githubLogin": "cgaucho",
+            "email": "cgaucho@cs.ucsb.edu",
+            "pictureUrl": "https://avatars.githubusercontent.com/u/22222?v=4",
+            "fullName": "Chris Gaucho",
             "emailVerified": true,
-            "locale": "en",
-            "hostedDomain": null,
             "admin": false,
-            "lastOnline": "2023-06-04T18:45:16.014490Z",
+            "instructor": true,
+            "accessToken": "ghu_Du4W9ArgMWFAKERska1w9SuT",
+            "emails": [
+                {
+                    "email": "cgaucho@cs.ucsb.edu",
+                    "githubId": 22222
+                },
+                {
+                    "email": "cgaucho.cis@gmail.com",
+                    "githubId": 22222
+                },
+                {
+                    "email": "cgaucho@engineering.ucsb.edu",
+                    "githubId": 22222
+                },
+                {
+                    "email": "cgaucho@engr.ucsb.edu",
+                    "githubId": 22222
+                }
+            ],
+            "lastOnline": "2023-11-09T21:06:11.131913Z"
         },
         {
-            "id": 3,
-            "email": "craig.zzyzx@example.org",
-            "googleSub": "123456789012345678901",
-            "pictureUrl": "https://lh3.googleusercontent.com/a-/AOh14GhpDBUt8eCEqiRT45hrFbcimsX_h1ONn0dc3HV8Bp8=s96-c",
-            "fullName": "Craig Zzyxx",
-            "givenName": "Craig",
-            "familyName": "Zzyxx",
+            "githubId": 33333
+
+            ,
+            "githubNodeId": "MDQ6VXNlcjExMTkwMTc=",
+            "githubLogin": "ldelplaya",
+            "email": "ldelplaya@cs.ucsb.edu",
+            "pictureUrl": "https://avatars.githubusercontent.com/u/33333?v=4",
+            "fullName": "Lauren del Playa",
             "emailVerified": true,
-            "locale": "en",
-            "hostedDomain": null,
             "admin": false,
-            "lastOnline": "2023-06-04T18:45:16.014490Z",
+            "instructor": false,
+            "accessToken": "ghu_DuFAKE4MWhCIpzFAKEeFSuT",
+            "emails": [
+                {
+                    "email": "ldelplaya@cs.ucsb.edu",
+                    "githubId": 33333
+                },
+                {
+                    "email": "ldelplaya.cis@gmail.com",
+                    "githubId": 33333
+                },
+                {
+                    "email": "ldelplaya@engineering.ucsb.edu",
+                    "githubId": 33333
+                },
+                {
+                    "email": "ldelplaya@engr.ucsb.edu",
+                    "githubId": 33333
+                }
+            ],
+            "lastOnline": "2023-11-09T21:06:11.131913Z"
         }
     ]
 }

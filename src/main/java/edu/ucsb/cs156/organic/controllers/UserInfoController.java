@@ -51,10 +51,8 @@ public class UserInfoController extends ApiController {
   public ResponseEntity<Instant> updateLastOnline() {
     User user = super.getCurrentUser().getUser();
     Instant timeNow = Instant.now();
-    if (user != null) {
-      user.setLastOnline(timeNow);
-      userRepository.save(user);
-    }
+    user.setLastOnline(timeNow);
+    userRepository.save(user);
     return ResponseEntity.ok().body(timeNow);
   }
 }

@@ -35,10 +35,11 @@ describe("UserTable tests", () => {
           expect(header).toBeInTheDocument();
         });
 
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-githubId`)).toHaveTextContent("1");
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-githubId`)).toHaveTextContent("11111");
         expect(screen.getByTestId(`${testId}-cell-row-0-col-admin`)).toHaveTextContent("true");
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-fullName`)).toHaveTextContent("Phill Conrad");
         expect(screen.getByTestId(`${testId}-cell-row-0-col-lastOnline`)).toHaveTextContent(formatTime(usersFixtures.threeUsers[0].lastOnline));
-        expect(screen.getByTestId(`${testId}-cell-row-1-col-githubId`)).toHaveTextContent("2");
+        expect(screen.getByTestId(`${testId}-cell-row-1-col-githubLogin`)).toHaveTextContent("cgaucho");
         expect(screen.getByTestId(`${testId}-cell-row-1-col-admin`)).toHaveTextContent("false");
       });
 });

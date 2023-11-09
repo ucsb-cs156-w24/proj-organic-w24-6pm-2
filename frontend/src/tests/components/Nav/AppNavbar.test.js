@@ -41,6 +41,24 @@ describe("AppNavbar tests", () => {
         expect(adminMenu).toBeInTheDocument();        
     });
 
+    test("renders correctly for user that hasn't signed in", async () => {
+        const currentUser = currentUserFixtures.not_logged_in;
+        const doLogin = jest.fn();
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <AppNavbar currentUser={currentUser} doLogin={doLogin} />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        const welcome = screen.queryByText("Welcome");
+        expect(welcome).not.toBeInTheDocument();
+        const adminMenu = screen.queryByTestId("appnavbar-admin-dropdown");
+        expect(adminMenu).not.toBeInTheDocument();
+    });
+
     test("renders H2Console and Swagger links correctly", async () => {
         const currentUser = currentUserFixtures.adminUser;
         const systemInfo = systemInfoFixtures.showingAll;

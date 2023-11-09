@@ -163,6 +163,9 @@ const currentUserFixtures = {
     noRoot: {
         loggedIn: true,
     },
+    not_logged_in: {
+        loggedIn: false,
+    }
 };
 
 export {

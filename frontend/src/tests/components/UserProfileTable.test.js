@@ -1,5 +1,5 @@
 import UserProfileTable from "main/components/UserProfileTable";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 describe("UserProfileTable tests", () => {
     test("renders an empty table without crashing", () => {

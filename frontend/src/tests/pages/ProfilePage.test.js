@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
@@ -19,13 +19,11 @@ describe("ProfilePage tests", () => {
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
 
         jest.spyOn(console, 'error')
-        // @ts-ignore jest.spyOn adds this functionallity
         console.error.mockImplementation(() => null);
     });
 
     afterEach(() => {
-        // @ts-ignore jest.spyOn adds this functionallity
-        console.error.mockRestore()
+        jest.clearAllMocks();
     })
 
     test("renders correctly for regular logged in user", async () => {
@@ -49,6 +47,8 @@ describe("ProfilePage tests", () => {
             </QueryClientProvider>
         );
 
+        expect(await screen.findAllByText("root")).toHaveLength(2);
+        expect(screen.queryByText("Not logged in.")).not.toBeInTheDocument();
     });
 
     test("renders correct content when not logged in", async () => {

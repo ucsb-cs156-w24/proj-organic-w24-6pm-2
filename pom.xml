@@ -232,7 +232,7 @@
                         <param>edu.ucsb.cs156.organic.OrganicApplication</param>
                         <param>edu.ucsb.cs156.organic.config.SecurityConfig</param>
                         <param>edu.ucsb.cs156.organic.config.SecurityConfig.MyCsrfRequestMatcher</param>
-                        <param>edu.ucsb.cs156.organic.config.SpringFoxConfig</param>
+                        <param>edu.ucsb.cs156.organic.services.GrantedAuthoritiesService</param>
                     </excludedClasses>
                     <excludedTestClasses></excludedTestClasses>
                     <excludedMethods>

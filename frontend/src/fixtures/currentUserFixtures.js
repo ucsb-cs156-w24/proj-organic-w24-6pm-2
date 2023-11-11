@@ -11,7 +11,7 @@ const apiCurrentUserFixtures = {
             "emailVerified": true,
             "admin": true,
             "instructor": false,
-            "accessToken": "ghu_Du4W9ArgMWhCIpzeFYx9IOilsSRska1w9SuT",
+            "accessToken": "ghu_Du4W9ThisIsNotARealTokenXyzska1w9SuT",
             "emails": [{
                 "email": "pconrad@cs.ucsb.edu",
                 "githubId": 1119017
@@ -84,7 +84,7 @@ const apiCurrentUserFixtures = {
             "emailVerified": true,
             "admin": false,
             "instructor": false,
-            "accessToken": "ghu_Du4W9ArgMWhCIpzeFYx9IOilsSRska1w9SuT",
+            "accessToken": "ghu_Du4W9ThisIsNotARealTokenEither1w9SuT",
             "emails": [{
                 "email": "cgaucho@cs.ucsb.edu",
                 "githubId": 1119018

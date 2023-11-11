@@ -1,0 +1,45 @@
+{ "databaseChangeLog": [
+    {
+        "changeSet": {
+          "id": "UserEmails-1",
+          "author": "matt (generated)",
+          "preConditions": [
+            {
+              "onFail": "MARK_RAN"
+            },
+            {
+              "not": [
+                {
+                  "tableExists": {
+                    "tableName": "USEREMAILS"
+                  }
+                }
+              ]
+            }
+          ],
+          "changes": [
+            {
+              "createTable": {
+                "columns": [
+                  {
+                    "column": {
+                      "constraints": {
+                        "primaryKey": true,
+                        "primaryKeyName": "CONSTRAINT_9"
+                      },
+                      "name": "EMAIL",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "USER_GITHUB_ID",
+                      "type": "INT"
+                    }
+                  }]
+                ,
+                "tableName": "USEREMAILS"
+              }
+            }]
+        }}
+   ]}

@@ -23,13 +23,18 @@
                 "columns": [
                   {
                     "column": {
-                      "autoIncrement": true,
                       "constraints": {
                         "primaryKey": true,
                         "primaryKeyName": "CONSTRAINT_4"
                       },
-                      "name": "ID",
-                      "type": "BIGINT"
+                      "name": "GITHUB_ID",
+                      "type": "INT"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "ACCESS_TOKEN",
+                      "type": "VARCHAR(255)"
                     }
                   },
                   {
@@ -58,19 +63,19 @@
                   },
                   {
                     "column": {
-                      "name": "FAMILY_NAME",
-                      "type": "VARCHAR(255)"
-                    }
-                  },
-                  {
-                    "column": {
                       "name": "FULL_NAME",
                       "type": "VARCHAR(255)"
                     }
                   },
                   {
                     "column": {
-                      "name": "GIVEN_NAME",
+                      "name": "GITHUB_LOGIN",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "GITHUB_NODE_ID",
                       "type": "VARCHAR(255)"
                     }
                   },
@@ -87,12 +92,6 @@
                     "column": {
                       "name": "LAST_ONLINE",
                       "type": "TIMESTAMP"
-                    }
-                  },
-                  {
-                    "column": {
-                      "name": "LOCALE",
-                      "type": "VARCHAR(255)"
                     }
                   },
                   {

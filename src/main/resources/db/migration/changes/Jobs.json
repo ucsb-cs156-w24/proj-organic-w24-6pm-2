@@ -59,7 +59,7 @@
                   {
                     "column": {
                       "name": "CREATED_BY_ID",
-                      "type": "BIGINT"
+                      "type": "INT"
                     }
                   }]
                 ,

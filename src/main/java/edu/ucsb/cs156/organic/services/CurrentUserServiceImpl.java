@@ -2,6 +2,7 @@ package edu.ucsb.cs156.organic.services;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -81,8 +82,7 @@ public class CurrentUserServiceImpl extends CurrentUserService {
    * @param authentication
    * @return
    */
-  public User getOAuth2AuthenticatedUser(SecurityContext securityContext, Authentication authentication)
-      throws Exception {
+  public User getOAuth2AuthenticatedUser(SecurityContext securityContext, Authentication authentication) {
     OAuth2User oAuthUser = ((OAuth2AuthenticationToken) authentication).getPrincipal();
 
     log.trace("*** Available attributes directly from Github OAuth ***");
@@ -106,7 +106,9 @@ public class CurrentUserServiceImpl extends CurrentUserService {
           .fullName(oAuthUser.getAttribute("name"))
           .admin(adminGithubLogins.contains(githubLogin))
           .build();
+      u = userRepository.save(u);
     }
+
     updateToken(u);
     updateUserFromGithubAPI(u);
     u = userRepository.save(u);
@@ -117,7 +119,7 @@ public class CurrentUserServiceImpl extends CurrentUserService {
     return grantedAuthoritiesService.getGrantedAuthorities();
   }
 
-  public void updateToken(User user) throws Exception {
+  public void updateToken(User user) {
 
     Authentication authentication = SecurityContextHolder
         .getContext()
@@ -137,22 +139,42 @@ public class CurrentUserServiceImpl extends CurrentUserService {
     }
   }
 
-  public void updateUserFromGithubAPI(User user) throws Exception {
+  public void updateUserFromGithubAPI(User user) {
 
     String token = user.getAccessToken();
 
     if (token == null) {
+      log.error("Unable to authenticate to github because token is null");
       return;
     }
 
-    GitHub github = new GitHubBuilder().withOAuthToken(token).build();
+    GitHub github = null;
 
-    GHMyself myself = github.getMyself();
-    user.setEmail(myself.getEmail());
-    user.setPictureUrl(myself.getAvatarUrl());
-    user.setGithubLogin(myself.getLogin());
+    try {
+      github = new GitHubBuilder().withOAuthToken(token).build();
+    } catch (Exception e) {
+      log.error("Unable to authenticate to github, Exception thrown: {}", e);
+      return;
+    }
 
-    List<GHEmail> emails = myself.getEmails2();
+    GHMyself myself = null;
+    List<GHEmail> emails = null;
+    try {
+      myself = github.getMyself();
+      user.setEmail(myself.getEmail());
+      user.setPictureUrl(myself.getAvatarUrl());
+      user.setGithubLogin(myself.getLogin());
+    } catch (IOException e) {
+      log.error("Unable to getMyself from github, IOException thrown: {}", e);
+      return;
+    }
+
+    try {
+      emails = myself.getEmails2();
+    } catch (IOException e) {
+      log.error("Unable to getEmails2 from github, IOException thrown: {}", e);
+      return;
+    }
 
     emails.forEach((email) -> {
       log.trace("email={}", email);

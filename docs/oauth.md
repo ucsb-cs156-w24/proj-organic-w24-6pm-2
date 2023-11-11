@@ -1,15 +1,20 @@
 # OAuth Setup
 
-This Spring Boot application is set up to use GITHUB OAuth as it's authentication scheme.
+This Spring Boot application is set up to use Github OAuth as it's authentication scheme.
 
-Setting this up on localhost requires the first two steps below; getting this to work on Heroku requires an additional third step.
+Setting this up on localhost requires the first two steps below; getting this to work on Dokku requires additional 
+steps.
 
-1. Obtaining a GITHUB *client id* and *client secret*, which is
-   done at the [GITHUB Developer Console](https://console.cloud.GITHUB.com/).
+
+
+Instructions for setting up Github OAuth can be found here:
+
+* <https://github.com/ucsb-cs156/ucsb-cs156.github.io/blob/main/topics/oauth/oauth_github_setup.md>
+
+1. Obtaining a Github *client id* and *client secret*, which is described here: 
+   * <https://github.com/ucsb-cs156/ucsb-cs156.github.io/blob/main/topics/oauth/oauth_github_setup.md>
 2. Configuring the `.env` file with these values.
-3. Copying the `.env` values to the Heroku app's configuration values.
 
-Each of these three steps is explained in more detail below.
 
 # About the `.env` and `.env.SAMPLE` files.
 
@@ -24,23 +29,6 @@ Each of these three steps is explained in more detail below.
 * `.env` is never committed to the GitHub repo
 * There is more information about `.env` vs. `.env.SAMPLE` on this page if you are interested: [docs/environment-variables](environment-variables.md).
 
-
-## Step 1: Obtain a GITHUB client id and client secret
-
-1. Login to the GITHUB Developer Console at <https://console.cloud.GITHUB.com/>.
-
-2. Create a new project on the top left (or select the project you would like to create your OAuth app in)
-
-2. On the upper left, there is a hamburger menu icon that provides a left navigation menu.
-   
-   * Look for `APIs and Services` then `Credentials`.
-   * On that page, near the top, click the button for `+ CREATE CREDENTIALS`
-   * This makes a pull-down menu where you can select `OAuth Client ID`
-   * For Application Type, select `Web Application`
-   * For name, choose something you will remember; I suggest using the name of your repo, or the name of the Heroku application
-   * Scroll down to the part of the page that says: `Authorized redirect URIs`
-
-3. Under `Authorized redirect URIs`, you'll need to click the `+ ADD URI` button twice to enter two addresses:
 
    * For localhost, enter: `http://localhost:8080/login/oauth2/code/github`
      - Note that this *must* be `http` not `https`

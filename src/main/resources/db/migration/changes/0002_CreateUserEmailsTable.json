@@ -2,7 +2,7 @@
     {
         "changeSet": {
           "id": "UserEmails-1",
-          "author": "matt (generated)",
+          "author": "MPriston",
           "preConditions": [
             {
               "onFail": "MARK_RAN"
@@ -25,7 +25,7 @@
                     "column": {
                       "constraints": {
                         "primaryKey": true,
-                        "primaryKeyName": "CONSTRAINT_9"
+                        "primaryKeyName": "EMAIL"
                       },
                       "name": "EMAIL",
                       "type": "VARCHAR(255)"

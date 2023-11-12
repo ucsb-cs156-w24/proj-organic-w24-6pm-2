@@ -34,6 +34,7 @@ function App() {
 
   /*  Display the LoadingPage while awaiting currentUser 
       response to prevent the NotFoundPage from displaying */
+      
   const updateLastOnlineMutation = useBackendMutation(
     () => ({ method: 'POST', url: '/api/currentUser/last-online' }),
     {}

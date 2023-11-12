@@ -21,7 +21,7 @@ describe("AppNavbar tests", () => {
             </QueryClientProvider>
         );
 
-        expect(await screen.findByText("Welcome, pconrad.cis@gmail.com")).toBeInTheDocument();
+        expect(await screen.findByText("Welcome")).toBeInTheDocument();
     });
 
     test("renders correctly for admin user", async () => {
@@ -36,9 +36,27 @@ describe("AppNavbar tests", () => {
             </QueryClientProvider>
         );
 
-        expect(await screen.findByText("Welcome, phtcon@ucsb.edu")).toBeInTheDocument();
+        expect(await screen.findByText("Welcome")).toBeInTheDocument();
         const adminMenu = screen.getByTestId("appnavbar-admin-dropdown");
         expect(adminMenu).toBeInTheDocument();        
+    });
+
+    test("renders correctly for user that hasn't signed in", async () => {
+        const currentUser = currentUserFixtures.not_logged_in;
+        const doLogin = jest.fn();
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <AppNavbar currentUser={currentUser} doLogin={doLogin} />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        const welcome = screen.queryByText("Welcome");
+        expect(welcome).not.toBeInTheDocument();
+        const adminMenu = screen.queryByTestId("appnavbar-admin-dropdown");
+        expect(adminMenu).not.toBeInTheDocument();
     });
 
     test("renders H2Console and Swagger links correctly", async () => {

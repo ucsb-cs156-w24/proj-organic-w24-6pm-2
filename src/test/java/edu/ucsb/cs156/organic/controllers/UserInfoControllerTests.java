@@ -77,4 +77,5 @@ public class UserInfoControllerTests extends ControllerTestCase {
     User savedUser = userCaptor.getValue();
     assertTrue(savedUser.getLastOnline().isAfter(beforeUpdate));
   }
+
 }

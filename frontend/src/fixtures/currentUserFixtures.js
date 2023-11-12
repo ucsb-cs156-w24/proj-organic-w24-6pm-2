@@ -1,166 +1,141 @@
 const apiCurrentUserFixtures = {
     adminUser: {
-        "user": {
-            "id": 1,
-            "email": "phtcon@ucsb.edu",
-            "googleSub": "115856948234298493496",
-            "pictureUrl": "https://lh3.googleusercontent.com/-bQynVrzVIrU/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmkGuVsELD1ZeV5iDUAUfe6_K-p8w/s96-c/photo.jpg",
+        "user":
+        {
+            "githubId": 1119017,
+            "githubNodeId": "MDQ6VXNlcjExMTkwMTc=",
+            "githubLogin": "pconrad",
+            "email": "pconrad@cs.ucsb.edu",
+            "pictureUrl": "https://avatars.githubusercontent.com/u/1119017?v=4",
             "fullName": "Phill Conrad",
-            "givenName": "Phill",
-            "familyName": "Conrad",
             "emailVerified": true,
-            "locale": "en",
-            "hostedDomain": "ucsb.edu",
             "admin": true,
-            "lastOnline": "2023-06-04T18:45:16.014490Z",
-            "commons": [
-                {
-                    "id": 1,
-                    "name": "MyCommon",
-                    "cowPrice": 2,
-                    "milkPrice": 3,
-                }
-            ]
+            "instructor": false,
+            "accessToken": "ghu_Du4W9ThisIsNotARealTokenXyzska1w9SuT",
+            "emails": [{
+                "email": "pconrad@cs.ucsb.edu",
+                "githubId": 1119017
+            },
+            {
+                "email": "pconrad.cis@gmail.com",
+                "githubId": 1119017
+            },
+            {
+                "email": "pconrad@engineering.ucsb.edu",
+                "githubId": 1119017
+            },
+            {
+                "email": "pconrad@engr.ucsb.edu",
+                "githubId": 1119017
+            }],
+            "lastOnline": "2023-11-09T21:06:11.131913Z"
         },
         "roles": [
-            {
-                "authority": "ROLE_MEMBER"
-            },
-            {
-                "authority": "SCOPE_openid"
-            },
-            {
-                "authority": "SCOPE_https://www.googleapis.com/auth/userinfo.profile"
-            },
-            {
-                "authority": "SCOPE_https://www.googleapis.com/auth/userinfo.email"
-            },
+            { "authority": "SCOPE_email" },
             {
                 "authority": "ROLE_USER",
                 "attributes": {
-                    "sub": "115856948234298493496",
+                    "login": "pconrad",
+                    "id": 1119017,
+                    "node_id": "MDQ6VXNlcjExMTkwMTc=",
+                    "avatar_url": "https://avatars.githubusercontent.com/u/1119017?v=4",
+                    "gravatar_id": "",
+                    "url": "https://api.github.com/users/pconrad",
+                    "html_url": "https://github.com/pconrad",
+                    "followers_url": "https://api.github.com/users/pconrad/followers",
+                    "following_url": "https://api.github.com/users/pconrad/following{/other_user}",
+                    "gists_url": "https://api.github.com/users/pconrad/gists{/gist_id}",
+                    "starred_url": "https://api.github.com/users/pconrad/starred{/owner}{/repo}",
+                    "subscriptions_url": "https://api.github.com/users/pconrad/subscriptions",
+                    "organizations_url": "https://api.github.com/users/pconrad/orgs",
+                    "repos_url": "https://api.github.com/users/pconrad/repos",
+                    "events_url": "https://api.github.com/users/pconrad/events{/privacy}",
+                    "received_events_url": "https://api.github.com/users/pconrad/received_events",
+                    "type": "User",
+                    "site_admin": false,
                     "name": "Phill Conrad",
-                    "given_name": "Phill",
-                    "family_name": "Conrad",
-                    "picture": "https://lh3.googleusercontent.com/a/AATXAJyxrU2gDahCiNe4ampVZlv5176Jo0F0PG3KyYgk=s96-c",
-                    "email": "phtcon@ucsb.edu",
-                    "email_verified": true,
-                    "locale": "en",
-                    "hd": "ucsb.edu"
+                    "company": "UC Santa Barbara",
+                    "blog": "http://www.cs.ucsb.edu/~pconrad",
+                    "location": "Santa Barbara, CA",
+                    "email": null,
+                    "hireable": null,
+                    "bio": null,
+                    "twitter_username": null,
+                    "public_repos": 267,
+                    "public_gists": 1,
+                    "followers": 81,
+                    "following": 12,
+                    "created_at": "2011-10-11T09:33:28Z",
+                    "updated_at": "2023-11-08T20:14:48Z"
                 }
             },
-            {
-                "authority": "ROLE_ADMIN"
-            }
-        ]
-
+            { "authority": "ROLE_ADMIN" },
+            { "authority": "SCOPE_profile" }]
     },
     userOnly: {
-
-        "user": {
-            "id": 2,
-            "email": "pconrad.cis@gmail.com",
-            "googleSub": "102656447703889917227",
-            "pictureUrl": "https://lh3.googleusercontent.com/a-/AOh14GhpDBUt8eCEqiRT45hrFbcimsX_h1ONn0dc3HV8Bp8=s96-c",
-            "fullName": "Phillip Conrad",
-            "givenName": "Phillip",
-            "familyName": "Conrad",
+        "user":
+        {
+            "githubId": 1119018,
+            "githubNodeId": "MDQ6VXNlcjExMTkwMTc=",
+            "githubLogin": "cgaucho",
+            "email": "cgaucho@cs.ucsb.edu",
+            "pictureUrl": "https://avatars.githubusercontent.com/u/1119017?v=4",
+            "fullName": "Chris Gaucho",
             "emailVerified": true,
-            "locale": "en",
-            "hostedDomain": null,
             "admin": false,
-            "lastOnline": "2023-06-04T18:45:16.014490Z",
-            "commons": [
-                {
-                    "id": 1,
-                    "name": "MyCommon",
-                    "cowPrice": 2,
-                    "milkPrice": 3,
-                }
-            ]
+            "instructor": false,
+            "accessToken": "ghu_Du4W9ThisIsNotARealTokenEither1w9SuT",
+            "emails": [{
+                "email": "cgaucho@cs.ucsb.edu",
+                "githubId": 1119018
+            },
+            ],
+            "lastOnline": "2023-11-09T21:06:11.131913Z"
         },
         "roles": [
-            {
-                "authority": "SCOPE_openid"
-            },
+            { "authority": "SCOPE_email" },
             {
                 "authority": "ROLE_USER",
                 "attributes": {
-                    "sub": "102656447703889917227",
-                    "name": "Phillip Conrad",
-                    "given_name": "Phillip",
-                    "family_name": "Conrad",
-                    "picture": "https://lh3.googleusercontent.com/a-/AOh14GhpDBUt8eCEqiRT45hrFbcimsX_h1ONn0dc3HV8Bp8=s96-c",
-                    "email": "pconrad.cis@gmail.com",
-                    "email_verified": true,
-                    "locale": "en"
+                    "login": "cgaucho",
+                    "id": 1119018,
+                    "node_id": "MDQ6VXNlcjExMTkwMTc=",
+                    "avatar_url": "https://avatars.githubusercontent.com/u/1119017?v=4",
+                    "gravatar_id": "",
+                    "url": "https://api.github.com/users/cgaucho",
+                    "html_url": "https://github.com/cgaucho",
+                    "followers_url": "https://api.github.com/users/cgaucho/followers",
+                    "following_url": "https://api.github.com/users/cgaucho/following{/other_user}",
+                    "gists_url": "https://api.github.com/users/cgaucho/gists{/gist_id}",
+                    "starred_url": "https://api.github.com/users/cgaucho/starred{/owner}{/repo}",
+                    "subscriptions_url": "https://api.github.com/users/cgaucho/subscriptions",
+                    "organizations_url": "https://api.github.com/users/cgaucho/orgs",
+                    "repos_url": "https://api.github.com/users/cgaucho/repos",
+                    "events_url": "https://api.github.com/users/cgaucho/events{/privacy}",
+                    "received_events_url": "https://api.github.com/users/cgaucho/received_events",
+                    "type": "User",
+                    "site_admin": false,
+                    "name": "Chris Gaucho",
+                    "company": "UC Santa Barbara",
+                    "blog": "http://www.cs.ucsb.edu/~cgaucho",
+                    "location": "Santa Barbara, CA",
+                    "email": null,
+                    "hireable": null,
+                    "bio": null,
+                    "twitter_username": null,
+                    "public_repos": 267,
+                    "public_gists": 1,
+                    "followers": 81,
+                    "following": 12,
+                    "created_at": "2011-10-11T09:33:28Z",
+                    "updated_at": "2023-11-08T20:14:48Z"
                 }
             },
-            {
-                "authority": "SCOPE_https://www.googleapis.com/auth/userinfo.profile"
-            },
-            {
-                "authority": "SCOPE_https://www.googleapis.com/auth/userinfo.email"
-            }
-        ]
+            { "authority": "SCOPE_profile" }]
+
+
 
     },
-    userNoGivenName: {
-
-        "user": {
-            "id": 2,
-            "email": "pconrad.cis@gmail.com",
-            "googleSub": "102656447703889917227",
-            "pictureUrl": "https://lh3.googleusercontent.com/a-/AOh14GhpDBUt8eCEqiRT45hrFbcimsX_h1ONn0dc3HV8Bp8=s96-c",
-            "fullName": "Phillip Conrad",
-            "familyName": "Conrad",
-            "emailVerified": true,
-            "locale": "en",
-            "hostedDomain": null,
-            "admin": false
-        },
-        "roles": [
-            {
-                "authority": "SCOPE_openid"
-            },
-            {
-                "authority": "ROLE_USER",
-                "attributes": {
-                    "sub": "102656447703889917227",
-                    "name": "Phillip Conrad",
-                    "given_name": "Phillip",
-                    "family_name": "Conrad",
-                    "picture": "https://lh3.googleusercontent.com/a-/AOh14GhpDBUt8eCEqiRT45hrFbcimsX_h1ONn0dc3HV8Bp8=s96-c",
-                    "email": "pconrad.cis@gmail.com",
-                    "email_verified": true,
-                    "locale": "en"
-                }
-            },
-            {
-                "authority": "SCOPE_https://www.googleapis.com/auth/userinfo.profile"
-            },
-            {
-                "authority": "SCOPE_https://www.googleapis.com/auth/userinfo.email"
-            }
-        ]
-
-    },
-    missingRolesToTestErrorHandling:  {
-        "user": {
-            "id": 2,
-            "email": "pconrad.cis@gmail.com",
-            "googleSub": "102656447703889917227",
-            "pictureUrl": "https://lh3.googleusercontent.com/a-/AOh14GhpDBUt8eCEqiRT45hrFbcimsX_h1ONn0dc3HV8Bp8=s96-c",
-            "fullName": "Phillip Conrad",
-            "givenName": "Phillip",
-            "familyName": "Conrad",
-            "emailVerified": true,
-            "locale": "en",
-            "hostedDomain": null,
-            "admin": false,
-            "lastOnline": "2023-06-04T18:45:16.014490Z",
-        }
-    }
 };
 
 const currentUserFixtures = {
@@ -169,10 +144,6 @@ const currentUserFixtures = {
         root: {
             ...(apiCurrentUserFixtures.adminUser),
             rolesList: [
-                "ROLE_MEMBER",
-                "SCOPE_openid",
-                "SCOPE_https://www.googleapis.com/auth/userinfo.profile",
-                "SCOPE_https://www.googleapis.com/auth/userinfo.email",
                 "ROLE_USER",
                 "ROLE_ADMIN"
             ]
@@ -183,16 +154,21 @@ const currentUserFixtures = {
         root: {
             ...(apiCurrentUserFixtures.userOnly),
             rolesList: [
-                "SCOPE_openid",
+                "SCOPE_email",
                 "ROLE_USER",
-                "SCOPE_https://www.googleapis.com/auth/userinfo.profile",
-                "SCOPE_https://www.googleapis.com/auth/userinfo.email",
+                "SCOPE_profile",
             ]
         },
     },
     noRoot: {
         loggedIn: true,
     },
+    not_logged_in: {
+        loggedIn: false,
+    }
 };
 
-export { currentUserFixtures, apiCurrentUserFixtures };
+export {
+    currentUserFixtures,
+    apiCurrentUserFixtures
+};

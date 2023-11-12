@@ -8,13 +8,16 @@ describe("Footer tests", () => {
             <Footer systemInfo={systemInfoFixtures.showingAll}/>
         );
 
+        const expectedText = "Organic is a project ofCS156, a course at UC Santa Barbara.  It's purpose: provide students and instructors with useful tools to manage Github organizations associated with programming and software engineering courses. The open source code is available on GitHub.";
+
+        
         const text = screen.getByTestId("footer-content");
         expect(text).toBeInTheDocument();
         expect(typeof(text.textContent)).toBe('string');
-        expect(text.textContent).toEqual('HappyCows is a project of Mattanjah de Vries, Distinguished Professor of Chemistry at UC Santa Barbara. The open source code is available on GitHub.');
-    
+        expect(text.textContent).toEqual(expectedText);
+        
         const href = screen.getByTestId("github-href");
-        expect(href).toHaveAttribute("href", "https://github.com/ucsb-cs156/proj-happycows");
+        expect(href).toHaveAttribute("href", "https://github.com/ucsb-cs156/proj-organic");
     });
 
     test("renders correctly when systemInfo.showingNeither", async () => {

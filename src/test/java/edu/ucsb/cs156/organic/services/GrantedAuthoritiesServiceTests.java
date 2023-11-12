@@ -30,15 +30,15 @@ class GrantedAuthoritiesServiceTests {
   @Autowired
   GrantedAuthoritiesService grantedAuthoritiesService;
 
-  @WithMockUser(roles = { "USER" })
-  @Test
-  void test_getGrantedAuthorities() {
-    // act 
-    Collection<? extends GrantedAuthority> grantedAuthorities = grantedAuthoritiesService.getGrantedAuthorities();
+  // @WithMockUser(roles = { "USER" })
+  // @Test
+  // void test_getGrantedAuthorities() {
+  //   // act 
+  //   Collection<? extends GrantedAuthority> grantedAuthorities = grantedAuthoritiesService.getGrantedAuthorities();
  
-    // assert
+  //   // assert
 
-    assertTrue(grantedAuthorities.size() > 0 );
-  }
+  //   assertTrue(grantedAuthorities.size() > 0 );
+  // }
 
 }

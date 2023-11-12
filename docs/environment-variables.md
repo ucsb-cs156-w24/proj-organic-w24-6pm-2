@@ -20,14 +20,14 @@ The actual values go into a file `.env` that is copied from `.env.SAMPLE`, but t
 When adding new properties to the application that are necessary for the application to run, it is
 helpful to have fallback values, especially if those values are not accessed during tests.
 
-As an example, in `src/main/resources/application.properties`, we see lines that contain fallback values for `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` and `ADMIN_EMAILS`:
+As an example, in `src/main/resources/application.properties`, we see lines that contain fallback values for `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` and `ADMIN_GITHUB_LOGINS`:
 
 ```
 spring.security.oauth2.client.registration.GITHUB.client-id=${GITHUB_CLIENT_ID:${env.GITHUB_CLIENT_ID:client_id_unset}}
 spring.security.oauth2.client.registration.GITHUB.client-secret=${GITHUB_CLIENT_SECRET:${env.GITHUB_CLIENT_SECRET:client_secret_unset}}
 spring.security.oauth2.client.registration.GITHUB.scope=email,profile
 ...
-app.admin.emails=${ADMIN_EMAILS:${env.ADMIN_EMAILS:phtcon@ucsb.edu}}
+app.admin.githubLogins=${ADMIN_GITHUB_LOGINS:${env.ADMIN_GITHUB_LOGINS:pconrad,phtcon}}
 ```
 
 The fallback values, in this case being:
@@ -36,7 +36,7 @@ The fallback values, in this case being:
 |--------------|---------------|
 | `GITHUB_CLIENT_ID` | `client_id_unset` |
 | `GITHUB_CLIENT_SECRET` | `client_secret_unset` |
-| `ADMIN_EMAILS` | `phtcon@ucsb.edu` |
+| `ADMIN_GITHUB_LOGINS` | `pconrad,phtcon` |
 
 While the values for `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` will not work in practice (i.e. with these values, OAuth login 
 will fail), having a default value:

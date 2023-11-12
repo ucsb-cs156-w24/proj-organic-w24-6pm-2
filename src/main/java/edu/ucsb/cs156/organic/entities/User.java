@@ -3,7 +3,15 @@ package edu.ucsb.cs156.organic.entities;
 import lombok.*;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -12,23 +20,25 @@ import java.time.Instant;
 @Entity(name = "users")
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Integer githubId;
+  private String githubNodeId;
+  private String githubLogin;
   private String email;
   private String pictureUrl;
   private String fullName;
-  private String givenName;
-  private String familyName;
   private boolean emailVerified;
-  private String locale;
   private boolean admin;
   private boolean instructor;
+  private String accessToken;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)  @Fetch(FetchMode.JOIN)
+  private List<UserEmail> emails;
 
   @Builder.Default
   private Instant lastOnline = Instant.now();
 
   @Override
   public String toString() {
-    return String.format("User: id=%d email=%s", id, email);
+    return String.format("User: githubId=%d githubLogin=%s", githubId, githubLogin);
   }
 }

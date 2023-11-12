@@ -1,7 +1,7 @@
 { "databaseChangeLog": [
     {
         "changeSet": {
-          "id": "Jobs-1",
+          "id": "changeset-0001",
           "author": "MPriston",
           "preConditions": [
             {

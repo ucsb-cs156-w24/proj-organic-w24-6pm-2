@@ -1,7 +1,7 @@
 { "databaseChangeLog": [
     {
         "changeSet": {
-          "id": "UserEmails-1",
+          "id": "changeset-0002",
           "author": "MPriston",
           "preConditions": [
             {

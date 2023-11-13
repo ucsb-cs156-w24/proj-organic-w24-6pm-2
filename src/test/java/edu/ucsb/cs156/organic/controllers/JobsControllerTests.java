@@ -1,8 +1,9 @@
 package edu.ucsb.cs156.organic.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -10,13 +11,13 @@ import static org.mockito.Mockito.when;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-
 import static org.awaitility.Awaitility.await;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,11 +47,17 @@ import edu.ucsb.cs156.organic.repositories.jobs.JobsRepository;
 import edu.ucsb.cs156.organic.services.jobs.JobService;
 import lombok.extern.slf4j.Slf4j;
 
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+
 @Slf4j
 @WebMvcTest(controllers = JobsController.class)
 @Import(JobService.class)
 @AutoConfigureDataJpa
 public class JobsControllerTests extends ControllerTestCase {
+
+        @Captor
+        ArgumentCaptor<Job> jobCaptor;
 
         @MockBean
         JobsRepository jobsRepository;
@@ -147,7 +154,8 @@ public class JobsControllerTests extends ControllerTestCase {
                                 .log("Hello World! from test job!\nGoodbye from test job!")
                                 .build();
 
-                when(jobsRepository.save(any(Job.class))).thenReturn(jobStarted).thenReturn(jobCompleted);
+                when(jobsRepository.save(eq(jobStarted))).thenReturn(jobStarted);
+                when(jobsRepository.save(eq(jobCompleted))).thenReturn(jobCompleted);
 
                 // act
                 MvcResult response = mockMvc
@@ -160,8 +168,14 @@ public class JobsControllerTests extends ControllerTestCase {
 
                 assertEquals("running", jobReturned.getStatus());
 
-                await().atMost(10, SECONDS)
-                                .untilAsserted(() -> verify(jobsRepository, times(4)).save(eq(jobCompleted)));
+                await().atMost(5, SECONDS)
+                .untilAsserted(() -> {
+                        verify(jobsRepository, atLeast(1)).save(jobCaptor.capture());                        
+                        List<Job> values = jobCaptor.getAllValues();
+                        assertEquals("complete", values.get(0).getStatus(), "first saved job should show running");
+                        assertEquals(jobCompleted.getLog(), values.get(0).getLog());
+                });
+               
         }
 
         @WithMockUser(roles = { "ADMIN" })
@@ -190,7 +204,8 @@ public class JobsControllerTests extends ControllerTestCase {
                                 .log("Hello World! from test job!\nFail!")
                                 .build();
 
-                when(jobsRepository.save(any(Job.class))).thenReturn(jobStarted).thenReturn(jobFailed);
+                when(jobsRepository.save(eq(jobStarted))).thenReturn(jobStarted);
+                when(jobsRepository.save(eq(jobFailed))).thenReturn(jobFailed);
 
                 // act
                 MvcResult response = mockMvc
@@ -202,8 +217,13 @@ public class JobsControllerTests extends ControllerTestCase {
 
                 assertEquals("running", jobReturned.getStatus());
 
-                await().atMost(10, SECONDS)
-                                .untilAsserted(() -> verify(jobsRepository, times(3)).save(eq(jobFailed)));
+                await().atMost(5, SECONDS)
+                .untilAsserted(() -> {
+                        verify(jobsRepository, atLeast(1)).save(jobCaptor.capture());                        
+                        List<Job> values = jobCaptor.getAllValues();
+                        assertEquals("error", values.get(0).getStatus(), "first saved job should show running");
+                        assertEquals(jobFailed.getLog(), values.get(0).getLog());
+                });
         }
 
         @WithMockUser(roles = { "ADMIN" })

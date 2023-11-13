@@ -13,6 +13,8 @@ import edu.ucsb.cs156.organic.services.GrantedAuthoritiesService;
 import edu.ucsb.cs156.organic.testconfig.TestConfig;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
@@ -33,6 +35,6 @@ public abstract class ControllerTestCase {
   
   protected Map<String, Object> responseToJson(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
     String responseString = result.getResponse().getContentAsString();
-    return mapper.readValue(responseString, Map.class);
+    return mapper.readValue(responseString, new TypeReference<Map<String,Object>>(){});
   }
 }

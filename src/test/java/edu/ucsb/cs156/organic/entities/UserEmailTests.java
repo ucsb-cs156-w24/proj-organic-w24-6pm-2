@@ -19,4 +19,14 @@ public class UserEmailTests {
         UserEmail userEmail = UserEmail.builder().email("cgaucho@ucsb.edu").user(user).build();
         assertEquals(12345, userEmail.getGithubId()); 
     }
+
+    /**
+     * for test coverage purposes
+     */
+    @Test
+    void test_noArgsConstructor() {
+        UserEmail userEmail = new UserEmail();
+        assertEquals(null, userEmail.getEmail());
+        assertEquals(null, userEmail.getUser());
+    }
 }

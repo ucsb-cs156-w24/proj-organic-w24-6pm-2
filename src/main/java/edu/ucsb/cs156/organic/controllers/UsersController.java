@@ -15,7 +15,7 @@ import edu.ucsb.cs156.organic.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 
-@Tag(name="User information (admin only)")
+@Tag(name = "User information (admin only)")
 @RequestMapping("/api/admin/users")
 @RestController
 public class UsersController extends ApiController {

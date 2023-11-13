@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.ucsb.cs156.organic.entities.jobs.Job;
 import edu.ucsb.cs156.organic.jobs.TestJob;
 import edu.ucsb.cs156.organic.repositories.jobs.JobsRepository;
-import edu.ucsb.cs156.organic.services.jobs.JobContextConsumer;
 import edu.ucsb.cs156.organic.services.jobs.JobService;
 
 

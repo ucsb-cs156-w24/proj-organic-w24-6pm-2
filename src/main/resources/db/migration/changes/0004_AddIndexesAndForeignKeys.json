@@ -1,0 +1,94 @@
+{
+    "databaseChangeLog": [
+        {
+            "changeSet": {
+              "id": "changeset-0004a",
+              "author": "MPriston",
+              "changes": [
+                {
+                  "createIndex": {
+                    "columns": [
+                      {
+                        "column": {
+                          "name": "USER_GITHUB_ID"
+                        }
+                      }]
+                    ,
+                    "indexName": "USEREMAILS_USER_GITHUB_ID_INDEX",
+                    "tableName": "USEREMAILS"
+                  }
+                }]
+              
+            }
+          },
+          
+          {
+            "changeSet": {
+              "id": "changeset-0004b",
+              "author": "MPriston",
+              "changes": [
+                {
+                  "createIndex": {
+                    "columns": [
+                      {
+                        "column": {
+                          "name": "CREATED_BY_ID"
+                        }
+                      }]
+                    ,
+                    "indexName": "JOBS_CREATED_BY_ID_INDEX",
+                    "tableName": "JOBS"
+                  }
+                }]
+              
+            }
+          },
+          
+          {
+            "changeSet": {
+              "id": "changeset-0004c",
+              "author": "MPriston",
+              "changes": [
+                {
+                  "addForeignKeyConstraint": {
+                    "baseColumnNames": "USER_GITHUB_ID",
+                    "baseTableName": "USEREMAILS",
+                    "constraintName": "USEREMAILS_USER_GITHUB_ID_FK",
+                    "deferrable": false,
+                    "initiallyDeferred": false,
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "RESTRICT",
+                    "referencedColumnNames": "GITHUB_ID",
+                    "referencedTableName": "USERS",
+                    "validate": true
+                  }
+                }]
+              
+            }
+          },
+          
+          {
+            "changeSet": {
+              "id": "changeset-0004d",
+              "author": "MPriston",
+              "changes": [
+                {
+                  "addForeignKeyConstraint": {
+                    "baseColumnNames": "CREATED_BY_ID",
+                    "baseTableName": "JOBS",
+                    "constraintName": "JOBS_CREATED_BY_ID_FK",
+                    "deferrable": false,
+                    "initiallyDeferred": false,
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "RESTRICT",
+                    "referencedColumnNames": "GITHUB_ID",
+                    "referencedTableName": "USERS",
+                    "validate": true
+                  }
+                }]
+              
+            }
+          }
+          
+    ]
+}

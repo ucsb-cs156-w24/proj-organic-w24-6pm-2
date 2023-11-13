@@ -1,0 +1,94 @@
+{
+    "databaseChangeLog": [
+        {
+            "changeSet": {
+              "id": "changeset-0004",
+              "author": "matt (generated)",
+              "changes": [
+                {
+                  "createIndex": {
+                    "columns": [
+                      {
+                        "column": {
+                          "name": "USER_GITHUB_ID"
+                        }
+                      }]
+                    ,
+                    "indexName": "FK8WOD0WRCEOIFBBPWONE12SMEV_INDEX_9",
+                    "tableName": "USEREMAILS"
+                  }
+                }]
+              
+            }
+          },
+          
+          {
+            "changeSet": {
+              "id": "ZZ-2",
+              "author": "matt (generated)",
+              "changes": [
+                {
+                  "createIndex": {
+                    "columns": [
+                      {
+                        "column": {
+                          "name": "CREATED_BY_ID"
+                        }
+                      }]
+                    ,
+                    "indexName": "FKKJPYGUUYD5SHXTABV9V5JPE6X_INDEX_2",
+                    "tableName": "JOBS"
+                  }
+                }]
+              
+            }
+          },
+          
+          {
+            "changeSet": {
+              "id": "ZZ-3",
+              "author": "matt (generated)",
+              "changes": [
+                {
+                  "addForeignKeyConstraint": {
+                    "baseColumnNames": "USER_GITHUB_ID",
+                    "baseTableName": "USEREMAILS",
+                    "constraintName": "FK8WOD0WRCEOIFBBPWONE12SMEV",
+                    "deferrable": false,
+                    "initiallyDeferred": false,
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "RESTRICT",
+                    "referencedColumnNames": "GITHUB_ID",
+                    "referencedTableName": "USERS",
+                    "validate": true
+                  }
+                }]
+              
+            }
+          },
+          
+          {
+            "changeSet": {
+              "id": "ZZ-4",
+              "author": "matt (generated)",
+              "changes": [
+                {
+                  "addForeignKeyConstraint": {
+                    "baseColumnNames": "CREATED_BY_ID",
+                    "baseTableName": "JOBS",
+                    "constraintName": "FKKJPYGUUYD5SHXTABV9V5JPE6X",
+                    "deferrable": false,
+                    "initiallyDeferred": false,
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "RESTRICT",
+                    "referencedColumnNames": "GITHUB_ID",
+                    "referencedTableName": "USERS",
+                    "validate": true
+                  }
+                }]
+              
+            }
+          }
+          
+    ]
+}

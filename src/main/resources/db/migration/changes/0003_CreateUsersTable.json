@@ -1,0 +1,110 @@
+{ "databaseChangeLog": [
+    {
+        "changeSet": {
+          "id": "changeset-0003",
+          "author": "MPriston",
+          "preConditions": [
+            {
+              "onFail": "MARK_RAN"
+            },
+            {
+              "not": [
+                {
+                  "tableExists": {
+                    "tableName": "USERS"
+                  }
+                }
+              ]
+            }
+          ],
+          "changes": [
+            {
+              "createTable": {
+                "columns": [
+                  {
+                    "column": {
+                      "constraints": {
+                        "primaryKey": true,
+                        "primaryKeyName": "GITHUB_ID"
+                      },
+                      "name": "GITHUB_ID",
+                      "type": "INT"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "ACCESS_TOKEN",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "constraints": {
+                        "nullable": false
+                      },
+                      "name": "ADMIN",
+                      "type": "BOOLEAN"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "EMAIL",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "constraints": {
+                        "nullable": false
+                      },
+                      "name": "EMAIL_VERIFIED",
+                      "type": "BOOLEAN"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "FULL_NAME",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "GITHUB_LOGIN",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "GITHUB_NODE_ID",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "constraints": {
+                        "nullable": false
+                      },
+                      "name": "INSTRUCTOR",
+                      "type": "BOOLEAN"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "LAST_ONLINE",
+                      "type": "TIMESTAMP"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "PICTURE_URL",
+                      "type": "VARCHAR(255)"
+                    }
+                  }]
+                ,
+                "tableName": "USERS"
+              }
+            }]
+          
+        }
+      }
+]}

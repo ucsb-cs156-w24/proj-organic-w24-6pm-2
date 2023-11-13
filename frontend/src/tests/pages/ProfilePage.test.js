@@ -34,12 +34,12 @@ describe("ProfilePage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
-        expect(await screen.findAllByText("User Profile for cgaucho"));
+        await screen.findAllByText("User Profile for cgaucho");
         const header = screen.getByText("User Profile for cgaucho");
         expect(header).toHaveClass("mb-3");
 
         expect(screen.queryByText("Not logged in.")).not.toBeInTheDocument();
-        expect(screen.queryByText("Emails")).toBeInTheDocument();
+        expect(screen.getByText("Emails")).toBeInTheDocument();
 
         const emailsHeader = screen.getByText("Emails");
         expect(emailsHeader).toHaveClass("mt-3");

@@ -8,6 +8,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 
 import edu.ucsb.cs156.organic.entities.User;
+import edu.ucsb.cs156.organic.repositories.UserEmailRepository;
 import edu.ucsb.cs156.organic.repositories.UserRepository;
 import edu.ucsb.cs156.organic.testconfig.TestConfig;
 
@@ -30,6 +31,9 @@ public class UsersControllerTests extends ControllerTestCase {
 
   @MockBean
   UserRepository userRepository;
+
+  @MockBean
+  UserEmailRepository userEmailRepository;
 
   @WithMockUser(roles = { "ADMIN" })
   @Test

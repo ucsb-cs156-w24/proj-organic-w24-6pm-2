@@ -3,28 +3,16 @@ package edu.ucsb.cs156.organic.controllers;
 import edu.ucsb.cs156.organic.entities.User;
 import edu.ucsb.cs156.organic.entities.UserEmail;
 import edu.ucsb.cs156.organic.models.CurrentUser;
-import edu.ucsb.cs156.organic.repositories.UserEmailRepository;
 import edu.ucsb.cs156.organic.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import io.swagger.v3.oas.annotations.Operation;
 
 import java.time.Instant;
-import java.util.List;
 
-import org.kohsuke.github.GHEmail;
-import org.kohsuke.github.GHMyself;
-import org.kohsuke.github.GHUser;
-import org.kohsuke.github.GitHub;
-import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,5 +42,13 @@ public class UserInfoController extends ApiController {
     user.setLastOnline(timeNow);
     userRepository.save(user);
     return ResponseEntity.ok().body(timeNow);
+  }
+
+  @Operation(summary = "Get current users emails")
+  @PreAuthorize("hasRole('ROLE_USER')")
+  @GetMapping("/emails")
+  public Iterable<UserEmail> getUsersEmails() {
+    User user = super.getCurrentUser().getUser();
+    return user.getEmails();
   }
 }

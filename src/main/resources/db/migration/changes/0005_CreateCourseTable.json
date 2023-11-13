@@ -1,0 +1,132 @@
+{ "databaseChangeLog": [
+  {
+    "changeSet": {
+      "id": "changeset-0005a",
+      "author": "pconrad",
+      "preConditions": [
+        {
+          "onFail": "MARK_RAN"
+        },
+        {
+          "not": [
+            {
+              "tableExists": {
+                "tableName": "COURSES"
+              }
+            }
+          ]
+        }
+      ],
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "autoIncrement": true,
+                  "constraints": {
+                    "primaryKey": true,
+                    "primaryKeyName": "CONSTRAINT_6"
+                  },
+                  "name": "ID",
+                  "type": "BIGINT"
+                }
+              },
+              {
+                "column": {
+                  "name": "END",
+                  "type": "TIMESTAMP"
+                }
+              },
+              {
+                "column": {
+                  "name": "GITHUB_ORG",
+                  "type": "VARCHAR(255)"
+                }
+              },
+              {
+                "column": {
+                  "name": "NAME",
+                  "type": "VARCHAR(255)"
+                }
+              },
+              {
+                "column": {
+                  "name": "SCHOOL",
+                  "type": "VARCHAR(255)"
+                }
+              },
+              {
+                "column": {
+                  "name": "START",
+                  "type": "TIMESTAMP"
+                }
+              },
+              {
+                "column": {
+                  "name": "TERM",
+                  "type": "VARCHAR(255)"
+                }
+              }]
+            ,
+            "tableName": "COURSES"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "changeset-0005b",
+      "author": "pconrad",
+      "preConditions": [
+        {
+          "onFail": "MARK_RAN"
+        },
+        {
+          "not": [
+            {
+              "tableExists": {
+                "tableName": "COURSE_STAFF"
+              }
+            }
+          ]
+        }
+      ],
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "autoIncrement": true,
+                  "constraints": {
+                    "primaryKey": true,
+                    "primaryKeyName": "CONSTRAINT_2"
+                  },
+                  "name": "ID",
+                  "type": "BIGINT"
+                }
+              },
+              {
+                "column": {
+                  "name": "COURSE_ID",
+                  "type": "BIGINT"
+                }
+              },
+              {
+                "column": {
+                  "name": "GITHUB_ID",
+                  "type": "INT"
+                }
+              }]
+            ,
+            "tableName": "COURSE_STAFF"
+          }
+        }]
+      
+    }
+  }
+  
+]}

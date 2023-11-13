@@ -24,9 +24,10 @@ managing course rosters; all of the instructors currently using the tool need th
 This matches current functionality with one exception, where we are fixing a design flaw in the original app: instead of treating "staff" as a special case of students, having staff is built in right from the start as a specific feature.
 
 * Any user can log in with their github id (i.e. the application uses Github id for OAuth) (DONE)
-* Initial Admin users are specified in the ADMIN_GITHUB_LOGINS
-* Admin can be designated by other admins (similar to how it works in https://github.org/ucsb-cs156/proj-gauchoride).
-* Admin users can designate other users as admins or instructors.  Instructors can create courses.
+* Initial Admin users are specified in the ADMIN_GITHUB_LOGINS (DONE)
+* Admin can be designated by other admins (similar to how it works in https://github.org/ucsb-cs156/proj-gauchoride). (https://github.com/ucsb-cs156/proj-organic/issues/20)
+* Admin users can designate other users as admins or instructors. (https://github.com/ucsb-cs156/proj-organic/issues/20)
+* Admins and Instructors can create courses.
 * An instructor can create a course and link it to a Github organization.  The course start and end dates will be required (unlike the current app where they are optional)
 * The instructor that creates a course is automatically a member of that courses staff, which provides certain privileges for that course.
 * An instructor can do CRUD operations on additional course staff adding them by email.  Those users have the same privileges as the original instructors.  (This is for TAs and other course helpers; if it is needed at some point to differentiate levels of privilege, we'll build that when we need it.  For now, there is just

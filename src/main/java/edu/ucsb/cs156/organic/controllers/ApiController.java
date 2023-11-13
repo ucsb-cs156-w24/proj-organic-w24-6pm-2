@@ -10,6 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.Map;
 
 @Slf4j
@@ -32,4 +36,29 @@ public abstract class ApiController {
     return map;
   }
 
+  private ObjectMapper mapper;
+
+  /**
+   * Special ObjectMapper that ignores Mockito mocks
+   * @return ObjectMapper mapper
+   */
+  public ObjectMapper getMapper() {
+    return mapper;
+  }
+
+  public ApiController() {
+   mapper = mapperThatIgnoresMockitoMocks();
+  }
+
+  public static ObjectMapper mapperThatIgnoresMockitoMocks() {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new JavaTimeModule());
+    mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
+      @Override
+      public boolean hasIgnoreMarker(final AnnotatedMember m) {
+        return super.hasIgnoreMarker(m) || m.getName().contains("Mockito");
+      }
+    });
+    return mapper;
+  }
 }

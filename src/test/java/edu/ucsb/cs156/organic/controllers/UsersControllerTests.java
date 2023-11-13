@@ -43,10 +43,9 @@ public class UsersControllerTests extends ControllerTestCase {
 
     User u1 = User.builder().githubId(1).build();
     User u2 = User.builder().githubId(2).build();
-    User u = currentUserService.getCurrentUser().getUser();
 
     ArrayList<User> expectedUsers = new ArrayList<>();
-    expectedUsers.addAll(Arrays.asList(u1, u2, u));
+    expectedUsers.addAll(Arrays.asList(u1, u2));
 
     when(userRepository.findAll()).thenReturn(expectedUsers);
     String expectedJson = mapper.writeValueAsString(expectedUsers);

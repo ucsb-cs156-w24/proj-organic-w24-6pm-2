@@ -117,6 +117,15 @@
             <artifactId>spring-security-config</artifactId>
         </dependency>
 
+        <!--
+        https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.15.3</version>
+        </dependency>
+
+
         <!-- https://central.sonatype.com/artifact/org.apache.commons/commons-csv/1.10.0 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -307,6 +316,7 @@
                 <dependency>
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
+                    <version>2.2.224</version>
                     <scope>runtime</scope>
                 </dependency>
             </dependencies>

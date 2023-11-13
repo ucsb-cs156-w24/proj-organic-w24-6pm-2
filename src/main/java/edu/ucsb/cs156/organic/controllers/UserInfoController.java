@@ -18,6 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 @Slf4j
 @Tag(name = "Current User Information")
 @RequestMapping("/api/currentUser")
@@ -29,8 +35,10 @@ public class UserInfoController extends ApiController {
   @Operation(summary = "Get information about current user")
   @PreAuthorize("hasRole('ROLE_USER')")
   @GetMapping("")
-  public CurrentUser getCurrentUser() {
-    return super.getCurrentUser();
+  public ResponseEntity<String> getCurrentUserAsJson() throws JsonProcessingException {
+    CurrentUser cu = super.getCurrentUser();
+    String cuAsJson = getMapper().writeValueAsString(cu);
+    return ResponseEntity.ok().body(cuAsJson);
   }
 
   @Operation(summary = "Update user's last online time")
@@ -51,4 +59,5 @@ public class UserInfoController extends ApiController {
     User user = super.getCurrentUser().getUser();
     return user.getEmails();
   }
+
 }

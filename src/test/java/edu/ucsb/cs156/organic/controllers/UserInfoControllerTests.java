@@ -7,8 +7,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.ucsb.cs156.organic.entities.User;
+import edu.ucsb.cs156.organic.entities.UserEmail;
 import edu.ucsb.cs156.organic.models.CurrentUser;
+import edu.ucsb.cs156.organic.repositories.UserEmailRepository;
 import edu.ucsb.cs156.organic.repositories.UserRepository;
 import edu.ucsb.cs156.organic.testconfig.TestConfig;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
@@ -26,6 +30,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebMvcTest(controllers = UserInfoController.class)
 @Import(TestConfig.class)
@@ -49,8 +55,9 @@ public class UserInfoControllerTests extends ControllerTestCase {
 
     // arrange
 
+    ObjectMapper mapper = ApiController.mapperThatIgnoresMockitoMocks();
     CurrentUser currentUser = currentUserService.getCurrentUser();
-    String expectedJson = mapper.writeValueAsString(currentUser);
+    String expectedJson =  mapper.writeValueAsString(currentUser);
 
     // act
 
@@ -75,7 +82,30 @@ public class UserInfoControllerTests extends ControllerTestCase {
 
     verify(userRepository).save(userCaptor.capture());
     User savedUser = userCaptor.getValue();
-    assertTrue(savedUser.getLastOnline().isAfter(beforeUpdate));
+
+    assertTrue(savedUser.getLastOnline().isAfter(beforeUpdate),
+        String.format(
+            "savedUser.getLastOnline() is %s which should be after the beforeUpdate value of %s should be updated",
+            savedUser.getLastOnline().toString(), beforeUpdate.toString()));
+  }
+
+  @WithMockUser(roles = { "USER" })
+  @Test
+  public void currentUser__get_emails() throws Exception {
+    CurrentUser currentUser = currentUserService.getCurrentUser();
+
+    MvcResult response = mockMvc.perform(get("/api/currentUser/emails").with(csrf()))
+        .andExpect(status().isOk()).andReturn();
+
+    String responseString = response.getResponse().getContentAsString();
+
+    UserEmail expectedUserEmail = UserEmail.builder().email("cgaucho@ucsb.edu").user(currentUser.getUser()).build();
+    List<UserEmail> expectedUserEmails = new ArrayList<UserEmail>();
+    expectedUserEmails.add(expectedUserEmail);
+
+    String expectedJson = mapper.writeValueAsString(expectedUserEmails);
+    assertEquals(expectedJson, responseString);
+
   }
 
 }

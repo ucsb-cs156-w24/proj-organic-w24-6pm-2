@@ -34,6 +34,24 @@ describe("ProfilePage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
+        expect(await screen.findAllByText("User Profile for cgaucho"));
+        const header = screen.getByText("User Profile for cgaucho");
+        expect(header).toHaveClass("mb-3");
+
+        expect(screen.queryByText("Not logged in.")).not.toBeInTheDocument();
+        expect(screen.queryByText("Emails")).toBeInTheDocument();
+
+        const emailsHeader = screen.getByText("Emails");
+        expect(emailsHeader).toHaveClass("mt-3");
+        expect(emailsHeader).toHaveClass("mb-3");
+
+        const debuggingInfoHeader = screen.getByText("Debugging Information");
+        expect(debuggingInfoHeader).toHaveClass("mt-3");
+        expect(debuggingInfoHeader).toHaveClass("mb-3");
+
+        expect(screen.getByTestId("UsersTable-cell-row-0-col-githubLogin")).toBeInTheDocument();
+        expect(screen.getByTestId("UsersTable-cell-row-0-col-githubLogin")).toHaveTextContent("cgaucho");
+
     });
 
     test("renders correctly for admin user from UCSB", async () => {

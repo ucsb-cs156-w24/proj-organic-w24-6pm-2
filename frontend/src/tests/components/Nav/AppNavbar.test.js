@@ -21,7 +21,7 @@ describe("AppNavbar tests", () => {
             </QueryClientProvider>
         );
 
-        expect(await screen.findByText("Welcome")).toBeInTheDocument();
+        expect(await screen.findByText("Welcome, cgaucho")).toBeInTheDocument();
     });
 
     test("renders correctly for admin user", async () => {
@@ -36,7 +36,7 @@ describe("AppNavbar tests", () => {
             </QueryClientProvider>
         );
 
-        expect(await screen.findByText("Welcome")).toBeInTheDocument();
+        expect(await screen.findByText("Welcome, pconrad")).toBeInTheDocument();
         const adminMenu = screen.getByTestId("appnavbar-admin-dropdown");
         expect(adminMenu).toBeInTheDocument();        
     });

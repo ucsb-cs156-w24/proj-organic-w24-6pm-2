@@ -1,7 +1,7 @@
 package edu.ucsb.cs156.organic.controllers;
 
 import edu.ucsb.cs156.organic.entities.Course;
-import edu.ucsb.cs156.organic.entities.CourseStaff;
+import edu.ucsb.cs156.organic.entities.Staff;
 import edu.ucsb.cs156.organic.entities.User;
 import edu.ucsb.cs156.organic.repositories.CourseRepository;
 import edu.ucsb.cs156.organic.repositories.CourseStaffRepository;
@@ -93,7 +93,7 @@ public class CoursesController extends ApiController {
         Course savedCourse = courseRepository.save(course);
         User u = getCurrentUser().getUser();
 
-        CourseStaff courseStaff = CourseStaff.builder()
+        Staff courseStaff = Staff.builder()
                 .courseId(savedCourse.getId())
                 .githubId(u.getGithubId())
                 .build();
@@ -107,7 +107,7 @@ public class CoursesController extends ApiController {
     @Operation(summary = "Add a staff member to a course")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addStaff")
-    public CourseStaff addStaff(
+    public Staff addStaff(
             @Parameter(name = "courseId") @RequestParam Long courseId,
             @Parameter(name = "githubLogin") @RequestParam String githubLogin)
             throws JsonProcessingException {
@@ -118,7 +118,7 @@ public class CoursesController extends ApiController {
         User user = userRepository.findByGithubLogin(githubLogin)
                 .orElseThrow(() -> new EntityNotFoundException(User.class, githubLogin.toString()));
 
-        CourseStaff courseStaff = CourseStaff.builder()
+        Staff courseStaff = Staff.builder()
                 .courseId(course.getId())
                 .githubId(user.getGithubId())
                 .user(user)
@@ -133,7 +133,7 @@ public class CoursesController extends ApiController {
     @Operation(summary = "Get Staff for course")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/getStaff")
-    public Iterable<CourseStaff> getStaff(
+    public Iterable<Staff> getStaff(
             @Parameter(name = "courseId") @RequestParam Long courseId
     )
             throws JsonProcessingException {
@@ -141,7 +141,7 @@ public class CoursesController extends ApiController {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new EntityNotFoundException(Course.class, courseId.toString()));
 
-        Iterable<CourseStaff> courseStaff = courseStaffRepository.findByCourseId(course.getId());
+        Iterable<Staff> courseStaff = courseStaffRepository.findByCourseId(course.getId());
         return courseStaff;
     }
 

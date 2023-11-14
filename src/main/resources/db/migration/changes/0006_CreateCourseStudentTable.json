@@ -1,0 +1,102 @@
+{ "databaseChangeLog": [
+  {
+    "changeSet": {
+      "id": "changeset-0006a",
+      "author": "pconrad",
+      "preConditions": [
+        {
+          "onFail": "MARK_RAN"
+        },
+        {
+          "not": [
+            {
+              "tableExists": {
+                "tableName": "STUDENTS"
+              }
+            }
+          ]
+        }
+      ],
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "autoIncrement": true,
+                  "constraints": {
+                    "primaryKey": true,
+                    "primaryKeyName": "CONSTRAINT_68"
+                  },
+                  "name": "ID",
+                  "type": "BIGINT"
+                }
+              },
+              {
+                "column": {
+                  "name": "COURSE_ID",
+                  "type": "BIGINT"
+                }
+              },
+              {
+                "column": {
+                  "name": "EMAIL",
+                  "type": "VARCHAR(255)"
+                }
+              },
+              {
+                "column": {
+                  "name": "FNAME",
+                  "type": "VARCHAR(255)"
+                }
+              },
+              {
+                "column": {
+                  "name": "GITHUB_ID",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "name": "LNAME",
+                  "type": "VARCHAR(255)"
+                }
+              },
+              {
+                "column": {
+                  "name": "STUDENT_ID",
+                  "type": "VARCHAR(255)"
+                }
+              }]
+            ,
+            "tableName": "STUDENTS"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "changeset-0006b",
+      "author": "pconrad",
+      "changes": [
+        {
+          "addForeignKeyConstraint": {
+            "baseColumnNames": "GITHUB_ID",
+            "baseTableName": "STUDENTS",
+            "constraintName": "STUDENTS_GITHUB_ID_FK",
+            "deferrable": false,
+            "initiallyDeferred": false,
+            "onDelete": "RESTRICT",
+            "onUpdate": "RESTRICT",
+            "referencedColumnNames": "GITHUB_ID",
+            "referencedTableName": "USERS",
+            "validate": true
+          }
+        }]
+      
+    }
+  }
+  
+]}

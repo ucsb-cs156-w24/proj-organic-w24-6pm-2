@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import edu.ucsb.cs156.organic.entities.Course;
-import edu.ucsb.cs156.organic.entities.CourseStaff;
+import edu.ucsb.cs156.organic.entities.Staff;
 import edu.ucsb.cs156.organic.entities.User;
 import edu.ucsb.cs156.organic.entities.jobs.Job;
 import edu.ucsb.cs156.organic.repositories.CourseRepository;
@@ -187,13 +187,13 @@ public class CoursesControllerTests extends ControllerTestCase {
 
                 User user = User.builder().githubId(12345).githubLogin("scottpchow23").build();
 
-                CourseStaff courseStaffBefore = CourseStaff.builder()
+                Staff courseStaffBefore = Staff.builder()
                                 .courseId(course1.getId())
                                 .githubId(user.getGithubId())
                                 .user(user)
                                 .build();
 
-                CourseStaff courseStaffAfter = CourseStaff.builder()
+                Staff courseStaffAfter = Staff.builder()
                                 .id(456L)
                                 .courseId(course1.getId())
                                 .githubId(user.getGithubId())
@@ -269,21 +269,21 @@ public class CoursesControllerTests extends ControllerTestCase {
                 User user1 = User.builder().githubId(12345).githubLogin("scottpchow23").build();
                 User user2 = User.builder().githubId(67890).githubLogin("pconrad").build();
 
-                CourseStaff courseStaff1 = CourseStaff.builder()
+                Staff courseStaff1 = Staff.builder()
                                 .id(111L)
                                 .courseId(course1.getId())
                                 .githubId(user1.getGithubId())
                                 .user(user1)
                                 .build();
 
-                CourseStaff courseStaff2 = CourseStaff.builder()
+                Staff courseStaff2 = Staff.builder()
                                 .id(222L)
                                 .courseId(course2.getId())
                                 .githubId(user2.getGithubId())
                                 .user(user2)
                                 .build();
 
-                ArrayList<CourseStaff> expectedCourseStaff = new ArrayList<>();
+                ArrayList<Staff> expectedCourseStaff = new ArrayList<>();
                 expectedCourseStaff.addAll(Arrays.asList(courseStaff1, courseStaff2));
 
                 when(courseRepository.findById(eq(course1.getId()))).thenReturn(Optional.of(course1));

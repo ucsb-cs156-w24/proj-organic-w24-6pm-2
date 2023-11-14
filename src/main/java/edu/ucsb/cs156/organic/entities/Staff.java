@@ -4,14 +4,12 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@Entity(name = "course_staff")
-public class CourseStaff {
+@Entity(name = "staff")
+public class Staff {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;

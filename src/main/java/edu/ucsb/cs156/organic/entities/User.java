@@ -7,6 +7,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import liquibase.pro.packaged.t;
+
 import java.time.Instant;
 import java.util.List;
 
@@ -36,6 +38,6 @@ public class User {
 
   @Override
   public String toString() {
-    return String.format("User: githubId=%d githubLogin=%s", githubId, githubLogin);
+    return String.format("User: githubId=%d githubLogin=%s admin=%s", githubId, githubLogin, this.admin);
   }
 }

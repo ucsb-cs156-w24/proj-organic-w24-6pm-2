@@ -54,10 +54,11 @@ public class CoursesController extends ApiController {
     UserRepository userRepository;
 
     @Operation(summary = "List all courses")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/all")
     public Iterable<Course> allCourses() {
         User u = getCurrentUser().getUser();
+        log.info("u={}", u);
         if (u.isAdmin()) {
             return courseRepository.findAll();
         } else {

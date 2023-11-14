@@ -53,6 +53,13 @@ public class CurrentUserServiceImpl extends CurrentUserService {
         .user(this.getUser())
         .roles(this.getRoles())
         .build();
+    this.getRoles().forEach( (role) -> {
+      log.info("role={}", role);
+      if (role.getAuthority().equals("ROLE_ADMIN")) {
+        cu.getUser().setAdmin(true);
+      }
+    });
+
     log.info("getCurrentUser returns {}", cu);
     return cu;
   }

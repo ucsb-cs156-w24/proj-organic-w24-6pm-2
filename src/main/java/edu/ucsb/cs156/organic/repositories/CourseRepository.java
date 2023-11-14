@@ -1,20 +1,11 @@
 package edu.ucsb.cs156.organic.repositories;
 
 import edu.ucsb.cs156.organic.entities.Course;
-import liquibase.pro.packaged.Q;
-
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
-
-//  private String school;
-//   private String term;
-//   private LocalDateTime start;
-//   private LocalDateTime end;
-//   private String githubOrg;
 
 @Repository
 public interface CourseRepository extends CrudRepository<Course, Integer> {

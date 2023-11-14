@@ -35,6 +35,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -114,7 +116,7 @@ public class StudentsControllerTests extends ControllerTestCase {
 
                 ArrayList<Student> expectedStudents = new ArrayList<>();
                 expectedStudents.add(student1);
-               
+
                 when(courseRepository.findById(eq(course1.getId()))).thenReturn(Optional.of(course1));
                 when(studentRepository.findByCourseId(eq(course1.getId()))).thenReturn(expectedStudents);
 
@@ -150,6 +152,29 @@ public class StudentsControllerTests extends ControllerTestCase {
                 
         }
 
-       
+        @WithMockUser(roles = { "ADMIN" })
+        @Test
+        public void admin_cannot_upload_students_for_a_non_existing_course() throws Exception {
+
+                // arrange
+
+                MockMultipartFile file = new MockMultipartFile(
+                                "file",
+                                "egrades.csv",
+                                MediaType.TEXT_PLAIN_VALUE,
+                                "Hello, World!".getBytes());
+
+                when(courseRepository.findById(eq(course1.getId()))).thenReturn(Optional.empty());
+
+                // act
+
+                MvcResult response = mockMvc.perform(multipart("/api/students/upload/egrades?courseId=1").file(file).with(csrf()))
+                                .andExpect(status().isNotFound()).andReturn();
+
+                // assert
+
+                verify(courseRepository, atLeastOnce()).findById(eq(course1.getId()));
+
+        }
 
 }

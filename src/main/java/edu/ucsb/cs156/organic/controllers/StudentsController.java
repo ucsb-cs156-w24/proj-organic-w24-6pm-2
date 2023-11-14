@@ -5,8 +5,8 @@ import edu.ucsb.cs156.organic.entities.Staff;
 import edu.ucsb.cs156.organic.entities.Student;
 import edu.ucsb.cs156.organic.entities.User;
 import edu.ucsb.cs156.organic.repositories.CourseRepository;
-import edu.ucsb.cs156.organic.repositories.CourseStaffRepository;
-import edu.ucsb.cs156.organic.repositories.CourseStudentRepository;
+import edu.ucsb.cs156.organic.repositories.StaffRepository;
+import edu.ucsb.cs156.organic.repositories.StudentRepository;
 import edu.ucsb.cs156.organic.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -50,10 +50,10 @@ public class StudentsController extends ApiController {
     CourseRepository courseRepository;
 
     @Autowired
-    CourseStaffRepository courseStaffRepository;
+    StaffRepository courseStaffRepository;
 
     @Autowired
-    CourseStudentRepository courseStudentRepository;
+    StudentRepository courseStudentRepository;
 
     @Autowired
     UserRepository userRepository;

@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CourseStudentRepository extends CrudRepository<Student, Integer> {
+public interface StudentRepository extends CrudRepository<Student, Integer> {
     Iterable<Student> findByCourseId(Long courseId);
     Iterable<Student> findByGithubId(Integer githubId);
     Optional<Student> findById(Long id);

@@ -48,7 +48,7 @@ import edu.ucsb.cs156.organic.entities.Staff;
 import edu.ucsb.cs156.organic.entities.User;
 import edu.ucsb.cs156.organic.entities.jobs.Job;
 import edu.ucsb.cs156.organic.repositories.CourseRepository;
-import edu.ucsb.cs156.organic.repositories.CourseStaffRepository;
+import edu.ucsb.cs156.organic.repositories.StaffRepository;
 import edu.ucsb.cs156.organic.repositories.UserRepository;
 import edu.ucsb.cs156.organic.repositories.jobs.JobsRepository;
 import edu.ucsb.cs156.organic.services.jobs.JobService;
@@ -70,7 +70,7 @@ public class CoursesControllerTests extends ControllerTestCase {
         CourseRepository courseRepository;
 
         @MockBean
-        CourseStaffRepository courseStaffRepository;
+        StaffRepository courseStaffRepository;
 
         @Autowired
         ObjectMapper objectMapper;

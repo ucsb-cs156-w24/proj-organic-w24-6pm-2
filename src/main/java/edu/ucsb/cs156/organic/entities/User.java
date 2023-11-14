@@ -36,6 +36,6 @@ public class User {
 
   @Override
   public String toString() {
-    return String.format("User: githubId=%d githubLogin=%s", githubId, githubLogin);
+    return String.format("User: githubId=%d githubLogin=%s admin=%s", githubId, githubLogin, this.admin);
   }
 }

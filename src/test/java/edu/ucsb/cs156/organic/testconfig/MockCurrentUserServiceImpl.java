@@ -48,8 +48,8 @@ public class MockCurrentUserServiceImpl extends CurrentUserServiceImpl {
       pictureUrl = "https://example.org/" +  user.getUsername() + ".jpg";
       fullName = "Fake " + user.getUsername();
       emailVerified = true;
-      admin= (user.getUsername().equals("admin"));
-    }
+      admin = false;
+    } 
 
     User u = User.builder()
     .githubLogin(githubLogin)
@@ -69,7 +69,8 @@ public class MockCurrentUserServiceImpl extends CurrentUserServiceImpl {
     emails.add(userEmail);   
 
     when(userSpy.getEmails()).thenReturn(emails);
-    
+   
+
     log.trace("************** ALERT **********************");
     log.trace("************* MOCK USER********************");
     log.trace("authentication={}",authentication);

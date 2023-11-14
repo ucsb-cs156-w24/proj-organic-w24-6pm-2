@@ -1,8 +1,10 @@
 package edu.ucsb.cs156.organic.controllers;
 
+import edu.ucsb.cs156.organic.entities.Course;
 import edu.ucsb.cs156.organic.entities.User;
 import edu.ucsb.cs156.organic.entities.UserEmail;
 import edu.ucsb.cs156.organic.models.CurrentUser;
+import edu.ucsb.cs156.organic.repositories.CourseRepository;
 import edu.ucsb.cs156.organic.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -58,6 +60,14 @@ public class UserInfoController extends ApiController {
   public Iterable<UserEmail> getUsersEmails() {
     User user = super.getCurrentUser().getUser();
     return user.getEmails();
+  }
+
+  @Operation(summary = "Get courses for which current user is on the staff")
+  @PreAuthorize("hasRole('ROLE_USER')")
+  @GetMapping("/staffedCourses")
+  public Iterable<Course> getStaffedCourses() {
+    User user = super.getCurrentUser().getUser();
+    return userRepository.findCoursesStaffedByUser(user.getGithubId());  
   }
 
 }

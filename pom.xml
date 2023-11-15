@@ -139,6 +139,13 @@
             <version>3.8.0</version>
         </dependency>
 
+        <!-- http://opencsv.sourceforge.net/ -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.7.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -250,9 +257,6 @@
                         <param>edu.ucsb.cs156.organic.services.GrantedAuthoritiesService</param>
                     </excludedClasses>
                     <excludedTestClasses></excludedTestClasses>
-                    <excludedMethods>
-                        <param>flush_and_close_noPitest</param>
-                    </excludedMethods>
                     <outputFormats>
                         <outputFormat>HTML</outputFormat>
                         <outputFormat>CSV</outputFormat>

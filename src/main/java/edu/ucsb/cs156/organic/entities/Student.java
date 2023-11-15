@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@Entity(name = "entstudent")
+@Entity(name = "student")
 public class Student {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

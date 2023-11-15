@@ -258,7 +258,7 @@
                     </excludedClasses>
                     <excludedTestClasses></excludedTestClasses>
                     <excludedMethods>
-                        <param>flush_and_close_noPitest</param>
+                        <param>close_noPitest</param>
                     </excludedMethods>
                     <outputFormats>
                         <outputFormat>HTML</outputFormat>

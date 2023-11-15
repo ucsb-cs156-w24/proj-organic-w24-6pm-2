@@ -153,7 +153,6 @@ public class StudentsControllerTests extends ControllerTestCase {
 
                 // arrange
 
-               
                 when(courseRepository.findById(eq(course1.getId()))).thenReturn(Optional.empty());
 
                 // act 
@@ -218,6 +217,35 @@ public class StudentsControllerTests extends ControllerTestCase {
 
                 // arrange
 
+                 Student student2After = Student.builder()
+                        .id(2L)
+                        .courseId(course1.getId())
+                        .fname("LAUREN")
+                        .lname("DEL PLAYA")
+                        .email("ldelplaya@umail.ucsb.edu")
+                        .studentId("A987654")
+                        .courseId(course1.getId())
+                        .build();
+
+                  Student student3Before = Student.builder()
+                        .courseId(course1.getId())
+                        .fname("SABADO")
+                        .lname("TARDE")
+                        .email("sabadotarde@umail.ucsb.edu")
+                        .studentId("1234567")
+                        .courseId(course1.getId())
+                        .build();
+
+                  Student student3After = Student.builder()
+                        .id(2L)
+                        .courseId(course1.getId())
+                        .fname("SABADO")
+                        .lname("TARDE")
+                        .email("sabadotarde@umail.ucsb.edu")
+                        .studentId("1234567")
+                        .courseId(course1.getId())
+                        .build();
+
                 MockMultipartFile file = new MockMultipartFile(
                                 "file",
                                 "egrades.csv",
@@ -231,6 +259,9 @@ public class StudentsControllerTests extends ControllerTestCase {
                                 .thenReturn(Optional.of(student2));
                 when(studentRepository.findByCourseIdAndStudentId(eq(course1.getId()), eq("1234567")))
                                 .thenReturn(Optional.empty());
+
+                when(studentRepository.save(eq(student2After))).thenReturn(student2After);
+                when(studentRepository.save(eq(student3Before))).thenReturn(student3After);
 
                 // act
 
@@ -248,6 +279,12 @@ public class StudentsControllerTests extends ControllerTestCase {
                       );
                 String expectedJson = mapper.writeValueAsString(expectedMap);
                 assertEquals(expectedJson, responseString);
+                verify(studentRepository, atLeastOnce()).findByCourseIdAndStudentId(eq(course1.getId()), eq("A123456"));
+                verify(studentRepository, atLeastOnce()).findByCourseIdAndStudentId(eq(course1.getId()), eq("A987654"));
+                verify(studentRepository, atLeastOnce()).findByCourseIdAndStudentId(eq(course1.getId()), eq("1234567"));
+
+                verify(studentRepository, atLeastOnce()).save(eq(student2After));
+                verify(studentRepository, atLeastOnce()).save(eq(student3Before));
         }
 
 }

@@ -1,42 +1,32 @@
 package edu.ucsb.cs156.organic.controllers;
 
 import edu.ucsb.cs156.organic.entities.Course;
-import edu.ucsb.cs156.organic.entities.CourseStaff;
+import edu.ucsb.cs156.organic.entities.Staff;
 import edu.ucsb.cs156.organic.entities.User;
 import edu.ucsb.cs156.organic.repositories.CourseRepository;
-import edu.ucsb.cs156.organic.repositories.CourseStaffRepository;
+import edu.ucsb.cs156.organic.repositories.StaffRepository;
 import edu.ucsb.cs156.organic.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import liquibase.pro.packaged.co;
 import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.ucsb.cs156.organic.errors.EntityNotFoundException;
 
-import javax.validation.Valid;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Tag(name = "Courses")
 @RequestMapping("/api/courses")
@@ -48,7 +38,7 @@ public class CoursesController extends ApiController {
     CourseRepository courseRepository;
 
     @Autowired
-    CourseStaffRepository courseStaffRepository;
+    StaffRepository courseStaffRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -71,15 +61,12 @@ public class CoursesController extends ApiController {
     @PostMapping("/post")
     public Course postCourse(
             @Parameter(name = "name", description ="course name, e.g. CMPSC 156" ) @RequestParam String name,
-            @Parameter(name = "school", description ="school abbreviation e.g. ucsb" ) @RequestParam String school,
+            @Parameter(name = "school", description ="school abbreviation e.g. UCSB" ) @RequestParam String school,
             @Parameter(name = "term", description = "quarter or semester, e.g. F23") @RequestParam String term,
             @Parameter(name = "start", description = "in iso format, i.e. YYYY-mm-ddTHH:MM:SS; e.g. 2023-10-01T00:00:00 see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
             @Parameter(name = "end", description = "in iso format, i.e. YYYY-mm-ddTHH:MM:SS; e.g. 2023-12-31T11:59:59 see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
             @Parameter(name = "githubOrg", description = "for example ucsb-cs156-f23" ) @RequestParam String githubOrg)
             throws JsonProcessingException {
-
-        // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-        // See: https://www.baeldung.com/spring-date-parameters
 
         Course course = Course.builder()
                 .name(name)
@@ -93,7 +80,7 @@ public class CoursesController extends ApiController {
         Course savedCourse = courseRepository.save(course);
         User u = getCurrentUser().getUser();
 
-        CourseStaff courseStaff = CourseStaff.builder()
+        Staff courseStaff = Staff.builder()
                 .courseId(savedCourse.getId())
                 .githubId(u.getGithubId())
                 .build();
@@ -107,7 +94,7 @@ public class CoursesController extends ApiController {
     @Operation(summary = "Add a staff member to a course")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addStaff")
-    public CourseStaff addStaff(
+    public Staff addStaff(
             @Parameter(name = "courseId") @RequestParam Long courseId,
             @Parameter(name = "githubLogin") @RequestParam String githubLogin)
             throws JsonProcessingException {
@@ -118,7 +105,7 @@ public class CoursesController extends ApiController {
         User user = userRepository.findByGithubLogin(githubLogin)
                 .orElseThrow(() -> new EntityNotFoundException(User.class, githubLogin.toString()));
 
-        CourseStaff courseStaff = CourseStaff.builder()
+        Staff courseStaff = Staff.builder()
                 .courseId(course.getId())
                 .githubId(user.getGithubId())
                 .user(user)
@@ -133,7 +120,7 @@ public class CoursesController extends ApiController {
     @Operation(summary = "Get Staff for course")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/getStaff")
-    public Iterable<CourseStaff> getStaff(
+    public Iterable<Staff> getStaff(
             @Parameter(name = "courseId") @RequestParam Long courseId
     )
             throws JsonProcessingException {
@@ -141,7 +128,7 @@ public class CoursesController extends ApiController {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new EntityNotFoundException(Course.class, courseId.toString()));
 
-        Iterable<CourseStaff> courseStaff = courseStaffRepository.findByCourseId(course.getId());
+        Iterable<Staff> courseStaff = courseStaffRepository.findByCourseId(course.getId());
         return courseStaff;
     }
 

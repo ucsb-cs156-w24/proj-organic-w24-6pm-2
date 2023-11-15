@@ -10,12 +10,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@Entity(name = "course_staff")
-public class CourseStaff {
+@Entity(name = "student")
+public class Student {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private Long courseId;
+  private String fname;
+  private String lname;
+  private String studentId;
+  private String email;
+  
   private Integer githubId;
 
   @OneToOne

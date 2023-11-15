@@ -61,6 +61,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 
+import java.util.Map;
+
 @Slf4j
 @WebMvcTest(controllers = StudentsController.class)
 @Import(JobService.class)
@@ -105,7 +107,19 @@ public class StudentsControllerTests extends ControllerTestCase {
         Student student1 = Student.builder()
                         .id(1L)
                         .courseId(course1.getId())
-                        .githubId(12345)
+                        .fname("Chris")
+                        .lname("Gaucho")
+                        .email("cgaucho@ucsb.edu")
+                        .studentId("A123456")
+                        .build();
+
+        Student student2 = Student.builder()
+                        .id(2L)
+                        .courseId(course1.getId())
+                        .fname("Lauren")
+                        .lname("Del Playa")
+                        .email("ldelplaya@ucsb.edu")
+                        .studentId("A987654")
                         .build();
 
         @WithMockUser(roles = { "ADMIN" })
@@ -149,7 +163,13 @@ public class StudentsControllerTests extends ControllerTestCase {
                 // assert
 
                 verify(courseRepository, atLeastOnce()).findById(eq(course1.getId()));
-                
+                String responseString = response.getResponse().getContentAsString();
+                Map<String,String> expectedMap = Map.of(
+                        "type", "EntityNotFoundException",
+                        "message", "Course with id 1 not found"
+                      );
+                String expectedJson = mapper.writeValueAsString(expectedMap);
+                assertEquals(expectedJson, responseString);
         }
 
         @WithMockUser(roles = { "ADMIN" })
@@ -168,13 +188,66 @@ public class StudentsControllerTests extends ControllerTestCase {
 
                 // act
 
-                MvcResult response = mockMvc.perform(multipart("/api/students/upload/egrades?courseId=1").file(file).with(csrf()))
+                MvcResult response = mockMvc
+                                .perform(multipart("/api/students/upload/egrades?courseId=1").file(file).with(csrf()))
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
 
                 verify(courseRepository, atLeastOnce()).findById(eq(course1.getId()));
+                String responseString = response.getResponse().getContentAsString();
+                Map<String,String> expectedMap = Map.of(
+                        "type", "EntityNotFoundException",
+                        "message", "Course with id 1 not found"
+                      );
+                String expectedJson = mapper.writeValueAsString(expectedMap);
+                assertEquals(expectedJson, responseString);
+        }
 
+        private final String sampleCSVContents = """
+                        Enrl Cd,Perm #,Grade,Final Units,Student Last,Student First Middle,Quarter,Course ID,Section,Meeting Time(s) / Location(s),Email,ClassLevel,Major1,Major2,Date/Time,Pronoun
+
+                        08235,A123456,,4.0,GAUCHO,CHRIS FAKE,F23,CMPSC156,0100,T R   2:00- 3:15 SH 1431     W    5:00- 5:50 PHELP 3525  W    6:00- 6:50 PHELP 3525  W    7:00- 7:50 PHELP 3525  ,cgaucho@umail.ucsb.edu,SR,CMPSC,,9/27/2023 9:39:25 AM,
+                        08250,A987654,,4.0,DEL PLAYA,LAUREN,F23,CMPSC156,0100,T R   2:00- 3:15 SH 1431     W    5:00- 5:50 PHELP 3525  W    6:00- 6:50 PHELP 3525  W    7:00- 7:50 PHELP 3525  ,ldelplaya@umail.ucsb.edu,SR,CMPSC,,9/27/2023 9:39:25 AM,She (She/Her/Hers)
+                        08243,1234567,,4.0,TARDE,SABADO,F23,CMPSC156,0100,T R   2:00- 3:15 SH 1431     W    5:00- 5:50 PHELP 3525  W    6:00- 6:50 PHELP 3525  W    7:00- 7:50 PHELP 3525  ,sabadotarde@umail.ucsb.edu,SR,CMPSC,,9/27/2023 9:39:25 AM,He (He/Him/His)
+                        """;
+
+        @WithMockUser(roles = { "ADMIN" })
+        @Test
+        public void admin_can_upload_students_for_an_existing_course() throws Exception {
+
+                // arrange
+
+                MockMultipartFile file = new MockMultipartFile(
+                                "file",
+                                "egrades.csv",
+                                MediaType.TEXT_PLAIN_VALUE,
+                                sampleCSVContents.getBytes());
+
+                when(courseRepository.findById(eq(course1.getId()))).thenReturn(Optional.of(course1));
+                when(studentRepository.findByCourseIdAndStudentId(eq(course1.getId()), eq("A123456")))
+                                .thenReturn(Optional.of(student1));
+                when(studentRepository.findByCourseIdAndStudentId(eq(course1.getId()), eq("A987654")))
+                                .thenReturn(Optional.of(student2));
+                when(studentRepository.findByCourseIdAndStudentId(eq(course1.getId()), eq("1234567")))
+                                .thenReturn(Optional.empty());
+
+                // act
+
+                MvcResult response = mockMvc
+                                .perform(multipart("/api/students/upload/egrades?courseId=1").file(file).with(csrf()))
+                                .andExpect(status().isOk()).andReturn();
+
+                // assert
+
+                verify(courseRepository, atLeastOnce()).findById(eq(course1.getId()));
+                String responseString = response.getResponse().getContentAsString();
+                Map<String,String> expectedMap = Map.of(
+                        "filename", "egrades.csv",
+                        "message", "Inserted 1 new students, Updated 2 students"
+                      );
+                String expectedJson = mapper.writeValueAsString(expectedMap);
+                assertEquals(expectedJson, responseString);
         }
 
 }

@@ -15,7 +15,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.ucsb.cs156.organic.errors.EntityNotFoundException;
 
-
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -85,36 +85,23 @@ public class StudentsController extends ApiController {
 
                 int counts[] = { 0, 0 };
 
-                InputStream inputStream = new BufferedInputStream(file.getInputStream());
-                InputStreamReader reader = new InputStreamReader(inputStream);
-                CSVReader csvReader = new CSVReader(reader);
-                csvReader.skip(2);
-                List<String[]> myEntries = csvReader.readAll();
-                for (String[] row : myEntries) {
-                        Student student = fromEgradesCSVRow(row);
-                        student.setCourseId(course.getId());
-                        Status s = upsertStudent(student, course);
-                        counts[s.ordinal()]++;
+                try (InputStream inputStream = new BufferedInputStream(file.getInputStream());
+                                InputStreamReader reader = new InputStreamReader(inputStream);
+                                CSVReader csvReader = new CSVReader(reader);) {
+                        csvReader.skip(2);
+                        List<String[]> myEntries = csvReader.readAll();
+                        for (String[] row : myEntries) {
+                                Student student = fromEgradesCSVRow(row);
+                                student.setCourseId(course.getId());
+                                Status s = upsertStudent(student, course);
+                                counts[s.ordinal()]++;
+                        }
                 }
-                closeNoPitest(csvReader);
-
                 return Map.of(
                                 "filename", file.getOriginalFilename(),
-                                "message", String.format("Inserted %d new students, Updated %d students", counts[Status.INSERTED.ordinal()], counts[Status.UPDATED.ordinal()]));
-                                               
+                                "message", String.format("Inserted %d new students, Updated %d students",
+                                                counts[Status.INSERTED.ordinal()], counts[Status.UPDATED.ordinal()]));
 
-        }
-
-        /**
-         * This method is excluded from pitest coverage in the pom.xml file
-         * We do this because we don't know of a good way to unit test for whether the
-         * CSVReader is closed or not, but closing it is considered good practice.
-         * 
-         * @param csvReader
-         * @throws IOException
-         */
-        public void closeNoPitest(CSVReader csvReader) throws IOException {
-                csvReader.close();
         }
 
         public Student fromEgradesCSVRow(String[] row) {

@@ -257,9 +257,6 @@
                         <param>edu.ucsb.cs156.organic.services.GrantedAuthoritiesService</param>
                     </excludedClasses>
                     <excludedTestClasses></excludedTestClasses>
-                    <excludedMethods>
-                        <param>close_noPitest</param>
-                    </excludedMethods>
                     <outputFormats>
                         <outputFormat>HTML</outputFormat>
                         <outputFormat>CSV</outputFormat>

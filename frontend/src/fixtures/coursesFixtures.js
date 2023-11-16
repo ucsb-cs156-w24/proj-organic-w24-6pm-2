@@ -40,4 +40,4 @@ const coursesFixtures = {
 };
 
 
-export { coursesFixture };
+export { coursesFixtures };

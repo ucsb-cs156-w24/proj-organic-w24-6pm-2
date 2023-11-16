@@ -2,7 +2,7 @@ name: 99 - Copy issues from starter repo
 
 env:
     GH_TOKEN: ${{ github.token }}
-    STARTER: https://github.com/ucsb-cs156/proj-happycows
+    STARTER: https://github.com/ucsb-cs156/proj-organic
     TAG: f23
 on:
   workflow_dispatch:

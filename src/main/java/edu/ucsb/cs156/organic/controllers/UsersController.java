@@ -53,11 +53,11 @@ public class UsersController extends ApiController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
     public User postUsersToggleInstructor(
-            @Parameter(name="githubId") @RequestParam Integer id)
+            @Parameter(name="githubId") @RequestParam Integer githubId)
             {
 
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(User.class, id));
+        User user = userRepository.findByGithubId(githubId)
+                .orElseThrow(() -> new EntityNotFoundException(User.class, githubId));
 
         user.setInstructor(!user.isInstructor());
 

@@ -56,6 +56,21 @@ public class CoursesController extends ApiController {
         }
     }
 
+    @Operation(summary= "Get a single course by id")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/get")
+    public Course getById(
+            @Parameter(name="id") @RequestParam Long id) {
+        User u = getCurrentUser().getUser();
+        if(u.isAdmin() || u.isInstructor()){
+                Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Course.class, id));
+
+                return course;
+        }
+        return null;
+    }
+
     @Operation(summary = "Create a new course")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")

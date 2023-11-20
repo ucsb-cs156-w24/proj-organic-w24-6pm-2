@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.ucsb.cs156.organic.errors.EntityNotFoundException;
-
+import org.springframework.security.access.AccessDeniedException;
 
 import java.time.LocalDateTime;
 
@@ -62,14 +62,18 @@ public class CoursesController extends ApiController {
     public Course getById(
             @Parameter(name="id") @RequestParam Long id) {
         User u = getCurrentUser().getUser();
-        if(u.isAdmin() || u.isInstructor()){
-                Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(Course.class, id));
 
-                return course;
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Course.class, id));
+        
+        if(!u.isAdmin() && !u.isInstructor()){
+                courseStaffRepository.findByCourseIdAndGithubId(id, u.getGithubId())
+                        .orElseThrow(() -> new AccessDeniedException(
+                String.format("User %s is not authorized to get course %d", u.getGithubLogin(), id)));
         }
-        return null;
-    }
+
+        return course;
+}
 
     @Operation(summary = "Create a new course")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

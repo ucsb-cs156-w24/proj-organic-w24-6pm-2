@@ -150,7 +150,7 @@ public class CoursesControllerTests extends ControllerTestCase {
  
          @WithMockUser(roles = { "ADMIN", "USER" })
          @Test
-         public void test_that_admin_instructor_can_get_by_id_when_the_id_exists() throws Exception {
+         public void test_that_admin_can_get_by_id_when_the_id_exists() throws Exception {
  
                  // arrange
                  when(courseRepository.findById(eq(1L))).thenReturn(Optional.of(course1));
@@ -165,10 +165,10 @@ public class CoursesControllerTests extends ControllerTestCase {
                  String responseString = response.getResponse().getContentAsString();
                  assertEquals(expectedJson, responseString);
          }
- 
+
          @WithMockUser(roles = { "ADMIN", "USER" })
          @Test
-         public void test_that_admin_instructor_cannot_get_by_id_when_the_id_does_not_exist() throws Exception {
+         public void test_that_admin_cannot_get_by_id_when_the_id_does_not_exist() throws Exception {
  
                  // arrange
  
@@ -184,6 +184,59 @@ public class CoursesControllerTests extends ControllerTestCase {
                  Map<String, Object> json = responseToJson(response);
                  assertEquals("EntityNotFoundException", json.get("type"));
                  assertEquals("Course with id 7 not found", json.get("message"));
+         }
+
+         @WithMockUser(roles = { "USER" })
+         @Test
+         public void test_that_instructor_can_get_by_id_when_the_id_exists() throws Exception {
+ 
+                User currentUser = currentUserService.getCurrentUser().getUser();
+
+                Staff courseStaff1 = Staff.builder()
+                                .id(1L)
+                                .courseId(course1.getId())
+                                .githubId(currentUser.getGithubId())
+                                .user(currentUser)
+                                .build();
+
+                when(courseRepository.findById(eq(course1.getId()))).thenReturn(Optional.of(course1));
+                when(courseStaffRepository.findByCourseIdAndGithubId(eq(course1.getId()),
+                                eq(courseStaff1.getGithubId()))).thenReturn(Optional.of(courseStaff1));
+
+                // act
+                MvcResult response = mockMvc.perform(get("/api/courses/get?id=1"))
+                                .andExpect(status().isOk()).andReturn();
+
+
+                // assert
+                verify(courseRepository, times(1)).findById(eq(1L));
+                verify(courseStaffRepository, times(1)).findByCourseIdAndGithubId(eq(course1.getId()),
+                                eq(courseStaff1.getGithubId()));
+                String expectedJson = mapper.writeValueAsString(course1);
+                String responseString = response.getResponse().getContentAsString();
+                assertEquals(expectedJson, responseString);
+         }
+
+         @WithMockUser(roles = { "USER" })
+         @Test
+         public void test_that_non_admin_non_instructor_cannot_get_by_id_when_the_id_does_not_exists() throws Exception {
+ 
+                 // arrange
+                User currentUser = currentUserService.getCurrentUser().getUser();
+
+                when(courseRepository.findById(eq(course1.getId()))).thenReturn(Optional.of(course1));
+
+                // act
+                MvcResult response = mockMvc.perform(get("/api/courses/get?id=1"))
+                                .andExpect(status().isForbidden()).andReturn();
+
+
+                // assert
+                verify(courseRepository, times(1)).findById(eq(1L));
+                Map<String, Object> json = responseToJson(response);
+                assertEquals("AccessDeniedException", json.get("type"));
+                assertEquals(String.format("User %s is not authorized to get course 1", currentUser.getGithubLogin()), json.get("message"));
+
          }
 
         @WithMockUser(roles = { "ADMIN", "USER" })

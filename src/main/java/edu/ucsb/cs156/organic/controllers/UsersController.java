@@ -62,6 +62,6 @@ public class UsersController extends ApiController {
         user.setInstructor(!user.isInstructor());
 
         User savedUser = userRepository.save(user);
-        return user;
+        return savedUser;
     }
 }

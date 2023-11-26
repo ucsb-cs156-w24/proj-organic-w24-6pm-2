@@ -38,15 +38,16 @@ describe("AdminUsersPage tests",  () => {
 
     test("usertable toggle admin tests", async ()=>{
         axiosMock.onPost("/api/admin/users/toggleAdmin").reply(200, "User with id 1 has toggled admin status");
-        const { getByText } = render(
+        render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AdminUsersPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
-        await waitFor(() => expect(getByText("Users")).toBeInTheDocument());
-
+        const title = await screen.findByText("Users");
+        expect(title).toBeInTheDocument();
+        
         const toggleAdminButton = screen.getByTestId(`${testId}-cell-row-0-col-toggle-admin-button`);
         expect(toggleAdminButton).toBeInTheDocument();
 
@@ -59,18 +60,20 @@ describe("AdminUsersPage tests",  () => {
 
     test("usertable toggle instructor tests", async ()=>{
         axiosMock.onPost("/api/admin/users/toggleInstructor").reply(200, "User with id 1 has toggled instructor status");
-        const { getByText } = render(
+        
+        render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AdminUsersPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
-        await waitFor(() => expect(getByText("Users")).toBeInTheDocument());
+        const title = await screen.findByText("Users");
+        expect(title).toBeInTheDocument();
 
         const toggleInstructorButton = screen.getByTestId(`${testId}-cell-row-0-col-toggle-instructor-button`);
         expect(toggleInstructorButton).toBeInTheDocument();
-
+  
         fireEvent.click(toggleInstructorButton);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));

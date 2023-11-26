@@ -4,7 +4,7 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 
 describe("Footer tests", () => {
     test("renders correctly", async () => {
-        render(
+        render( 
             <Footer systemInfo={systemInfoFixtures.showingAll}/>
         );
 

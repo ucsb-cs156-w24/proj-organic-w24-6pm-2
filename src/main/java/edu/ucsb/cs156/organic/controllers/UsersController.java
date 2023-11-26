@@ -51,7 +51,7 @@ public class UsersController extends ApiController {
 
     @Operation(summary= "Toggle a user's instructor status")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/post")
+    @PostMapping("/toggleInstructor")
     public User postUsersToggleInstructor(
             @Parameter(name="githubId") @RequestParam Integer githubId)
             {

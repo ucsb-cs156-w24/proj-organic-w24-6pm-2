@@ -242,7 +242,6 @@
                     <verbose>true</verbose>
                     <targetClasses>
                         <param>edu.ucsb.cs156.*</param>
-                        <!-- <param>edu.ucsb.cs156.organic.controllers.UsersController</param> -->
                     </targetClasses>
                     <targetTests>
                         <param>edu.ucsb.cs156.*</param>

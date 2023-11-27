@@ -68,6 +68,7 @@ public class UsersController extends ApiController {
 
         userRepository.save(user);
         return genericMessage("User with githubId %s has toggled instructor status to %s".formatted(githubId, user.isInstructor()));
+    }
 
     @Operation(summary = "Toggle the admin field")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

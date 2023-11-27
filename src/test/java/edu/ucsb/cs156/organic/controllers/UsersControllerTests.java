@@ -99,7 +99,9 @@ public class UsersControllerTests extends ControllerTestCase {
     Map<String, Object> json = responseToJson(response);
     assertEquals("User with githubId 1 has toggled instructor status to true", json.get("message"));
   }
-
+  
+  @WithMockUser(roles = { "ADMIN", "USER" })
+  @Test
   public void admin_can_toggle_admin_status_of_a_user_from_false_to_true() throws Exception {
           // arrange
           User userBefore = User.builder()
@@ -165,6 +167,8 @@ public class UsersControllerTests extends ControllerTestCase {
     assertEquals("User with githubId 1 has toggled instructor status to false", json.get("message"));
   }
 
+  @WithMockUser(roles = { "ADMIN", "USER" })
+  @Test
   public void admin_can_toggle_admin_status_of_a_user_from_true_to_false() throws Exception {
           // arrange
           User userBefore = User.builder()
@@ -215,7 +219,9 @@ public class UsersControllerTests extends ControllerTestCase {
     Map<String, Object> json = responseToJson(response);
     assertEquals("User with id 1 not found", json.get("message"));
   }
-  
+
+  @WithMockUser(roles = { "ADMIN", "USER" })
+  @Test
   public void admin_tries_to_toggleAdmin_non_existant_user_and_gets_right_error_message() throws Exception {
           // arrange
         

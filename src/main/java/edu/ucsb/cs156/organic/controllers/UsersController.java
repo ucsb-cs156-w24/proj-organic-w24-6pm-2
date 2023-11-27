@@ -52,7 +52,7 @@ public class UsersController extends ApiController {
     @Operation(summary= "Toggle a user's instructor status")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/toggleInstructor")
-    public User postUsersToggleInstructor(
+    public Object postUsersToggleInstructor(
             @Parameter(name="githubId") @RequestParam Integer githubId)
             {
 
@@ -61,7 +61,7 @@ public class UsersController extends ApiController {
 
         user.setInstructor(!user.isInstructor());
 
-        User savedUser = userRepository.save(user);
-        return savedUser;
+        userRepository.save(user);
+        return genericMessage("User with githubId %s has toggled instructor status to %s".formatted(githubId, user.isInstructor()));
     }
 }

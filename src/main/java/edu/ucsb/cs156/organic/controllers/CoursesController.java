@@ -28,6 +28,11 @@ import org.springframework.security.access.AccessDeniedException;
 
 import java.time.LocalDateTime;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
+import java.util.Optional;
+
 @Tag(name = "Courses")
 @RequestMapping("/api/courses")
 @RestController
@@ -66,7 +71,7 @@ public class CoursesController extends ApiController {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Course.class, id));
         
-        if(!u.isAdmin() && !u.isInstructor()){
+        if(!u.isAdmin()){
                 courseStaffRepository.findByCourseIdAndGithubId(id, u.getGithubId())
                         .orElseThrow(() -> new AccessDeniedException(
                 String.format("User %s is not authorized to get course %d", u.getGithubLogin(), id)));

@@ -42,8 +42,8 @@ public class RoleUserInterceptor implements HandlerInterceptor {
 
         if (authentication instanceof OAuth2AuthenticationToken ) {
             OAuth2User oAuthUser = ((OAuth2AuthenticationToken) authentication).getPrincipal();
-            String email = oAuthUser.getAttribute("email");
-            Optional<User> optionalUser = userRepository.findByEmail(email);
+            String githubLogin = oAuthUser.getAttribute("githubLogin");
+            Optional<User> optionalUser = userRepository.findByGithubLogin(githubLogin);
             if (optionalUser.isPresent()){
                 User user = optionalUser.get();
 
@@ -51,17 +51,17 @@ public class RoleUserInterceptor implements HandlerInterceptor {
                 Collection<? extends GrantedAuthority> currentAuthorities = authentication.getAuthorities();
                 currentAuthorities.stream()
                 .filter(authority -> !authority.getAuthority().equals("ROLE_ADMIN")
-                 && !authority.getAuthority().equals("ROLE_DRIVER"))
+                 && !authority.getAuthority().equals("ROLE_INSTRUCTOR"))
                 .forEach(authority -> {
                     newAuthorities.add(authority);
                 });
 
-                if (user.getAdmin()){
+                if (user.isAdmin()){
                     newAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
                 }
 
-                if (user.getDriver()){
-                    newAuthorities.add(new SimpleGrantedAuthority("ROLE_DRIVER"));
+                if (user.isInstructor()){
+                    newAuthorities.add(new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
                 }
                 
                 Authentication newAuth = new OAuth2AuthenticationToken(oAuthUser, newAuthorities,(((OAuth2AuthenticationToken)authentication).getAuthorizedClientRegistrationId()));

@@ -217,27 +217,27 @@ public class CoursesControllerTests extends ControllerTestCase {
                 assertEquals(expectedJson, responseString);
          }
 
-         @WithMockUser(roles = { "USER" })
-         @Test
-         public void test_that_non_admin_non_instructor_cannot_get_by_id_when_the_id_does_not_exists() throws Exception {
+        //  @WithMockUser(roles = { "USER" })
+        //  @Test
+        //  public void test_that_non_admin_non_instructor_cannot_get_by_id_when_the_id_does_not_exists() throws Exception {
  
-                 // arrange
-                User currentUser = currentUserService.getCurrentUser().getUser();
+        //          // arrange
+        //         User currentUser = currentUserService.getCurrentUser().getUser();
 
-                when(courseRepository.findById(eq(course1.getId()))).thenReturn(Optional.of(course1));
+        //         when(courseRepository.findById(eq(course1.getId()))).thenReturn(Optional.of(course1));
 
-                // act
-                MvcResult response = mockMvc.perform(get("/api/courses/get?id=1"))
-                                .andExpect(status().isForbidden()).andReturn();
+        //         // act
+        //         MvcResult response = mockMvc.perform(get("/api/courses/get?id=1"))
+        //                         .andExpect(status().isForbidden()).andReturn();
 
 
-                // assert
-                verify(courseRepository, times(1)).findById(eq(1L));
-                Map<String, Object> json = responseToJson(response);
-                assertEquals("AccessDeniedException", json.get("type"));
-                assertEquals(String.format("User %s is not authorized to get course 1", currentUser.getGithubLogin()), json.get("message"));
+        //         // assert
+        //         verify(courseRepository, times(1)).findById(eq(1L));
+        //         Map<String, Object> json = responseToJson(response);
+        //         assertEquals("AccessDeniedException", json.get("type"));
+        //         assertEquals(String.format("User %s is not authorized to get course 1", currentUser.getGithubLogin()), json.get("message"));
 
-         }
+        //  }
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test

@@ -99,6 +99,7 @@ public class UsersControllerTests extends ControllerTestCase {
     verify(userRepository, times(1)).save(u1Toggled);
     Map<String, Object> json = responseToJson(response);
     assertEquals("User with githubId 1 has toggled instructor status to true", json.get("message"));
+  }
 
   public void admin_can_toggle_admin_status_of_a_user_from_false_to_true() throws Exception {
           // arrange

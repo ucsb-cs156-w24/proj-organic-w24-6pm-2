@@ -7,14 +7,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import edu.ucsb.cs156.organic.entities.User;
 import edu.ucsb.cs156.organic.repositories.UserRepository;
@@ -40,6 +38,22 @@ public class UsersController extends ApiController {
         Iterable<User> users = userRepository.findAll();
         String body = mapper.writeValueAsString(users);
         return ResponseEntity.ok().body(body);
+    }
+
+    @Operation(summary= "Toggle a user's instructor status")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/toggleInstructor")
+    public Object postUsersToggleInstructor(
+            @Parameter(name="githubId") @RequestParam Integer githubId)
+            {
+
+        User user = userRepository.findByGithubId(githubId)
+                .orElseThrow(() -> new EntityNotFoundException(User.class, githubId));
+
+        user.setInstructor(!user.isInstructor());
+
+        userRepository.save(user);
+        return genericMessage("User with githubId %s has toggled instructor status to %s".formatted(githubId, user.isInstructor()));
     }
 
     @Operation(summary = "Toggle the admin field")

@@ -21,8 +21,8 @@ describe("UserTable tests", () => {
           <UsersTable users={usersFixtures.threeUsers}/>
         );
     
-        const expectedHeaders = ["githubId", "githubLogin", "fullName", "Email", "Last Online", "Admin"];
-        const expectedFields = ["githubId", "githubLogin", "fullName", "email", "lastOnline", "admin"];
+        const expectedHeaders = ["githubId", "githubLogin", "fullName", "Email", "Last Online", "Admin", "Instructor"];
+        const expectedFields = ["githubId", "githubLogin", "fullName", "email", "lastOnline", "admin", "instructor"];
         const testId = "UsersTable";
 
         expectedHeaders.forEach( (headerText)=> {
@@ -41,5 +41,6 @@ describe("UserTable tests", () => {
         expect(screen.getByTestId(`${testId}-cell-row-0-col-lastOnline`)).toHaveTextContent(formatTime(usersFixtures.threeUsers[0].lastOnline));
         expect(screen.getByTestId(`${testId}-cell-row-1-col-githubLogin`)).toHaveTextContent("cgaucho");
         expect(screen.getByTestId(`${testId}-cell-row-1-col-admin`)).toHaveTextContent("false");
+        expect(screen.getByTestId(`${testId}-cell-row-1-col-instructor`)).toHaveTextContent("true");
       });
 });

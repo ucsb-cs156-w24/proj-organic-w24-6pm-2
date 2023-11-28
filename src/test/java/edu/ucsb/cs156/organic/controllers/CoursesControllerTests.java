@@ -398,9 +398,11 @@ public class CoursesControllerTests extends ControllerTestCase {
         // get current user
         User user = userService.getCurrentUser().getUser();
         // mock user is staff
-        Integer githubId = user.getGithubId();
-        when(courseStaffRepository.findByCourseId(courseBefore.getId()))
-                .thenReturn(Arrays.asList(Staff.builder().githubId(githubId).build()));
+        Staff courseStaff = Staff.builder().courseId(courseBefore.getId()).githubId(user.getGithubId()).build();
+        when(courseStaffRepository.findByCourseIdAndGithubId(courseBefore.getId(), user.getGithubId()))
+                .thenReturn(Optional
+                        .of(courseStaff));
+
         // act
         // get urlTemplate from courseAfter using string interpolation
         String urlTemplate = String.format(
@@ -519,6 +521,5 @@ public class CoursesControllerTests extends ControllerTestCase {
                 "AccessDeniedException");
         assertEquals(expectedMap, responseMap);
     }
-
 
 }

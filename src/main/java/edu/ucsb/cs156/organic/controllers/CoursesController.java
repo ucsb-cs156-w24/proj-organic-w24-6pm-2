@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 import edu.ucsb.cs156.organic.errors.EntityNotFoundException;
 import org.springframework.security.access.AccessDeniedException;
 
@@ -150,22 +152,15 @@ public class CoursesController extends ApiController {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Course.class, id.toString()));
 
-        // Check if the current user is a staff member for this course. If not, throw
+        // Check if the current user is a staff member for this course or an admin. If
+        // not, throw
         // AccessDeniedException
 
-        Iterable<Staff> courseStaff = courseStaffRepository.findByCourseId(course.getId());
         User u = getCurrentUser().getUser();
-        boolean isStaffOrAdmin = u.isAdmin();
-        for (Staff staff : courseStaff) {
-            if (staff.getGithubId().equals(u.getGithubId())) {
-                isStaffOrAdmin = true;
-                break;
-            }
-        }
-
-        if (!isStaffOrAdmin) {
-            throw new AccessDeniedException(
-                    "User is not a staff member for this course");
+        if (!u.isAdmin()) {
+            courseStaffRepository.findByCourseIdAndGithubId(course.getId(), u.getGithubId())
+                    .orElseThrow(() -> new AccessDeniedException(
+                            "User is not a staff member for this course"));
         }
 
         course.setName(name);
@@ -173,14 +168,12 @@ public class CoursesController extends ApiController {
         course.setTerm(term);
         course.setStart(start);
         course.setEnd(end);
-        course.setGithubOrg(githubOrg); 
+        course.setGithubOrg(githubOrg);
 
         course = courseRepository.save(course);
         log.info("course={}", course);
 
         return course;
     }
-
-    
 
 }

@@ -15,7 +15,6 @@ import edu.ucsb.cs156.organic.testconfig.TestConfig;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -70,6 +69,39 @@ public class UsersControllerTests extends ControllerTestCase {
 
   @WithMockUser(roles = { "ADMIN", "USER" })
   @Test
+  public void users__instructor_toggle_false_to_true() throws Exception {
+
+    // arrange
+    User u1 = User.builder()
+      .email("cgaucho@ucsb.edu")
+      .githubId(1)
+      .instructor(false)
+      .build();
+    User u1Toggled = User.builder()
+      .email("cgaucho@ucsb.edu")
+      .githubId(1)
+      .instructor(true)
+      .lastOnline(u1.getLastOnline())
+      .build();
+
+    when(userRepository.findByGithubId(eq(1))).thenReturn(Optional.of(u1));
+    when(userRepository.save(eq(u1Toggled))).thenReturn(u1Toggled);
+
+    // act
+    MvcResult response = mockMvc.perform(
+      post("/api/admin/users/toggleInstructor?githubId=1")
+      .with(csrf()))
+      .andExpect(status().isOk()).andReturn();
+
+    // assert
+    verify(userRepository, times(1)).findByGithubId(1);
+    verify(userRepository, times(1)).save(u1Toggled);
+    Map<String, Object> json = responseToJson(response);
+    assertEquals("User with githubId 1 has toggled instructor status to true", json.get("message"));
+  }
+  
+  @WithMockUser(roles = { "ADMIN", "USER" })
+  @Test
   public void admin_can_toggle_admin_status_of_a_user_from_false_to_true() throws Exception {
           // arrange
           User userBefore = User.builder()
@@ -104,6 +136,39 @@ public class UsersControllerTests extends ControllerTestCase {
 
   @WithMockUser(roles = { "ADMIN", "USER" })
   @Test
+  public void users__instructor_toggle_true_to_false() throws Exception {
+
+    // arrange
+    User u1 = User.builder()
+      .email("cgaucho@ucsb.edu")
+      .githubId(1)
+      .instructor(true)
+      .build();
+    User u1Toggled = User.builder()
+      .email("cgaucho@ucsb.edu")
+      .githubId(1)
+      .instructor(false)
+      .lastOnline(u1.getLastOnline())
+      .build();
+
+    when(userRepository.findByGithubId(eq(1))).thenReturn(Optional.of(u1));
+    when(userRepository.save(eq(u1Toggled))).thenReturn(u1Toggled);
+
+    // act
+    MvcResult response = mockMvc.perform(
+      post("/api/admin/users/toggleInstructor?githubId=1")
+      .with(csrf()))
+      .andExpect(status().isOk()).andReturn();
+
+    // assert
+    verify(userRepository, times(1)).findByGithubId(1);
+    verify(userRepository, times(1)).save(u1Toggled);
+    Map<String, Object> json = responseToJson(response);
+    assertEquals("User with githubId 1 has toggled instructor status to false", json.get("message"));
+  }
+
+  @WithMockUser(roles = { "ADMIN", "USER" })
+  @Test
   public void admin_can_toggle_admin_status_of_a_user_from_true_to_false() throws Exception {
           // arrange
           User userBefore = User.builder()
@@ -134,6 +199,25 @@ public class UsersControllerTests extends ControllerTestCase {
 
           Map<String, Object> json = responseToJson(response);
           assertEquals("User with githubId 15 has toggled admin status to false", json.get("message"));
+  }
+
+  @WithMockUser(roles = { "ADMIN", "USER" })
+  @Test
+  public void users__admin_toggles_nonexistent_user() throws Exception {
+
+    // arrange
+    when(userRepository.findByGithubId(eq(1))).thenReturn(Optional.empty());
+
+    // act
+    MvcResult response = mockMvc.perform(
+      post("/api/admin/users/toggleInstructor?githubId=1")
+      .with(csrf()))
+      .andExpect(status().isNotFound()).andReturn();
+
+    // assert
+    verify(userRepository, times(1)).findByGithubId(1);
+    Map<String, Object> json = responseToJson(response);
+    assertEquals("User with id 1 not found", json.get("message"));
   }
 
   @WithMockUser(roles = { "ADMIN", "USER" })

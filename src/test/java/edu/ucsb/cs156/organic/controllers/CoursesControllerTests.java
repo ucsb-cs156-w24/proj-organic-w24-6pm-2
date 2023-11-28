@@ -237,12 +237,6 @@ public class CoursesControllerTests extends ControllerTestCase {
 
                 // assert
                 verify(courseRepository, times(1)).findById(eq(1L));
-                // Map<String, Object> json = responseToJson(response);
-                // System.out.print("json = ");
-                // System.out.println(json.toString());
-                // assertEquals("AccessDeniedException", json.get("type"));
-                // assertEquals(String.format("User %s is not authorized to get course 1", currentUser.getGithubLogin()), json.get("message"));
-
          }
 
         @WithMockUser(roles = { "ADMIN", "USER" })

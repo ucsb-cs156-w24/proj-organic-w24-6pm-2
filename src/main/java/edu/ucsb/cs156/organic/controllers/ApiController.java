@@ -71,4 +71,8 @@ public abstract class ApiController {
     });
     return mapper;
   }
+
+  protected Object genericMessage(String message) {
+    return Map.of("message", message);
+  }
 }

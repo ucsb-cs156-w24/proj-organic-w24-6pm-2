@@ -29,7 +29,7 @@ describe("UserTable tests", () => {
 
     );
 
-    const expectedHeaders = ["id", "Name", "School", "Term", "Start", "End", "GithubOrg"];
+    const expectedHeaders = ["id", "Name", "School", "Term", "Start", "End", "Github Org"];
     const expectedFields = ["id", "name", "school", "term", "start", "end", "githubOrg"];
     const testId = "CoursesTable";
 
@@ -59,7 +59,7 @@ describe("UserTable tests", () => {
     // arrange
     const currentUser = currentUserFixtures.adminUser;
 
-    const expectedHeaders = ["id", "Name", "School", "Term", "Start", "End", "GithubOrg"];
+    const expectedHeaders = ["id", "Name", "School", "Term", "Start", "End", "Github Org"];
     const expectedFields = ["id", "name", "school", "term", "start", "end", "githubOrg"];
     const testId = "CoursesTable";
 
@@ -98,7 +98,7 @@ describe("UserTable tests", () => {
 
     );
 
-    const expectedHeaders = ["id", "Name", "School", "Term", "Start", "End", "GithubOrg"];
+    const expectedHeaders = ["id", "Name", "School", "Term", "Start", "End", "Github Org"];
     const expectedFields = ["id", "name", "school", "term", "start", "end", "githubOrg"];
     const testId = "CoursesTable";
 

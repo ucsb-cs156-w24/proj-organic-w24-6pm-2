@@ -229,8 +229,6 @@ public class CoursesControllerTests extends ControllerTestCase {
                 when(courseRepository.findById(eq(course1.getId()))).thenReturn(Optional.of(course1));
 
                 // act
-                // MvcResult response = mockMvc.perform(get("/api/courses/get?id=1"))
-                //                 .andExpect(status().isForbidden()).andReturn();
                 mockMvc.perform(get("/api/courses/get?id=1"))
                    .andExpect(status().isForbidden());
 

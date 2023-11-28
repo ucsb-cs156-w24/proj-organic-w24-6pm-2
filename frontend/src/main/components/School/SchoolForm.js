@@ -17,7 +17,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
     const navigate = useNavigate();
 
     // Stryker disable next-line Regex
-    const abbrev_regex = /^([a-z\.\_])+$/;
+    const abbrev_regex = /^([a-z._])+$/;
 
     return (
 

@@ -597,9 +597,10 @@ public class CoursesControllerTests extends ControllerTestCase {
         // get current user
         User user = userService.getCurrentUser().getUser();
         // mock user is staff
-        Integer githubId = user.getGithubId();
-        when(courseStaffRepository.findByCourseId(courseBefore.getId()))
-                .thenReturn(Arrays.asList(Staff.builder().githubId(githubId).build()));
+        Staff courseStaff = Staff.builder().courseId(courseBefore.getId()).githubId(user.getGithubId()).build();
+        when(courseStaffRepository.findByCourseIdAndGithubId(courseBefore.getId(), user.getGithubId()))
+                .thenReturn(Optional
+                        .of(courseStaff));
         // act
         MvcResult response = mockMvc.perform(
                 delete("/api/courses/delete?id=1")

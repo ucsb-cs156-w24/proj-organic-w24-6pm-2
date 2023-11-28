@@ -153,8 +153,7 @@ public class CoursesController extends ApiController {
                 .orElseThrow(() -> new EntityNotFoundException(Course.class, id.toString()));
 
         // Check if the current user is a staff member for this course or an admin. If
-        // not, throw
-        // AccessDeniedException
+        // not, throw AccessDeniedException
 
         User u = getCurrentUser().getUser();
         if (!u.isAdmin()) {
@@ -187,22 +186,14 @@ public class CoursesController extends ApiController {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Course.class, id.toString()));
 
-        // Check if the current user is a staff member for this course. If not, throw
-        // AccessDeniedException
+        // Check if the current user is a staff member for this course or an admin. If
+        // not, throw AccessDeniedException
 
-        Iterable<Staff> courseStaff = courseStaffRepository.findByCourseId(course.getId());
         User u = getCurrentUser().getUser();
-        boolean isStaffOrAdmin = u.isAdmin();
-        for (Staff staff : courseStaff) {
-            if (staff.getGithubId().equals(u.getGithubId())) {
-                isStaffOrAdmin = true;
-                break;
-            }
-        }
-
-        if (!isStaffOrAdmin) {
-            throw new AccessDeniedException(
-                    "User is not a staff member for this course");
+        if (!u.isAdmin()) {
+            courseStaffRepository.findByCourseIdAndGithubId(course.getId(), u.getGithubId())
+                    .orElseThrow(() -> new AccessDeniedException(
+                            "User is not a staff member for this course"));
         }
 
         courseRepository.delete(course);

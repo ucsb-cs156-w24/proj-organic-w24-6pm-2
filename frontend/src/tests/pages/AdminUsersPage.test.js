@@ -36,7 +36,7 @@ describe("AdminUsersPage tests",  () => {
         expect(await screen.findByText("Users")).toBeInTheDocument();
     });
 
-    test("usertable toggle admin tests", async ()=>{
+    test("user table toggle admin tests", async ()=>{
         axiosMock.onPost("/api/admin/users/toggleAdmin").reply(200, "User with id 1 has toggled admin status");
         render(
             <QueryClientProvider client={queryClient}>
@@ -58,7 +58,7 @@ describe("AdminUsersPage tests",  () => {
         expect(axiosMock.history.post[0].params).toEqual({githubId:11111});
     });
 
-    test("usertable toggle instructor tests", async ()=>{
+    test("user table toggle instructor tests", async ()=>{
         axiosMock.onPost("/api/admin/users/toggleInstructor").reply(200, "User with id 1 has toggled instructor status");
         
         render(

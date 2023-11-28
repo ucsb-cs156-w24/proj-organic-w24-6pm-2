@@ -23,7 +23,7 @@ describe("UserTable tests", () => {
         );
     });
 
-    test("Has the expected colum headers and content as admin user", () => {
+    test("Has the expected column headers and content as admin user", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <UsersTable users={usersFixtures.threeUsers} showToggleButtons={true} />

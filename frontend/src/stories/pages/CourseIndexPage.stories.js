@@ -28,18 +28,22 @@ Empty.parameters = {
     ]
 }
 
-export const ThreeItemsOrdinaryUser = Template.bind({});
+export const ThreeItemsInstructorUser = Template.bind({});
 
-ThreeItemsOrdinaryUser.parameters = {
+ThreeItemsInstructorUser.parameters = {
     msw: [
         rest.get('/api/currentUser', (_req, res, ctx) => {
-            return res( ctx.json(apiCurrentUserFixtures.userOnly));
+            return res( ctx.json(apiCurrentUserFixtures.instructorUser));
         }),
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
         rest.get('/api/courses/all', (_req, res, ctx) => {
             return res(ctx.json(coursesFixtures.threeCourses));
+        }),
+        rest.delete('/api/courses', (req, res, ctx) => {
+            window.alert("DELETE: " + JSON.stringify(req.url));
+            return res(ctx.status(200),ctx.json({}));
         }),
     ],
 }

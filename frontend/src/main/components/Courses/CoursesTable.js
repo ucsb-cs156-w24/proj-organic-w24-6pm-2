@@ -56,7 +56,7 @@ import React from "react";
          },
      ];
 
-     if (hasRole(currentUser, "ROLE_ADMIN")) {
+     if (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) {
          columns.push(ButtonColumn("Edit", "primary", editCallback, "CoursesTable"));
          columns.push(ButtonColumn("Delete", "danger", deleteCallback, "CoursesTable"));
      }

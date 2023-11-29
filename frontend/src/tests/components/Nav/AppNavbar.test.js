@@ -38,7 +38,26 @@ describe("AppNavbar tests", () => {
 
         expect(await screen.findByText("Welcome, pconrad")).toBeInTheDocument();
         const adminMenu = screen.getByTestId("appnavbar-admin-dropdown");
-        expect(adminMenu).toBeInTheDocument();        
+        expect(adminMenu).toBeInTheDocument();
+        expect(await screen.findByText("Courses")).toBeInTheDocument(); 
+    });
+
+    test("renders correctly for instructor user", async () => {
+        const currentUser = currentUserFixtures.instructorUser;
+        const doLogin = jest.fn();
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <AppNavbar currentUser={currentUser} doLogin={doLogin} />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        expect(await screen.findByText("Welcome, dgaucho")).toBeInTheDocument();
+        const adminMenu = screen.queryByTestId("appnavbar-admin-dropdown");
+        expect(adminMenu).not.toBeInTheDocument();
+        expect(await screen.findByText("Courses")).toBeInTheDocument(); 
     });
 
     test("renders correctly for user that hasn't signed in", async () => {
@@ -57,6 +76,8 @@ describe("AppNavbar tests", () => {
         expect(welcome).not.toBeInTheDocument();
         const adminMenu = screen.queryByTestId("appnavbar-admin-dropdown");
         expect(adminMenu).not.toBeInTheDocument();
+        const courses = screen.queryByText("Courses");
+        expect(courses).not.toBeInTheDocument(); 
     });
 
     test("renders H2Console and Swagger links correctly", async () => {

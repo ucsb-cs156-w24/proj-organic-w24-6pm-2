@@ -41,6 +41,16 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
             {/* be sure that each NavDropdown has a unique id and data-testid  */}
           </>
 
+          <Nav className="me-auto">
+            {
+              (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) && (
+                <>
+                  <Nav.Link href="/courses">Courses</Nav.Link>
+                </>
+              )
+            }
+          </Nav>
+
           <Navbar.Collapse className="justify-content-between">
             <Nav className="mr-auto">
               {

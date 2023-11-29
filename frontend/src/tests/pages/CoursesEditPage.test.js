@@ -89,7 +89,7 @@ describe("CoursesEditPage tests", () => {
                 school: "UCSB",
                 term: "w23",
                 start: "2024-01-10T00:00",
-                end: "2023-3-12T00:00",
+                end: "2023-03-12T00:00",
                 githubOrg: "ucsb-cs156-w23"
             });
         });
@@ -170,7 +170,7 @@ describe("CoursesEditPage tests", () => {
             fireEvent.change(schoolField, { target: { value: "UCSB" } })
             fireEvent.change(termField, { target: { value: "w23" } })
             fireEvent.change(startField, { target: { value: "2024-01-10T00:00" } })
-            fireEvent.change(endField, { target: { value: "2023-3-12T00:00" } })
+            fireEvent.change(endField, { target: { value: "2023-03-12T00:00" } })
             fireEvent.change(githubOrgField, { target: { value: "ucsb-cs156-w23" } })
 
             fireEvent.click(submitButton);
@@ -186,7 +186,7 @@ describe("CoursesEditPage tests", () => {
                 school: "UCSB",
                 term: "w23",
                 start: "2024-01-10T00:00",
-                end: "2023-3-12T00:00",
+                end: "2023-03-12T00:00",
                 githubOrg: "ucsb-cs156-w23"
             })); // posted object
 

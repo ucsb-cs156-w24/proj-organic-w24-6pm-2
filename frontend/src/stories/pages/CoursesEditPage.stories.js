@@ -18,13 +18,13 @@ export const Default = Template.bind({});
 Default.parameters = {
     msw: [
         rest.get('/api/currentUser', (_req, res, ctx) => {
-            return res( ctx.json(apiCurrentUserFixtures.userOnly));
+            return res( ctx.json(apiCurrentUserFixtures.adminUser));
         }),
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
         rest.get('/api/courses', (_req, res, ctx) => {
-            return res(ctx.json(coursesFixtures.threeRequests[0]));
+            return res(ctx.json(coursesFixtures.threeCourses[0]));
         }),
         rest.put('/api/courses', async (req, res, ctx) => {
             var reqBody = await req.text();

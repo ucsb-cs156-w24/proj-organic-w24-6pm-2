@@ -8,6 +8,7 @@ import edu.ucsb.cs156.organic.services.CurrentUserService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -19,60 +20,67 @@ import java.util.Map;
 
 @Slf4j
 public abstract class ApiController {
-  @Autowired
-  private CurrentUserService currentUserService;
+    @Autowired
+    private CurrentUserService currentUserService;
 
-  protected CurrentUser getCurrentUser() {
-    return currentUserService.getCurrentUser();
-  }
-  
-  @ExceptionHandler({ IllegalArgumentException.class})
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Object handleIllegalArgumentException(Throwable e) {
-    Map<String,String> map =  Map.of(
-      "type", e.getClass().getSimpleName(),
-      "message", e.getMessage()
-    );
-    log.error("Exception thrown: {}", map);
-    return map;
-  }
+    protected CurrentUser getCurrentUser() {
+        return currentUserService.getCurrentUser();
+    }
 
-  @ExceptionHandler({ EntityNotFoundException.class })
-  @ResponseStatus(HttpStatus.NOT_FOUND)
-  public Object handleGenericException(Throwable e) {
-    return Map.of(
-      "type", e.getClass().getSimpleName(),
-      "message", e.getMessage()
-    );
-  }
+    @ExceptionHandler({ IllegalArgumentException.class })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Object handleIllegalArgumentException(Throwable e) {
+        Map<String, String> map = Map.of(
+                "type", e.getClass().getSimpleName(),
+                "message", e.getMessage());
+        log.error("Exception thrown: {}", map);
+        return map;
+    }
 
-  private ObjectMapper mapper;
+    @ExceptionHandler({ EntityNotFoundException.class })
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Object handleGenericException(Throwable e) {
+        return Map.of(
+                "type", e.getClass().getSimpleName(),
+                "message", e.getMessage());
+    }
 
-  /**
-   * Special ObjectMapper that ignores Mockito mocks
-   * @return ObjectMapper mapper
-   */
-  public ObjectMapper getMapper() {
-    return mapper;
-  }
+    @ExceptionHandler({ AccessDeniedException.class })
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public Object handleAccessDeniedException(Throwable e) {
+        return Map.of(
+                "type", e.getClass().getSimpleName(),
+                "message", e.getMessage());
+    }
 
-  public ApiController() {
-   mapper = mapperThatIgnoresMockitoMocks();
-  }
+    private ObjectMapper mapper;
 
-  public static ObjectMapper mapperThatIgnoresMockitoMocks() {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.registerModule(new JavaTimeModule());
-    mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
-      @Override
-      public boolean hasIgnoreMarker(final AnnotatedMember m) {
-        return super.hasIgnoreMarker(m) || m.getName().contains("Mockito");
-      }
-    });
-    return mapper;
-  }
+    /**
+     * Special ObjectMapper that ignores Mockito mocks
+     * 
+     * @return ObjectMapper mapper
+     */
+    public ObjectMapper getMapper() {
+        return mapper;
+    }
 
-  protected Object genericMessage(String message) {
-    return Map.of("message", message);
-  }
+    public ApiController() {
+        mapper = mapperThatIgnoresMockitoMocks();
+    }
+
+    public static ObjectMapper mapperThatIgnoresMockitoMocks() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
+            @Override
+            public boolean hasIgnoreMarker(final AnnotatedMember m) {
+                return super.hasIgnoreMarker(m) || m.getName().contains("Mockito");
+            }
+        });
+        return mapper;
+    }
+
+    protected Object genericMessage(String message) {
+        return Map.of("message", message);
+    }
 }

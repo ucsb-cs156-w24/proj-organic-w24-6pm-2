@@ -45,7 +45,9 @@ describe("UserTable tests", () => {
         });
 
         expect(screen.getByTestId(`${testId}-cell-row-0-col-toggle-admin-button`)).toBeInTheDocument();
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-toggle-admin-button`)).toHaveClass("btn-primary");
         expect(screen.getByTestId(`${testId}-cell-row-0-col-toggle-instructor-button`)).toBeInTheDocument();
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-toggle-instructor-button`)).toHaveClass("btn-primary");
 
         expect(screen.getByTestId(`${testId}-cell-row-0-col-githubId`)).toHaveTextContent("11111");
         expect(screen.getByTestId(`${testId}-cell-row-0-col-admin`)).toHaveTextContent("true");

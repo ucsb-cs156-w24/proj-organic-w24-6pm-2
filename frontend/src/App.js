@@ -10,6 +10,7 @@ import AdminUsersPage from "main/pages/AdminUsersPage";
 import AdminJobsPage from "main/pages/AdminJobsPage";
 
 import CoursesCreatePage from "main/pages/CoursesCreatePage";
+import CourseIndexPage from "main/pages/CourseIndexPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 import NotFoundPage from "main/pages/NotFoundPage";
@@ -32,8 +33,8 @@ function App() {
 
   const courseRoutes = (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) ? (
     <>
-      <Route path="/courses" element={<NotFoundPage />} />
       <Route path="/courses/create" element={<CoursesCreatePage />} />
+      <Route path="/courses" element={<CourseIndexPage />} />
       <Route path="/courses/edit/:id" element={<NotFoundPage />} />
     </>
   ) : null;

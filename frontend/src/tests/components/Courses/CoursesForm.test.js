@@ -54,8 +54,8 @@ describe("CoursesForm tests", () => {
         expect(screen.getByText(/Name is required/)).toBeInTheDocument();
         expect(screen.getByText(/School is required./)).toBeInTheDocument();
         expect(screen.getByText(/Term is required./)).toBeInTheDocument();
-        expect(screen.getByText(/Start date is required./)).toBeInTheDocument();
-        expect(screen.getByText(/End date is required./)).toBeInTheDocument();
+        expect(screen.getByText(/StartDate date is required./)).toBeInTheDocument();
+        expect(screen.getByText(/EndDate date is required./)).toBeInTheDocument();
         expect(screen.getByText(/GithubOrg is required./)).toBeInTheDocument();
     });
 
@@ -74,8 +74,8 @@ describe("CoursesForm tests", () => {
         const nameField = screen.getByTestId("CoursesForm-name");
         const schoolField = screen.getByTestId("CoursesForm-school");
         const termField = screen.getByTestId("CoursesForm-term");
-        const startField = screen.getByTestId("CoursesForm-start");
-        const endField = screen.getByTestId("CoursesForm-end");
+        const startField = screen.getByTestId("CoursesForm-startDate");
+        const endField = screen.getByTestId("CoursesForm-endDate");
         const githubOrgField = screen.getByTestId("CoursesForm-githubOrg")
         const submitButton = screen.getByTestId("CoursesForm-submit");
 
@@ -89,8 +89,8 @@ describe("CoursesForm tests", () => {
 
         await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-        expect(screen.queryByText(/Start date is required./)).not.toBeInTheDocument();
-        expect(screen.queryByText(/End date is required./)).not.toBeInTheDocument();
+        expect(screen.queryByText(/StartDate date is required./)).not.toBeInTheDocument();
+        expect(screen.queryByText(/EndDate date is required./)).not.toBeInTheDocument();
 
     });
 

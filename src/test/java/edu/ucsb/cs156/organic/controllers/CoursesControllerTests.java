@@ -89,8 +89,8 @@ public class CoursesControllerTests extends ControllerTestCase {
             .name("CS156")
             .school("UCSB")
             .term("F23")
-            .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-            .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+            .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+            .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
             .githubOrg("ucsb-cs156-f23")
             .build();
 
@@ -99,8 +99,8 @@ public class CoursesControllerTests extends ControllerTestCase {
             .name("CS148")
             .school("UCSB")
             .term("S24")
-            .start(LocalDateTime.parse("2024-01-01T00:00:00"))
-            .end(LocalDateTime.parse("2024-03-31T00:00:00"))
+            .startDate(LocalDateTime.parse("2024-01-01T00:00:00"))
+            .endDate(LocalDateTime.parse("2024-03-31T00:00:00"))
             .githubOrg("ucsb-cs148-w24")
             .build();
 
@@ -252,8 +252,8 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .name("CS16")
                 .school("UCSB")
                 .term("F23")
-                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
                 .build();
 
@@ -262,8 +262,8 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .name("CS16")
                 .school("UCSB")
                 .term("F23")
-                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
                 .build();
 
@@ -271,7 +271,7 @@ public class CoursesControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                post("/api/courses/post?name=CS16&school=UCSB&term=F23&start=2023-09-01T00:00:00&end=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                post("/api/courses/post?name=CS16&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -434,7 +434,7 @@ public class CoursesControllerTests extends ControllerTestCase {
         // act
 
         MvcResult response = mockMvc.perform(
-                put("/api/courses/update?id=42&name=CS16&school=UCSB&term=F23&start=2023-09-01T00:00:00&end=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                put("/api/courses/update?id=42&name=CS16&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
                                 .with(csrf()))
                 .andExpect(status().isNotFound()).andReturn();
         // assert
@@ -458,9 +458,9 @@ public class CoursesControllerTests extends ControllerTestCase {
         when(courseRepository.save(eq(courseAfter))).thenReturn(courseAfter);
 
         String urlTemplate = String.format(
-                "/api/courses/update?id=%d&name=%s&school=%s&term=%s&start=%s&end=%s&githubOrg=%s",
+                "/api/courses/update?id=%d&name=%s&school=%s&term=%s&startDate=%s&endDate=%s&githubOrg=%s",
                 courseAfter.getId(), courseAfter.getName(), courseAfter.getSchool(), courseAfter.getTerm(),
-                courseAfter.getStart().toString(), courseAfter.getEnd().toString(), courseAfter.getGithubOrg());
+                courseAfter.getStartDate().toString(), courseAfter.getEndDate().toString(), courseAfter.getGithubOrg());
         MvcResult response = mockMvc.perform(
                 put(urlTemplate)
                         .with(csrf()))
@@ -501,9 +501,9 @@ public class CoursesControllerTests extends ControllerTestCase {
         // act
         // get urlTemplate from courseAfter using string interpolation
         String urlTemplate = String.format(
-                "/api/courses/update?id=%d&name=%s&school=%s&term=%s&start=%s&end=%s&githubOrg=%s",
+                "/api/courses/update?id=%d&name=%s&school=%s&term=%s&startDate=%s&endDate=%s&githubOrg=%s",
                 courseAfter.getId(), courseAfter.getName(), courseAfter.getSchool(), courseAfter.getTerm(),
-                courseAfter.getStart().toString(), courseAfter.getEnd().toString(), courseAfter.getGithubOrg());
+                courseAfter.getStartDate().toString(), courseAfter.getEndDate().toString(), courseAfter.getGithubOrg());
         MvcResult response = mockMvc.perform(
                 put(urlTemplate)
                         .with(csrf()))
@@ -527,8 +527,8 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .name("CS16")
                 .school("UCSB")
                 .term("F23")
-                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
                 .build();
 
@@ -537,8 +537,8 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .name("CS16")
                 .school("UCSB")
                 .term("F23")
-                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
                 .build();
 
@@ -554,7 +554,7 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .thenReturn(notStaff);
         // act
         MvcResult response = mockMvc.perform(
-                put("/api/courses/update?id=1&name=CS16&school=UCSB&term=F23&start=2023-09-01T00:00:00&end=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                put("/api/courses/update?id=1&name=CS16&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
                         .with(csrf()))
                 .andExpect(status().isForbidden()).andReturn();
 
@@ -581,8 +581,8 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .name("CS16")
                 .school("UCSB")
                 .term("F23")
-                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
                 .build();
 
@@ -591,8 +591,8 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .name("CS32")
                 .school("UCSB")
                 .term("F23")
-                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs32-f23")
                 .build();
 
@@ -601,7 +601,7 @@ public class CoursesControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                put("/api/courses/update?id=1&name=CS32&school=UCSB&term=F23&start=2023-09-01T00:00:00&end=2023-12-31T00:00:00&githubOrg=ucsb-cs32-f23")
+                put("/api/courses/update?id=1&name=CS32&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs32-f23")
                         .with(csrf()))
                 .andExpect(status().isForbidden()).andReturn();
 

@@ -18,6 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -155,6 +156,18 @@ public class CoursesController extends ApiController {
         Iterable<Staff> courseStaff = courseStaffRepository.findByCourseId(course.getId());
         return courseStaff;
     }
+
+    @Operation(summary = "Delete a Course Staff by id")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/staff")
+    public Object deleteStaff(
+        @Parameter(name = "id") @RequestParam Long id) {
+        Staff staff = courseStaffRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Staff.class, id.toString()));
+
+                courseStaffRepository.delete(staff);
+                return genericMessage("Staff with id %s is deleted".formatted(id));
+        }
 
     @Operation(summary = "Update information for a course")
     // allow for roles of ADMIN or INSTRUCTOR but only if the user is a staff member

@@ -74,16 +74,16 @@ describe("CoursesForm tests", () => {
         const nameField = screen.getByTestId("CoursesForm-name");
         const schoolField = screen.getByTestId("CoursesForm-school");
         const termField = screen.getByTestId("CoursesForm-term");
-        const startField = screen.getByTestId("CoursesForm-startDate");
-        const endField = screen.getByTestId("CoursesForm-endDate");
+        const startDateField = screen.getByTestId("CoursesForm-startDate");
+        const endDateField = screen.getByTestId("CoursesForm-endDate");
         const githubOrgField = screen.getByTestId("CoursesForm-githubOrg")
         const submitButton = screen.getByTestId("CoursesForm-submit");
 
         fireEvent.change(nameField, { target: { value: "CMPSC 156" } });
         fireEvent.change(schoolField, { target: { value: 'ucsb' } });
         fireEvent.change(termField, { target: { value: 'f23' } });
-        fireEvent.change(startField, { target: { value: '2022-01-02T12:00' } });
-        fireEvent.change(endField, { target: { value: '2022-02-02T12:00' } });
+        fireEvent.change(startDateField, { target: { value: '2022-01-02T12:00' } });
+        fireEvent.change(endDateField, { target: { value: '2022-02-02T12:00' } });
         fireEvent.change(githubOrgField, { target: { value: 'cs156-f23'}})
         fireEvent.click(submitButton);
 

@@ -60,8 +60,8 @@ describe("CourseCreatePage tests", () => {
             name: "CS156",
             school: "UCSB",
             term: "F23",
-            start: "2023-09-24T12:00:00",
-            end: "2023-12-15T12:00:00",
+            startDate: "2023-09-24T12:00:00",
+            endDate: "2023-12-15T12:00:00",
             githubOrg: "ucsb-cs156-f23"
         };
 
@@ -82,16 +82,16 @@ describe("CourseCreatePage tests", () => {
         const nameField = screen.getByTestId("CoursesForm-name");
         const schoolField = screen.getByTestId("CoursesForm-school");
         const termField = screen.getByTestId("CoursesForm-term");
-        const startField = screen.getByTestId("CoursesForm-start");
-        const endField = screen.getByTestId("CoursesForm-end");
+        const startDateField = screen.getByTestId("CoursesForm-startDate");
+        const endDateField = screen.getByTestId("CoursesForm-endDate");
         const githubOrgField = screen.getByTestId("CoursesForm-githubOrg");
         const submitButton = screen.getByTestId("CoursesForm-submit");
 
         fireEvent.change(nameField, { target: { value: 'CS156' } });
         fireEvent.change(schoolField, { target: { value: 'UCSB' } });
         fireEvent.change(termField, { target: { value: 'F23' } });
-        fireEvent.change(startField, { target: { value: '2023-09-24T12:00:00' } });
-        fireEvent.change(endField, { target: { value: '2023-12-15T12:00:00' } });
+        fireEvent.change(startDateField, { target: { value: '2023-09-24T12:00:00' } });
+        fireEvent.change(endDateField, { target: { value: '2023-12-15T12:00:00' } });
         fireEvent.change(githubOrgField, { target: { value: 'ucsb-cs156-f23' } });
 
         expect(submitButton).toBeInTheDocument();
@@ -105,8 +105,8 @@ describe("CourseCreatePage tests", () => {
                 "name": "CS156",
                 "school": "UCSB",
                 "term": "F23",
-                "start": "2023-09-24T12:00",
-                "end": "2023-12-15T12:00",
+                "startDate": "2023-09-24T12:00",
+                "endDate": "2023-12-15T12:00",
                 "githubOrg": "ucsb-cs156-f23"
         });
 

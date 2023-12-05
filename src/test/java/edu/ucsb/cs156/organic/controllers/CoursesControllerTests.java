@@ -648,8 +648,8 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .name("CS16")
                 .school("UCSB")
                 .term("F23")
-                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
                 .build();
 
@@ -682,8 +682,8 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .name("CS16")
                 .school("UCSB")
                 .term("F23")
-                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
                 .build();
 
@@ -720,8 +720,8 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .name("CS16")
                 .school("UCSB")
                 .term("F23")
-                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
                 .build();
 
@@ -763,8 +763,8 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .name("CS16")
                 .school("UCSB")
                 .term("F23")
-                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
                 .build();
 

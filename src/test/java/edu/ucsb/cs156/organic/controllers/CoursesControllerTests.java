@@ -617,4 +617,174 @@ public class CoursesControllerTests extends ControllerTestCase {
         assertEquals(expectedMap, responseMap);
     }
 
+    // admin user cannot delete non existing course
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void an_admin_user_cannot_delete_non_existing_course() throws Exception {
+        // arrange
+
+        when(courseRepository.findById(eq(42L))).thenReturn(Optional.empty());
+        // act
+
+        MvcResult response = mockMvc.perform(
+                delete("/api/courses/delete?id=42")
+                                .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+        // assert
+
+        Map<String,String> responseMap = mapper.readValue(response.getResponse().getContentAsString(), new TypeReference<Map<String,String>>(){});
+        Map<String,String> expectedMap = Map.of("message", "Course with id 42 not found", "type", "EntityNotFoundException");
+        assertEquals(expectedMap, responseMap);
+    }
+
+    // admin user can delete course
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void an_admin_user_can_delete_a_course() throws Exception {
+        // arrange
+
+        Course courseBefore = Course.builder()
+                .id(1L)
+                .name("CS16")
+                .school("UCSB")
+                .term("F23")
+                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs16-f23")
+                .build();
+
+        when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+
+        // act
+        MvcResult response = mockMvc.perform(
+                delete("/api/courses/delete?id=1")
+                        .with(csrf()))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(courseRepository, times(1)).delete(courseBefore);
+        String expectedJson = mapper.writeValueAsString(courseBefore);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
+    // Instructor can delete course if they are staff
+    @WithMockUser(roles = { "INSTRUCTOR", "USER" })
+    @Test
+    public void an_instructor_user_can_delete_a_course_if_they_are_staff() throws Exception {
+        // arrange
+
+        // get current user, make sure that when courseStaffRepository.findByCourseId is
+        // called, it returns the current user
+
+        Course courseBefore = Course.builder()
+                .id(1L)
+                .name("CS16")
+                .school("UCSB")
+                .term("F23")
+                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs16-f23")
+                .build();
+
+        when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+
+        // get current user
+        User user = userService.getCurrentUser().getUser();
+        // mock user is staff
+        Staff courseStaff = Staff.builder().courseId(courseBefore.getId()).githubId(user.getGithubId()).build();
+        when(courseStaffRepository.findByCourseIdAndGithubId(courseBefore.getId(), user.getGithubId()))
+                .thenReturn(Optional
+                        .of(courseStaff));
+        // act
+        MvcResult response = mockMvc.perform(
+                delete("/api/courses/delete?id=1")
+                        .with(csrf()))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(courseRepository, times(1)).delete(courseBefore);
+        String expectedJson = mapper.writeValueAsString(courseBefore);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
+    // Instructor cannot delete course if they are not staff
+    @WithMockUser(roles = { "INSTRUCTOR", "USER" })
+    @Test
+    public void an_instructor_user_cannot_delete_a_course_if_they_are_not_staff() throws Exception {
+        // arrange
+
+        Course courseBefore = Course.builder()
+                .id(1L)
+                .name("CS16")
+                .school("UCSB")
+                .term("F23")
+                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs16-f23")
+                .build();
+
+        when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+        // mock user is not staff
+
+        User user = userService.getCurrentUser().getUser();
+        Integer githubId = user.getGithubId();
+        ArrayList<Staff> notStaff = new ArrayList<>();
+        notStaff.add(Staff.builder().githubId(githubId - 1).build());
+        when(courseStaffRepository.findByCourseId(courseBefore.getId()))
+                .thenReturn(notStaff);
+        // act
+        MvcResult response = mockMvc.perform(
+                delete("/api/courses/delete?id=1")
+                        .with(csrf()))
+                .andExpect(status().isForbidden()).andReturn();
+
+        // assert
+        verify(courseRepository, times(0)).delete(courseBefore);
+
+        // verify message is correct
+        Map<String, String> responseMap = mapper.readValue(response.getResponse().getContentAsString(),
+                new TypeReference<Map<String, String>>() {
+                });
+        Map<String, String> expectedMap = Map.of("message", "User is not a staff member for this course", "type",
+                "AccessDeniedException");
+        assertEquals(expectedMap, responseMap);
+    }
+
+    // User cannot delete course at all
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void a_user_cannot_delete_a_course() throws Exception {
+        // arrange
+
+        Course courseBefore = Course.builder()
+                .id(1L)
+                .name("CS16")
+                .school("UCSB")
+                .term("F23")
+                .start(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .end(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs16-f23")
+                .build();
+
+        when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+
+        // act
+        MvcResult response = mockMvc.perform(
+                delete("/api/courses/delete?id=1")
+                        .with(csrf()))
+                .andExpect(status().isForbidden()).andReturn();
+
+        // assert
+        verify(courseRepository, times(0)).delete(courseBefore);
+
+        // verify message is correct
+        Map<String, String> responseMap = mapper.readValue(response.getResponse().getContentAsString(),
+                new TypeReference<Map<String, String>>() {
+                });
+        Map<String, String> expectedMap = Map.of("message", "Access is denied", "type",
+                "AccessDeniedException");
+        assertEquals(expectedMap, responseMap);
+    }
 }

@@ -175,8 +175,7 @@ public class CoursesController extends ApiController {
                 .orElseThrow(() -> new EntityNotFoundException(Course.class, id.toString()));
 
         // Check if the current user is a staff member for this course or an admin. If
-        // not, throw
-        // AccessDeniedException
+        // not, throw AccessDeniedException
 
         User u = getCurrentUser().getUser();
         if (!u.isAdmin()) {
@@ -195,6 +194,31 @@ public class CoursesController extends ApiController {
         course = courseRepository.save(course);
         log.info("course={}", course);
 
+        return course;
+    }
+
+    // delete a course if the user is an admin or instructor for the course
+    @Operation(summary = "Delete a course")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
+    @DeleteMapping("/delete")
+    public Course deleteCourse(
+            @Parameter(name = "id") @RequestParam Long id)
+            throws JsonProcessingException {
+
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Course.class, id.toString()));
+
+        // Check if the current user is a staff member for this course or an admin. If
+        // not, throw AccessDeniedException
+
+        User u = getCurrentUser().getUser();
+        if (!u.isAdmin()) {
+            courseStaffRepository.findByCourseIdAndGithubId(course.getId(), u.getGithubId())
+                    .orElseThrow(() -> new AccessDeniedException(
+                            "User is not a staff member for this course"));
+        }
+
+        courseRepository.delete(course);
         return course;
     }
 

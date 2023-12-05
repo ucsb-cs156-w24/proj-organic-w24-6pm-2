@@ -24,12 +24,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 import edu.ucsb.cs156.organic.errors.EntityNotFoundException;
 import org.springframework.security.access.AccessDeniedException;
 
 import java.time.LocalDateTime;
+
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
+import java.util.Optional;
 
 @Tag(name = "Courses")
 @RequestMapping("/api/courses")
@@ -58,6 +61,25 @@ public class CoursesController extends ApiController {
             return courseRepository.findCoursesStaffedByUser(u.getGithubId());
         }
     }
+
+    @Operation(summary= "Get a single course by id")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/get")
+    public Course getById(
+            @Parameter(name="id") @RequestParam Long id) {
+        User u = getCurrentUser().getUser();
+
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Course.class, id));
+        
+        if(!u.isAdmin()){
+                courseStaffRepository.findByCourseIdAndGithubId(id, u.getGithubId())
+                        .orElseThrow(() -> new AccessDeniedException(
+                String.format("User %s is not authorized to get course %d", u.getGithubLogin(), id)));
+        }
+
+        return course;
+}
 
     @Operation(summary = "Create a new course")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

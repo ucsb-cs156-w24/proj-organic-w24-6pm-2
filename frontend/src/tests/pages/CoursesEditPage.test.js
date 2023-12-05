@@ -44,7 +44,7 @@ describe("CoursesEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/courses", { params: { id: 17 } }).timeout();
+            axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).timeout();
         });
 
         const queryClient = new QueryClient();
@@ -74,7 +74,7 @@ describe("CoursesEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/courses", { params: { id: 17 } }).reply(200, {
+            axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, {
                 id: 17,
                 name: "CS 156",
                 school: "UCSB",

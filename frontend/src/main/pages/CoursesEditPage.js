@@ -14,7 +14,7 @@ export default function CoursesEditPage({storybook=false}) {
       [`/api/courses?id=${id}`],
       {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
         method: "GET",
-        url: `/api/courses`,
+        url: `/api/courses/get`,
         params: {
           id
         }

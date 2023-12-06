@@ -1,4 +1,4 @@
-package edu.ucsb.cs156.organic.Interceptors;
+package edu.ucsb.cs156.organic.interceptors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ public class RoleUserInterceptorTests extends ControllerTestCase{
     @BeforeEach
     public void setupSecurityContext(){
         Map<String, Object> attributes = new HashMap<>();
-        attributes.put("githubId", 1);
+        attributes.put("id", 1);
         attributes.put("email", "gauchoMock@ucsb.edu");
         attributes.put("githubLogin", "gauchoMock123");
         attributes.put("fullName", "Mock Mock");
@@ -58,9 +58,10 @@ public class RoleUserInterceptorTests extends ControllerTestCase{
 
         Set<GrantedAuthority> fakeAuthorities = new HashSet<>();
         fakeAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        fakeAuthorities.add(new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
+        fakeAuthorities.add(new SimpleGrantedAuthority("ROLE_INSTRUCTOR")); 
         fakeAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         fakeAuthorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
+
 
         OAuth2User mockUser = new DefaultOAuth2User(fakeAuthorities, attributes, "githubLogin");
         Authentication authentication = new OAuth2AuthenticationToken(mockUser, fakeAuthorities , "mockUserRegisterId");
@@ -81,7 +82,7 @@ public class RoleUserInterceptorTests extends ControllerTestCase{
          .admin(false)
          .instructor(true)
          .build();
-        when(userRepository.findByGithubLogin("gaucho123")).thenReturn(Optional.of(mockUser));
+        when(userRepository.findByGithubId(123)).thenReturn(Optional.of(mockUser));
 
         // Act
         MockHttpServletRequest request = new MockHttpServletRequest("GET", "/api/currentUser");
@@ -99,7 +100,7 @@ public class RoleUserInterceptorTests extends ControllerTestCase{
 
         // Assert
         Collection<? extends GrantedAuthority> updatedAuthorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        verify(userRepository, times(1)).findByGithubLogin("gauchoMock123");
+        verify(userRepository, times(1)).findByGithubId(1);
         boolean hasAdminRole = updatedAuthorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
         boolean hasInstructorRole = updatedAuthorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_INSTRUCTOR"));
         boolean hasUserRole = updatedAuthorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_USER"));
@@ -114,14 +115,14 @@ public class RoleUserInterceptorTests extends ControllerTestCase{
     public void interceptor_removes_admin_role_when_admin_field_in_db_is_false() throws Exception {
         // Set up
         User mockUser = User.builder()
-            .githubId(123)
+            .githubId(1)
             .githubLogin("gaucho123")
             .fullName("Gaucho Gauchos")
             .emailVerified(true)
             .admin(false)
             .instructor(true)
             .build();
-        when(userRepository.findByGithubLogin("gauchoMock123")).thenReturn(Optional.of(mockUser));
+        when(userRepository.findByGithubId(1)).thenReturn(Optional.of(mockUser));
 
         // Act
         MockHttpServletRequest request = new MockHttpServletRequest("GET", "/api/currentUser");
@@ -139,7 +140,7 @@ public class RoleUserInterceptorTests extends ControllerTestCase{
 
         // Assert
         Collection<? extends GrantedAuthority> updatedAuthorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        verify(userRepository, times(1)).findByGithubLogin("gauchoMock123");
+        verify(userRepository, times(1)).findByGithubId(1);
         boolean hasAdminRole = updatedAuthorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
         boolean hasInstructorRole = updatedAuthorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_INSTRUCTOR"));
         boolean hasUserRole = updatedAuthorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_USER"));
@@ -161,7 +162,7 @@ public class RoleUserInterceptorTests extends ControllerTestCase{
             .admin(true)
             .instructor(false)
             .build();
-        when(userRepository.findByGithubLogin("gauchoMock123")).thenReturn(Optional.of(mockUser));
+        when(userRepository.findByGithubId(1)).thenReturn(Optional.of(mockUser));
 
         // Act
         MockHttpServletRequest request = new MockHttpServletRequest("GET", "/api/currentUser");
@@ -179,7 +180,7 @@ public class RoleUserInterceptorTests extends ControllerTestCase{
 
         // Assert
         Collection<? extends GrantedAuthority> updatedAuthorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        verify(userRepository, times(1)).findByGithubLogin("gauchoMock123");
+        verify(userRepository, times(1)).findByGithubId(1);
         boolean hasAdminRole = updatedAuthorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
         boolean hasInstructorRole = updatedAuthorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_INSTRUCTOR"));
         boolean hasUserRole = updatedAuthorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_USER"));

@@ -5,6 +5,7 @@ import HomePage from "main/pages/HomePage";
 import LoadingPage from "main/pages/LoadingPage";
 import LoginPage from "main/pages/LoginPage";
 import ProfilePage from "main/pages/ProfilePage";
+import CoursesEditPage from "main/pages/CoursesEditPage";
 
 import AdminUsersPage from "main/pages/AdminUsersPage";
 import AdminJobsPage from "main/pages/AdminJobsPage";
@@ -35,7 +36,7 @@ function App() {
     <>
       <Route path="/courses/create" element={<CoursesCreatePage />} />
       <Route path="/courses" element={<CourseIndexPage />} />
-      <Route path="/courses/edit/:id" element={<NotFoundPage />} />
+      <Route path="/courses/edit/:id" element={<CoursesEditPage />} />
     </>
   ) : null;
 

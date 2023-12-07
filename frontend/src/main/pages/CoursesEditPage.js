@@ -23,7 +23,7 @@ export default function CoursesEditPage({storybook=false}) {
 
 
   const objectToAxiosPutParams = (course) => ({
-    url: "/api/courses",
+    url: "/api/courses/update",
     method: "PUT",
     params: {
       id: course.id,
@@ -46,7 +46,7 @@ export default function CoursesEditPage({storybook=false}) {
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/courses/update?id=${id}`]
+    [`/api/courses?id=${id}`]
   );
 
   const { isSuccess } = mutation

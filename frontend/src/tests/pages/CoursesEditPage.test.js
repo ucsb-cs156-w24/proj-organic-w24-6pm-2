@@ -83,7 +83,7 @@ describe("CoursesEditPage tests", () => {
                 endDate: "2023-12-15T00:00",
                 githubOrg: "ucsb-cs156-f23"
             });
-            axiosMock.onPut('/api/courses').reply(200, {
+            axiosMock.onPut('/api/courses/update').reply(200, {
                 id: "17",
                 name: "CS 148",
                 school: "UCSB",

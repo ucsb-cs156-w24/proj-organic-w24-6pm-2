@@ -27,15 +27,13 @@ export default function CoursesEditPage({storybook=false}) {
     method: "PUT",
     params: {
       id: course.id,
-    },
-    data: {
       name: course.name,
       school: course.school,
       term: course.term,
       startDate: course.startDate,
       endDate: course.endDate,
       githubOrg: course.githubOrg
-    }
+    },
   });
 
   const onSuccess = (course) => {

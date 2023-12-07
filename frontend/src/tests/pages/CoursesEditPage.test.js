@@ -83,7 +83,7 @@ describe("CoursesEditPage tests", () => {
                 endDate: "2023-12-15T00:00",
                 githubOrg: "ucsb-cs156-f23"
             });
-            axiosMock.onPut('/api/courses').reply(200, {
+            axiosMock.onPut('/api/courses/update').reply(200, {
                 id: "17",
                 name: "CS 148",
                 school: "UCSB",
@@ -180,15 +180,7 @@ describe("CoursesEditPage tests", () => {
             expect(mockNavigate).toBeCalledWith({ "to": "/courses" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
-            expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
-            expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
-                name: "CS 148",
-                school: "UCSB",
-                term: "w23",
-                startDate: "2024-01-10T00:00",
-                endDate: "2023-03-12T00:00",
-                githubOrg: "ucsb-cs156-w23"
-            })); // posted object
+            expect(axiosMock.history.put[0].params).toEqual({ id: 17, name: "CS 148", endDate: "2023-03-12T00:00", startDate: "2024-01-10T00:00", school: "UCSB", term: "w23", githubOrg: "ucsb-cs156-w23" });
 
         });
 

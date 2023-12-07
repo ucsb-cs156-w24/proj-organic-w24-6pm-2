@@ -187,7 +187,7 @@ describe("CourseIndexPage tests", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/all").reply(200, coursesFixtures.threeCourses);
-        axiosMock.onDelete("/api/courses").reply(200, "Course with id 1 was deleted");
+        axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
 
         // act
         render(
@@ -219,7 +219,7 @@ describe("CourseIndexPage tests", () => {
         setupInstructorUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/all").reply(200, coursesFixtures.threeCourses);
-        axiosMock.onDelete("/api/courses").reply(200, "Course with id 1 was deleted");
+        axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
 
         // act
         render(

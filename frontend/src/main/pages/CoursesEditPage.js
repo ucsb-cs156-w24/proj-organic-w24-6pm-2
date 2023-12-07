@@ -23,19 +23,17 @@ export default function CoursesEditPage({storybook=false}) {
 
 
   const objectToAxiosPutParams = (course) => ({
-    url: "/api/courses",
+    url: "/api/courses/update",
     method: "PUT",
     params: {
       id: course.id,
-    },
-    data: {
       name: course.name,
       school: course.school,
       term: course.term,
       startDate: course.startDate,
       endDate: course.endDate,
       githubOrg: course.githubOrg
-    }
+    },
   });
 
   const onSuccess = (course) => {

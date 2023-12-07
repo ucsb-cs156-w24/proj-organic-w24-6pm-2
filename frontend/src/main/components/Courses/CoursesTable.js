@@ -43,12 +43,12 @@ import React from "react";
              accessor: 'term',
          },
          {
-             Header: 'Start',
-             accessor: 'start',
+             Header: 'StartDate',
+             accessor: 'startDate',
          },
          {
-             Header: 'End',
-             accessor: 'end',
+             Header: 'EndDate',
+             accessor: 'endDate',
          },
          {
              Header: 'GitHub Org',
@@ -56,7 +56,7 @@ import React from "react";
          },
      ];
 
-     if (hasRole(currentUser, "ROLE_ADMIN")) {
+     if (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) {
          columns.push(ButtonColumn("Edit", "primary", editCallback, "CoursesTable"));
          columns.push(ButtonColumn("Delete", "danger", deleteCallback, "CoursesTable"));
      }

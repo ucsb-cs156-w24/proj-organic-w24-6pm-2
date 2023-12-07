@@ -46,7 +46,7 @@ export default function CoursesEditPage({storybook=false}) {
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/courses?id=${id}`]
+    [`/api/courses/update?id=${id}`]
   );
 
   const { isSuccess } = mutation

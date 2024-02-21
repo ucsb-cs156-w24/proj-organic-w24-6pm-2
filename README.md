@@ -7,6 +7,26 @@
 | prod | <https://organic.dokku-00.cs.ucsb.edu/>     | 
 | qa   | <https://organic-qa.dokku-00.cs.ucsb.edu/>  | 
 
+# W24 Production Deployments
+
+
+| Team | Link       | 
+|------|------------|
+| w24-6pm-1 | <https://organic.dokku-09.cs.ucsb.edu/> | 
+| w24-6pm-2 | <https://organic.dokku-10.cs.ucsb.edu/>  | 
+| w24-6pm-3 | <https://organic.dokku-11.cs.ucsb.edu/>  | 
+| w24-6pm-4 | <https://organic.dokku-12.cs.ucsb.edu/>  | 
+
+# W24 QA Deployments
+
+
+| Team | Link       | 
+|------|------------|
+| w24-6pm-1 | <https://organic-qa.dokku-09.cs.ucsb.edu/> | 
+| w24-6pm-2 | <https://organic-qa.dokku-10.cs.ucsb.edu/>  | 
+| w24-6pm-3 | <https://organic-qa.dokku-11.cs.ucsb.edu/>  | 
+| w24-6pm-4 | <https://organic-qa.dokku-12.cs.ucsb.edu/>  | 
+
 # Description
 
 This is a full rewrite of the application <https://github.com/brownfield-team/anacapa-github-linker>, which has been deployed

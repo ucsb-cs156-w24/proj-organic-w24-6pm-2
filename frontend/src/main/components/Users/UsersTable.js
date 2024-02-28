@@ -6,11 +6,11 @@ import { useBackendMutation } from "main/utils/useBackend";
 export default function UsersTable({ users, showToggleButtons = false }) {
     // toggleAdmin
     function cellToAxiosParamsToggleAdmin(cell) {
-        return {
-            url: "/api/admin/users/toggleAdmin",
-            method: "POST",
-            params: {
-                githubId: cell.row.values.githubId
+            return {
+                url: "/api/admin/users/toggleAdmin",
+                method: "POST",
+                params: {
+                    githubId: cell.row.values.githubId
             }
         }
     }
@@ -24,8 +24,14 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     // Stryker restore all 
 
     // Stryker disable next-line all : TODO try to make a good test for this
-    const toggleAdminCallback = async(cell) => { toggleAdminMutation.mutate(cell); }
+    //const toggleAdminCallback = async(cell) => { toggleAdminMutation.mutate(cell); }
 
+    const toggleAdminCallback = async (cell) => {
+        if (window.confirm("Are you sure you want to toggle off your admin privileges?")) {
+            toggleAdminMutation.mutate(cell);
+        }
+    }
+    
     // toggleInstructor
     function cellToAxiosParamsToggleInstructor(cell) {
         return {
@@ -87,6 +93,7 @@ export default function UsersTable({ users, showToggleButtons = false }) {
         ButtonColumn("toggle-admin", "primary", toggleAdminCallback, "UsersTable"),
         ButtonColumn("toggle-instructor", "primary", toggleInstructorCallback, "UsersTable")
     ]
+
     return <OurTable
         data={users}
         columns={showToggleButtons ? buttonColumn : columns}

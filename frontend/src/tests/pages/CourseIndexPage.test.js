@@ -41,10 +41,9 @@ describe("CourseIndexPage tests", () => {
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.instructorUser);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
     }
-    
+
     test("does not render Create Button for ROLE_USER", async () => {
         // arrange
-        const currentUser = apiCurrentUserFixtures.userWithRoleUser; // Use a fixture for a user with ROLE_USER
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/all").reply(200, []);
 

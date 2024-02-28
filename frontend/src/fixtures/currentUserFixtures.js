@@ -260,6 +260,17 @@ const currentUserFixtures = {
             ]
         }
     },
+    userWithRoleUser: {
+        loggedIn: true,
+        root: {
+            ...(apiCurrentUserFixtures.userWithRoleUser),
+            rolesList: [
+                "SCOPE_email",
+                "ROLE_USER",
+                "SCOPE_profile",
+            ]
+        }
+    },
     noRoot: {
         loggedIn: true,
     },

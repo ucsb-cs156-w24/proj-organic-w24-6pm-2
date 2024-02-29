@@ -27,7 +27,7 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     //const toggleAdminCallback = async(cell) => { toggleAdminMutation.mutate(cell); }
 
     const toggleAdminCallback = async (cell) => {
-        if (window.confirm("Are you sure you want to toggle off your admin privileges?")) {
+        if (window.confirm("Are you sure you want to toggle this users admin role?")) {
             toggleAdminMutation.mutate(cell);
         }
     }
@@ -52,7 +52,11 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     // Stryker restore all 
 
     // Stryker disable next-line all : TODO try to make a good test for this
-    const toggleInstructorCallback = async(cell) => { toggleInstructorMutation.mutate(cell); }
+    const toggleInstructorCallback = async(cell) => { 
+        if (window.confirm("Are you sure you want to toggle this users instructor role?")) {
+            toggleInstructorMutation.mutate(cell); 
+        }
+    }
 
     const columns = [
         {

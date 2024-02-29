@@ -24,21 +24,21 @@ describe("AppNavbar tests", () => {
         expect(await screen.findByText("Welcome, cgaucho")).toBeInTheDocument();
     });
 
-    // test("renders correctly for ROLE_USER", async () => {
-    //     const currentUser = currentUserFixtures.userWithRoleUser;
-    //     const doLogin = jest.fn();
+    test("renders correctly for ROLE_USER", async () => {
+        const currentUser = currentUserFixtures.userWithRoleUser;
+        const doLogin = jest.fn();
 
-    //     render(
-    //         <QueryClientProvider client={queryClient}>
-    //             <MemoryRouter>
-    //                 <AppNavbar currentUser={currentUser} doLogin={doLogin} />
-    //             </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <AppNavbar currentUser={currentUser} doLogin={doLogin} />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
 
-    //     expect(await screen.findByText("Welcome, roleUser")).toBeInTheDocument();
-    //     expect(await screen.findByText("Courses")).toBeInTheDocument();
-    // });
+        expect(await screen.findByText("Welcome, roleUser")).toBeInTheDocument();
+        expect(await screen.findByText("Courses")).toBeInTheDocument();
+    });
 
     test("renders correctly for admin user", async () => {
         const currentUser = currentUserFixtures.adminUser;

@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-w24/proj-organic-w24-6pm-2
 owner: ucsb-cs156-w24
 repo_name: proj-organic-w24-6pm-2
-pull_requests: [{"author":{"id":"U_kgDOB2_BEg","is_bot":false,"login":"kjlee2504","name":"Kevin Lee"},"headRefName":"kevin-see-courses","number":15,"title":"KL - FEATURE: ROLE_USER able to view courses","url":"https://github.com/ucsb-cs156-w24/proj-organic-w24-6pm-2/pull/15"}]
+pull_requests: [{"author":{"id":"U_kgDOB2_BEg","is_bot":false,"login":"kjlee2504","name":"Kevin Lee"},"headRefName":"kevin-see-courses","number":15,"title":"KL - FEATURE: ROLE_USER able to view courses","url":"https://github.com/ucsb-cs156-w24/proj-organic-w24-6pm-2/pull/15"},{"author":{"id":"U_kgDOB3Dxlg","is_bot":false,"login":"DemirInce","name":""},"headRefName":"DemirInce-AdminCanToggleAdmin","number":14,"title":"Fixed - Admin can toggle self off admin ","url":"https://github.com/ucsb-cs156-w24/proj-organic-w24-6pm-2/pull/14"}]

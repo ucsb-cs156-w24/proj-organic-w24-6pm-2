@@ -83,7 +83,7 @@ import java.util.Optional;
 }
 
     @Operation(summary = &quot;Create a new course&quot;)
-    @PreAuthorize(&quot;hasAnyRole('ROLE_USER', 'ROLE_ADMIN')&quot;)
+    @PreAuthorize(&quot;hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')&quot;)
     @PostMapping(&quot;/post&quot;)
     public Course postCourse(
             @Parameter(name = &quot;name&quot;, description = &quot;course name, e.g. CMPSC 156&quot;) @RequestParam String name,

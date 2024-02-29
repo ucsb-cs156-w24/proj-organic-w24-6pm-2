@@ -83,7 +83,7 @@ public class CoursesController extends ApiController {
 }
 
     @Operation(summary = "Create a new course")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("/post")
     public Course postCourse(
             @Parameter(name = "name", description = "course name, e.g. CMPSC 156") @RequestParam String name,
@@ -118,7 +118,7 @@ public class CoursesController extends ApiController {
     }
 
     @Operation(summary = "Add a staff member to a course")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("/addStaff")
     public Staff addStaff(
             @Parameter(name = "courseId") @RequestParam Long courseId,
@@ -144,7 +144,7 @@ public class CoursesController extends ApiController {
     }
 
     @Operation(summary = "Get Staff for course")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/getStaff")
     public Iterable<Staff> getStaff(
             @Parameter(name = "courseId") @RequestParam Long courseId)
@@ -158,7 +158,7 @@ public class CoursesController extends ApiController {
     }
 
     @Operation(summary = "Delete a Course Staff by id")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @DeleteMapping("/staff")
     public Object deleteStaff(
         @Parameter(name = "id") @RequestParam Long id) {

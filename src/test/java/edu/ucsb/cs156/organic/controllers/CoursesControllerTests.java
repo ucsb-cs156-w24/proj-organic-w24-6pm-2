@@ -879,35 +879,4 @@ public class CoursesControllerTests extends ControllerTestCase {
         assertEquals(expectedMap, responseMap);
     }
 
-    /*@WithMockUser(roles = { "INSTRUCTOR", "USER" })
-    @Test
-    public void an_instructor_user_can_create_a_course() throws Exception {
-        // arrange
-
-        // get current user, make sure that when courseStaffRepository.findByCourseId is
-        // called, it returns the current user
-
-        Course course = Course.builder()
-                .id(1L)
-                .name("CS16")
-                .school("UCSB")
-                .term("F23")
-                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
-                .githubOrg("ucsb-cs16-f23")
-                .build();
-
-        // act
-        MvcResult response = mockMvc.perform(
-                post("/api/courses/post?name=name&school=school&term=term&startDate=2024-10-01T02%3A02%3A02&endDate=2024-10-02T02%3A02%3A02&githubOrg=Org")
-                        .with(csrf()))
-                .andExpect(status().isOk()).andReturn();
-
-        // assert
-        verify(courseRepository, times(1)).delete(courseBefore);
-        String expectedJson = mapper.writeValueAsString(courseBefore);
-        String responseString = response.getResponse().getContentAsString();
-        assertEquals(expectedJson, responseString);
-    }*/
-
 }

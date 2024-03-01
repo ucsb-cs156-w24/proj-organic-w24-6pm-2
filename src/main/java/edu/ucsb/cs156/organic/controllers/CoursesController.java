@@ -83,7 +83,7 @@ public class CoursesController extends ApiController {
 }
 
     @Operation(summary = "Create a new course")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
     @PostMapping("/post")
     public Course postCourse(
             @Parameter(name = "name", description = "course name, e.g. CMPSC 156") @RequestParam String name,

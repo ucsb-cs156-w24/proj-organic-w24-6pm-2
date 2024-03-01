@@ -282,6 +282,45 @@ public class CoursesControllerTests extends ControllerTestCase {
         assertEquals(expectedJson, responseString);
     }
 
+    @WithMockUser(roles = { "INSTRUCTOR", "USER" })
+    @Test
+    public void an_instructor_user_can_post_a_new_course() throws Exception {
+        // arrange
+
+        Course courseBefore = Course.builder()
+                .name("CS16")
+                .school("UCSB")
+                .term("F23")
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs16-f23")
+                .build();
+
+        Course courseAfter = Course.builder()
+                .id(222L)
+                .name("CS16")
+                .school("UCSB")
+                .term("F23")
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs16-f23")
+                .build();
+
+        when(courseRepository.save(eq(courseBefore))).thenReturn(courseAfter);
+
+        // act
+        MvcResult response = mockMvc.perform(
+                post("/api/courses/post?name=CS16&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                        .with(csrf()))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(courseRepository, times(1)).save(courseBefore);
+        String expectedJson = mapper.writeValueAsString(courseAfter);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
     @WithMockUser(roles = { "ADMIN", "USER" })
     @Test
     public void an_admin_user_can_add_a_staff_member_to_a_course() throws Exception {
@@ -839,4 +878,5 @@ public class CoursesControllerTests extends ControllerTestCase {
                 "AccessDeniedException");
         assertEquals(expectedMap, responseMap);
     }
+
 }

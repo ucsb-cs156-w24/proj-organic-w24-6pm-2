@@ -172,7 +172,7 @@ public class CoursesController extends ApiController {
     @Operation(summary = "Update information for a course")
     // allow for roles of ADMIN or INSTRUCTOR but only if the user is a staff member
     // for the course
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/update")
     public Course updateCourse(
             @Parameter(name = "id") @RequestParam Long id,
@@ -212,7 +212,7 @@ public class CoursesController extends ApiController {
 
     // delete a course if the user is an admin or instructor for the course
     @Operation(summary = "Delete a course")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/delete")
     public Course deleteCourse(
             @Parameter(name = "id") @RequestParam Long id)

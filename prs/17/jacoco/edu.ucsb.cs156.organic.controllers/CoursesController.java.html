@@ -83,7 +83,7 @@ import java.util.Optional;
 }
 
     @Operation(summary = &quot;Create a new course&quot;)
-    @PreAuthorize(&quot;hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')&quot;)
+    @PreAuthorize(&quot;hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')&quot;)
     @PostMapping(&quot;/post&quot;)
     public Course postCourse(
             @Parameter(name = &quot;name&quot;, description = &quot;course name, e.g. CMPSC 156&quot;) @RequestParam String name,
@@ -118,7 +118,7 @@ import java.util.Optional;
     }
 
     @Operation(summary = &quot;Add a staff member to a course&quot;)
-    @PreAuthorize(&quot;hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @PostMapping(&quot;/addStaff&quot;)
     public Staff addStaff(
             @Parameter(name = &quot;courseId&quot;) @RequestParam Long courseId,
@@ -144,7 +144,7 @@ import java.util.Optional;
     }
 
     @Operation(summary = &quot;Get Staff for course&quot;)
-    @PreAuthorize(&quot;hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @GetMapping(&quot;/getStaff&quot;)
     public Iterable&lt;Staff&gt; getStaff(
             @Parameter(name = &quot;courseId&quot;) @RequestParam Long courseId)
@@ -158,7 +158,7 @@ import java.util.Optional;
     }
 
     @Operation(summary = &quot;Delete a Course Staff by id&quot;)
-    @PreAuthorize(&quot;hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @DeleteMapping(&quot;/staff&quot;)
     public Object deleteStaff(
         @Parameter(name = &quot;id&quot;) @RequestParam Long id) {

@@ -195,6 +195,35 @@ const apiCurrentUserFixtures = {
             { "authority": "ROLE_INSTRUCTOR"},
             { "authority": "SCOPE_profile" }]
     },
+    userWithRoleUser: {
+        "user": {
+            "githubId": 123456,  
+            "githubNodeId": "MDQ6VXNlcjEyMzQ1Ng==",
+            "githubLogin": "roleUser",
+            "email": "roleuser@example.com",
+            "pictureUrl": "https://avatars.githubusercontent.com/u/123456?v=4",
+            "fullName": "Role User",
+            "emailVerified": true,
+            "admin": false,
+            "instructor": false,
+            "accessToken": "ghu_Du4W9ThisIsNotARealTokenXyzska1w9SuT",
+            "emails": [{
+                "email": "roleuser@example.com",
+                "githubId": 123456
+            }],
+            "lastOnline": "2023-11-09T21:06:11.131913Z"
+        },
+        "roles": [
+            { "authority": "SCOPE_email" },
+            {
+                "authority": "ROLE_USER",
+                "attributes": {
+                    "login": "roleUser",
+                }
+            },
+            { "authority": "SCOPE_profile" }
+        ]
+    }
 };
 
 const currentUserFixtures = {
@@ -227,6 +256,17 @@ const currentUserFixtures = {
                 "SCOPE_email",
                 "ROLE_USER",
                 "ROLE_INSTRUCTOR",
+                "SCOPE_profile",
+            ]
+        }
+    },
+    userWithRoleUser: {
+        loggedIn: true,
+        root: {
+            ...(apiCurrentUserFixtures.userWithRoleUser),
+            rolesList: [
+                "SCOPE_email",
+                "ROLE_USER",
                 "SCOPE_profile",
             ]
         }

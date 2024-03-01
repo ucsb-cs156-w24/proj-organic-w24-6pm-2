@@ -42,6 +42,27 @@ describe("CourseIndexPage tests", () => {
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
     }
 
+    test("does not render Create Button for ROLE_USER", async () => {
+        // arrange
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/all").reply(200, []);
+
+        // act
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CourseIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        // assert
+        await waitFor(() => {
+            const createButton = screen.queryByText(/Create Course/);
+            expect(createButton).not.toBeInTheDocument();
+        });
+    });
+
     test("Renders with Create Button for admin user", async () => {
         // arrange
         setupAdminUser();

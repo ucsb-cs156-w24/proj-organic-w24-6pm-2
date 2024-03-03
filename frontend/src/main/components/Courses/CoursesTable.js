@@ -5,7 +5,7 @@ import React from "react";
  import { useNavigate } from "react-router-dom";
  import { hasRole } from "main/utils/currentUser";
 
- export default function CoursesTable({ courses, currentUser }) {
+ export default function CoursesTable({ courses, currentUser, onJoinClick }) {
 
      const navigate = useNavigate();
 
@@ -24,6 +24,10 @@ import React from "react";
 
      // Stryker disable next-line all : TODO try to make a good test for this
      const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
+
+     const joinCallBack = (cell) => {
+        onJoinClick(cell.row.values.id);
+    };
 
      const columns = [
          {
@@ -59,6 +63,9 @@ import React from "react";
      if (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) {
          columns.push(ButtonColumn("Edit", "primary", editCallback, "CoursesTable"));
          columns.push(ButtonColumn("Delete", "danger", deleteCallback, "CoursesTable"));
+     }
+     else {
+         columns.push(ButtonColumn("Join", undefined, joinCallBack, "CoursesTable"));
      }
 
      return <OurTable

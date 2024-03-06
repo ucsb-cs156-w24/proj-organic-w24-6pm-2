@@ -101,10 +101,16 @@ function CoursesForm({ initialContents, submitAction, buttonLabel = "Create" }) 
                             id="startDate"
                             type="datetime-local"
                             isInvalid={Boolean(errors.startDate)}
-                            {...register("startDate", { required: true, pattern: isodate_regex })}
+                            {...register("startDate", { required: true, pattern: isodate_regex, validate: {
+                                validateDates: (_, formValues) => {
+                                if (formValues.startDate >= formValues.endDate){
+                                    return "Start Date is greater than or equal to End Date (should be less than End Date).";
+                                }
+                                return null;
+                            }}})}
                         />
                         <Form.Control.Feedback type="invalid">
-                            {errors.startDate && 'StartDate date is required. '}
+                            {errors?.startDate?.message}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>

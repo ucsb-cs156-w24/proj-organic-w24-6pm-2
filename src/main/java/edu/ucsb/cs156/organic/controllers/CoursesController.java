@@ -35,6 +35,9 @@ import javax.validation.Valid;
 
 import java.util.Optional;
 
+// added this for date comparison
+import org.springframework.http.ResponseEntity;
+
 @Tag(name = "Courses")
 @RequestMapping("/api/courses")
 @RestController
@@ -85,7 +88,7 @@ public class CoursesController extends ApiController {
     @Operation(summary = "Create a new course")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
     @PostMapping("/post")
-    public Course postCourse(
+    public Object postCourse(
             @Parameter(name = "name", description = "course name, e.g. CMPSC 156") @RequestParam String name,
             @Parameter(name = "school", description = "school abbreviation e.g. UCSB") @RequestParam String school,
             @Parameter(name = "term", description = "quarter or semester, e.g. F23") @RequestParam String term,
@@ -94,7 +97,9 @@ public class CoursesController extends ApiController {
             @Parameter(name = "githubOrg", description = "for example ucsb-cs156-f23") @RequestParam String githubOrg)
             throws JsonProcessingException {
 
-        Course course = Course.builder()
+        Course course;
+
+        course = Course.builder()
                 .name(name)
                 .school(school)
                 .term(term)
@@ -102,6 +107,10 @@ public class CoursesController extends ApiController {
                 .endDate(endDate)
                 .githubOrg(githubOrg)
                 .build();
+
+        if (startDate.isAfter(endDate) || startDate.isEqual(endDate)){
+                return ResponseEntity.badRequest().body("The value of Start Date should be lower than the value of End Date.");
+        }
 
         Course savedCourse = courseRepository.save(course);
         User u = getCurrentUser().getUser();

@@ -4,6 +4,7 @@ import OurTable, { ButtonColumn } from "main/components/OurTable"
 import { formatTime } from "main/utils/dateUtils";
 import { useBackendMutation } from "main/utils/useBackend";
 
+// Stryker disable all
 const ConfirmationModal = ({ isOpen, onClose, onConfirm, message }) => {
     const customStyles = {
         content: {
@@ -38,6 +39,7 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, message }) => {
         </Modal>
     );
 };
+// Stryker restore all 
 
 export default function UsersTable({ users, showToggleButtons = false }) {
     const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);

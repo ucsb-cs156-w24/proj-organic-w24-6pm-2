@@ -1,4 +1,4 @@
-package edu.ucsb.cs156.organic.interceptors;
+package edu.ucsb.cs156.organic.Interceptors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -72,7 +72,7 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     {
       Header: "Last Online",
       id: "lastOnline",
-      accessor: (row) => formatTime(row.lastOnline),
+      accessor: (row) => formatTime(row.lastOnline * 1000),
     },
     {
       Header: "Admin",

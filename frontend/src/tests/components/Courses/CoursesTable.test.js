@@ -53,7 +53,7 @@ describe("UserTable tests", () => {
     expect(deleteButton).not.toBeInTheDocument();
 
     const joinButton = screen.queryByTestId(`${testId}-cell-row-0-col-Join-button`);
-    expect(joinButton).toBeInTheDocument();
+    expect(joinButton).not.toBeInTheDocument();
 
   });
 
@@ -127,7 +127,7 @@ describe("UserTable tests", () => {
     expect(deleteButton).toHaveClass("btn-danger");
 
     const joinButton = screen.queryByTestId(`CoursesTable-cell-row-0-col-Join-button`);
-    expect(joinButton).not.toBeInTheDocument();
+    expect(joinButton).toBeInTheDocument();
 
   });
 
@@ -179,7 +179,7 @@ describe("UserTable tests", () => {
   });
 
   test("Join button calls the callback", async () => {
-    const currentUser = currentUserFixtures.userOnly;
+    const currentUser = currentUserFixtures.adminUser;
     const onJoinClickMock = jest.fn();
   
     render(

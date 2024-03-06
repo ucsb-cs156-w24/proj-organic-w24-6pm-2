@@ -36,6 +36,12 @@ describe("dateUtils tests", () => {
     it('should return empty string for null input', () => {
       expect(formatTime(null)).toEqual('');
     });
+    it('should multiply by 1000 when input is a number', () => {
+      expect(formatTime(1653346250.111)).toEqual('5/23/2022');
+    });
+    it('should NOT multiply by 1000 when input is a string', () => {
+      expect(formatTime('2022-06-01')).toEqual('Online now');
+    });
 
     it('should return `Online now` for less than 2 minutes', () => {
       const oneMinuteAgo = new Date(Date.now() - 60 * 1000).toISOString();

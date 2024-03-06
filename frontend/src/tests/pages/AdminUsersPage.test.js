@@ -52,7 +52,10 @@ describe("AdminUsersPage tests",  () => {
         expect(toggleAdminButton).toBeInTheDocument();
 
         fireEvent.click(toggleAdminButton);
-        fireEvent.click(screen.getAllByText("Yes")[0]);
+
+        const confirm = await screen.getAllByText("Yes")[0];
+        expect(confirm).toBeInTheDocument();
+        fireEvent.click(confirm);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
         expect(axiosMock.history.post[0].url).toBe("/api/admin/users/toggleAdmin");
@@ -77,7 +80,9 @@ describe("AdminUsersPage tests",  () => {
   
         fireEvent.click(toggleInstructorButton);
 
-        fireEvent.click(screen.getAllByText("Yes")[1]);
+        const confirm = await screen.getAllByText("Yes")[1];
+        expect(confirm).toBeInTheDocument();
+        fireEvent.click(confirm);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
         expect(axiosMock.history.post[0].url).toBe("/api/admin/users/toggleInstructor");
@@ -100,7 +105,10 @@ describe("AdminUsersPage tests",  () => {
         expect(toggleAdminButton).toBeInTheDocument();
 
         fireEvent.click(toggleAdminButton);
-        fireEvent.click(screen.getAllByText("No")[0]);
+
+        const confirm = await screen.getAllByText("No")[0];
+        expect(confirm).toBeInTheDocument();
+        fireEvent.click(confirm);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(0));
     });
@@ -123,7 +131,9 @@ describe("AdminUsersPage tests",  () => {
   
         fireEvent.click(toggleInstructorButton);
 
-        fireEvent.click(screen.getAllByText("No")[1]);
+        const confirm = await screen.getAllByText("No")[1];
+        expect(confirm).toBeInTheDocument();
+        fireEvent.click(confirm);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(0));
     });

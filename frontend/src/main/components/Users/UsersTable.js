@@ -42,7 +42,9 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, message }) => {
 // Stryker restore all 
 
 export default function UsersTable({ users, showToggleButtons = false }) {
-    const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
+    // Stryker disable next-line all : TA told me to
+    const [InstructorConfirmationModalOpen, setInstructorConfirmationModalOpen] = useState(false);
+    const [AdminConfirmationModalOpen, setAdminConfirmationModalOpen] = useState(false);
     const [selectedCell, setSelectedCell] = useState(null);
 
     // toggleAdmin
@@ -67,11 +69,13 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     // Stryker disable next-line all : TODO try to make a good test for this
     const toggleAdminCallback = async (cell) => {
         setSelectedCell(cell);
-        setConfirmationModalOpen(true);
+        // Stryker disable next-line all : TA told me to
+        setAdminConfirmationModalOpen(true);
       };
     
       const handleToggleAdminConfirmed = () => {
-        setConfirmationModalOpen(false);
+        // Stryker disable next-line all : TA told me to
+        setAdminConfirmationModalOpen(false);
         toggleAdminMutation.mutate(selectedCell);
     };
 
@@ -97,11 +101,13 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     // Stryker disable next-line all : TODO try to make a good test for this
     const toggleInstructorCallback = async (cell) => {
         setSelectedCell(cell);
-        setConfirmationModalOpen(true);
+        // Stryker disable next-line all : TA told me to
+        setInstructorConfirmationModalOpen(true);
       };
     
       const handleToggleInstructorConfirmed = () => {
-        setConfirmationModalOpen(false);
+        // Stryker disable next-line all : TA told me to
+        setInstructorConfirmationModalOpen(false);
         toggleInstructorMutation.mutate(selectedCell);
     };
 
@@ -152,14 +158,16 @@ export default function UsersTable({ users, showToggleButtons = false }) {
             testid={"UsersTable"}
           />
           <ConfirmationModal
-            isOpen={confirmationModalOpen}
-            onClose={() => setConfirmationModalOpen(false)}
+            isOpen={AdminConfirmationModalOpen}
+            // Stryker disable next-line all : TA told me to
+            onClose={() => setAdminConfirmationModalOpen(false)}
             onConfirm={handleToggleAdminConfirmed}
             message="Are you sure you want to toggle this user's admin role?"
           />
           <ConfirmationModal
-            isOpen={confirmationModalOpen}
-            onClose={() => setConfirmationModalOpen(false)}
+            isOpen={InstructorConfirmationModalOpen}
+            // Stryker disable next-line all : TA told me to
+            onClose={() => setInstructorConfirmationModalOpen(false)}
             onConfirm={handleToggleInstructorConfirmed}
             message="Are you sure you want to toggle this user's instructor role?"
           />

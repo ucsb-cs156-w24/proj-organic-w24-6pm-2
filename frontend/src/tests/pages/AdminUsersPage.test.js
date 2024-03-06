@@ -53,8 +53,7 @@ describe("AdminUsersPage tests",  () => {
 
         fireEvent.click(toggleAdminButton);
 
-        const confirm = await screen.getAllByText("Yes")[0];
-        expect(confirm).toBeInTheDocument();
+        const confirm = await screen.getByText("Yes");
         fireEvent.click(confirm);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
@@ -80,8 +79,7 @@ describe("AdminUsersPage tests",  () => {
   
         fireEvent.click(toggleInstructorButton);
 
-        const confirm = await screen.getAllByText("Yes")[1];
-        expect(confirm).toBeInTheDocument();
+        const confirm = await screen.getByText("Yes");
         fireEvent.click(confirm);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
@@ -106,8 +104,7 @@ describe("AdminUsersPage tests",  () => {
 
         fireEvent.click(toggleAdminButton);
 
-        const confirm = await screen.getAllByText("No")[0];
-        expect(confirm).toBeInTheDocument();
+        const confirm = await screen.getByText("No");
         fireEvent.click(confirm);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(0));
@@ -131,8 +128,7 @@ describe("AdminUsersPage tests",  () => {
   
         fireEvent.click(toggleInstructorButton);
 
-        const confirm = await screen.getAllByText("No")[1];
-        expect(confirm).toBeInTheDocument();
+        const confirm = await screen.getByText("No");
         fireEvent.click(confirm);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(0));

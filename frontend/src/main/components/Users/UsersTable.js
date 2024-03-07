@@ -24,13 +24,9 @@ export default function UsersTable({ users, showToggleButtons = false, currentGi
     // Stryker restore all 
 
     // Stryker disable next-line all : TODO try to make a good test for this
-    const toggleAdminCallback = async(cell) => {
-        // Check if the githubId of the row is the same as the current user's githubId
-        if (cell.row.values.githubId !== currentGithubId) {
+    const toggleAdminCallback = async (cell) => {
+        if (window.confirm("Are you sure you want to toggle off your admin privileges?")) {
             toggleAdminMutation.mutate(cell);
-        } else {
-            // Optionally, you can provide feedback to the user
-            alert("You cannot toggle your own admin rights.");
         }
     }
 

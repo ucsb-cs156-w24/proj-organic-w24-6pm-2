@@ -1,8 +1,8 @@
 { "databaseChangeLog": [
     {
       "changeSet": {
-        "id": "changeset-0006a",
-        "author": "pconrad",
+        "id": "changeset-0007a",
+        "author": "MihirB",
         "preConditions": [
           {
             "onFail": "MARK_RAN"
@@ -11,7 +11,7 @@
             "not": [
               {
                 "tableExists": {
-                  "tableName": "STUDENTS"
+                  "tableName": "SCHOOLS"
                 }
               }
             ]
@@ -23,80 +23,41 @@
               "columns": [
                 {
                   "column": {
-                    "autoIncrement": true,
                     "constraints": {
                       "primaryKey": true,
-                      "primaryKeyName": "CONSTRAINT_68"
+                      "nullable": false
                     },
-                    "name": "ID",
-                    "type": "BIGINT"
-                  }
-                },
-                {
-                  "column": {
-                    "name": "COURSE_ID",
-                    "type": "BIGINT"
-                  }
-                },
-                {
-                  "column": {
-                    "name": "EMAIL",
+                    "name": "ABBREV",
                     "type": "VARCHAR(255)"
                   }
                 },
                 {
                   "column": {
-                    "name": "FNAME",
+                    "name": "NAME",
                     "type": "VARCHAR(255)"
                   }
                 },
                 {
                   "column": {
-                    "name": "GITHUB_ID",
-                    "type": "INT"
-                  }
-                },
-                {
-                  "column": {
-                    "name": "LNAME",
+                    "name": "TERMREGEX",
                     "type": "VARCHAR(255)"
                   }
                 },
                 {
                   "column": {
-                    "name": "STUDENT_ID",
+                    "name": "TERMDESCRIPTION",
                     "type": "VARCHAR(255)"
                   }
-                }]
-              ,
-              "tableName": "STUDENTS"
+                },
+                {
+                  "column": {
+                    "name": "TERMERROR",
+                    "type": "VARCHAR(255)"
+                  }
+                }],
+              "tableName": "SCHOOLS"
             }
           }]
-        
-      }
-    },
-    
-    {
-      "changeSet": {
-        "id": "changeset-0006b",
-        "author": "pconrad",
-        "changes": [
-          {
-            "addForeignKeyConstraint": {
-              "baseColumnNames": "GITHUB_ID",
-              "baseTableName": "STUDENTS",
-              "constraintName": "STUDENTS_GITHUB_ID_FK",
-              "deferrable": false,
-              "initiallyDeferred": false,
-              "onDelete": "RESTRICT",
-              "onUpdate": "RESTRICT",
-              "referencedColumnNames": "GITHUB_ID",
-              "referencedTableName": "USERS",
-              "validate": true
-            }
-          }]
-        
       }
     }
-    
   ]}

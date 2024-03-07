@@ -15,15 +15,12 @@ const ProfilePage = () => {
         )
     }
 
-    const currentGithubId = currentUser.root.user.githubId;
-
     return (
         <BasicLayout>
             <h1 className={"mb-3"}>
                 User Profile for {currentUser.root.user.githubLogin}
             </h1>
-            {/* Pass the currentGithubId as a prop to UsersTable */}
-            <UsersTable users={[currentUser.root.user]} currentGithubId={currentGithubId} />
+            <UsersTable users={[currentUser.root.user]} />
             <h2 className={"mt-3 mb-3"}>
                 Emails
             </h2>

@@ -3,7 +3,7 @@ import OurTable, { ButtonColumn } from "main/components/OurTable"
 import { formatTime } from "main/utils/dateUtils";
 import { useBackendMutation } from "main/utils/useBackend";
 
-export default function UsersTable({ users, showToggleButtons = false }) {
+export default function UsersTable({ users, showToggleButtons = false, currentGithubId}) {
     // toggleAdmin
     function cellToAxiosParamsToggleAdmin(cell) {
         return {
@@ -24,7 +24,15 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     // Stryker restore all 
 
     // Stryker disable next-line all : TODO try to make a good test for this
-    const toggleAdminCallback = async(cell) => { toggleAdminMutation.mutate(cell); }
+    const toggleAdminCallback = async(cell) => {
+        // Check if the githubId of the row is the same as the current user's githubId
+        if (cell.row.values.githubId !== currentGithubId) {
+            toggleAdminMutation.mutate(cell);
+        } else {
+            // Optionally, you can provide feedback to the user
+            alert("You cannot toggle your own admin rights.");
+        }
+    }
 
     // toggleInstructor
     function cellToAxiosParamsToggleInstructor(cell) {
@@ -36,6 +44,8 @@ export default function UsersTable({ users, showToggleButtons = false }) {
             }
         }
     }
+
+    
 
     // Stryker disable all : hard to test for query caching
     const toggleInstructorMutation = useBackendMutation(

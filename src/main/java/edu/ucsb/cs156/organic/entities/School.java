@@ -19,4 +19,5 @@ public class School {
   private String termRegex;
   private String termDescription;
   private String termError;
+  
 }

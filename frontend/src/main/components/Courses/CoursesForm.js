@@ -112,7 +112,7 @@ function CoursesForm({ initialContents, submitAction, buttonLabel = "Create" }) 
                             }}})}
                         />
                         <Form.Control.Feedback type="invalid">
-                            {errors.startDate && (errors.startDate.type == 'required' ? "StartDate date is required." : errors.startDate.message )}
+                            {errors.startDate && (errors.startDate.type === 'required' ? "StartDate date is required." : errors.startDate.message )}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>

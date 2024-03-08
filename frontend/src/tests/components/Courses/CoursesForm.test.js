@@ -123,11 +123,8 @@ describe("CoursesForm tests", () => {
         fireEvent.change(githubOrgField, { target: { value: 'cs156-f23'}})
         fireEvent.click(submitButton);
 
-        // await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
         await screen.findByText(/Start Date is greater than or equal to End Date/);
-        expect(screen.queryByText(/Start Date is greater than or equal to End Date/)).toBeInTheDocument();
-        // expect(screen.queryByText(/EndDate date is required./)).not.toBeInTheDocument();
-
+        expect(screen.getByText(/Start Date is greater than or equal to End Date/)).toBeInTheDocument();
     });
 
     test("Error messages on bad input (same start and end date)", async () => {
@@ -158,11 +155,8 @@ describe("CoursesForm tests", () => {
         fireEvent.change(githubOrgField, { target: { value: 'cs156-f23'}})
         fireEvent.click(submitButton);
 
-        // await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
         await screen.findByText(/Start Date is greater than or equal to End Date/);
-        expect(screen.queryByText(/Start Date is greater than or equal to End Date/)).toBeInTheDocument();
-        // expect(screen.queryByText(/EndDate date is required./)).not.toBeInTheDocument();
-
+        expect(screen.getByText(/Start Date is greater than or equal to End Date/)).toBeInTheDocument();
     });
 
 

@@ -31,32 +31,24 @@ import React from "react";
 
      const columns = [
          {
-             Header: 'id',
-             accessor: 'id',
+             Header: 'Abbrev',
+             accessor: 'abbrev',
          },
          {
              Header: 'Name',
              accessor: 'name',
          },
          {
-             Header: 'School',
-             accessor: 'school',
+             Header: 'Term Regex',
+             accessor: 'termRegex',
          },
          {
-             Header: 'Term',
-             accessor: 'term',
+             Header: 'Term Description',
+             accessor: 'termDescription',
          },
          {
-             Header: 'StartDate',
-             accessor: 'startDate',
-         },
-         {
-             Header: 'EndDate',
-             accessor: 'endDate',
-         },
-         {
-             Header: 'GitHub Org',
-             accessor: 'githubOrg',
+             Header: 'Term Error',
+             accessor: 'termError',
          },
      ];
 
@@ -69,5 +61,5 @@ import React from "react";
      return <OurTable
          data={school}
          columns={columns}
-         testid={"CoursesTable"} />;
+         testid={"SchoolTable"} />;
     };

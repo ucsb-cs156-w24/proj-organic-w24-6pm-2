@@ -6,7 +6,7 @@ import SchoolTable from 'main/components/School/SchoolTable';
 import { Button } from 'react-bootstrap';
 import { hasRole, useCurrentUser} from 'main/utils/currentUser';
 
-export default function CourseIndexPage() {
+export default function SchoolIndexPage() {
 
   const { data: currentUser } = useCurrentUser();
 
@@ -18,7 +18,7 @@ export default function CourseIndexPage() {
               href="/school/create"
               style={{ float: "right" }}
           >
-              Create Course 
+              Create School 
           </Button>
       )
     
@@ -37,7 +37,7 @@ export default function CourseIndexPage() {
       <BasicLayout>
         <div className="pt-2">
           {createButton()}
-          <h1>Course</h1>
+          <h1>School</h1>
           <SchoolTable school={school} currentUser={currentUser} />
         </div>
       </BasicLayout>

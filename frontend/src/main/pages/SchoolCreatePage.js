@@ -10,17 +10,15 @@ export default function SchoolCreatePage({storybook=false}) {
         url: "/api/school/post",
         method: "POST",
         params: {
-        name: school.name,
-        school: school.school,
-        term: school.term,
-        startDate: school.startDate,
-        endDate: school.endDate,
-        githubOrg: school.githubOrg
+            name: school.name,
+            termRegex: school.termRegex,
+            termDescription: school.termDescription,
+            termError: school.termError,
         }
     });
 
     const onSuccess = (school) => {
-        toast(`New school created - id: ${school.id}`);
+        toast(`New school created - abbrev: ${school.abbrev}`);
     }
 
     const mutation = useBackendMutation(

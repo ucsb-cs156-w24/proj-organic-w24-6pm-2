@@ -184,7 +184,117 @@ describe("CoursesEditPage tests", () => {
 
         });
 
-       
+        test("Shows an error message if the school is changed but the term is not", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
+            
+            fireEvent.change(schoolField, { target: { value: "UCSD" } });
+            fireEvent.change(termField, { target: { value: "f23" } });
+            fireEvent.click(submitButton);
+        
+
+            await waitFor(() => expect(mockToast).toBeCalledWith("Error: Please update the term when changing the school."));
+            expect(mockNavigate).not.toHaveBeenCalled();
+        });
+
+        test("Submits successfully if both the school and term are changed", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
+            // Change both the school and term fields
+            fireEvent.change(schoolField, { target: { value: "UCSD" } });
+            fireEvent.change(termField, { target: { value: "w23" } }); // Change to a different term
+            fireEvent.click(submitButton);
+        
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
+            expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" });
+        });
+
+        test("Submits successfully if only the term is changed", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
+           
+            fireEvent.change(schoolField, { target: { value: "UCSB" } });
+        
+            
+            fireEvent.change(termField, { target: { value: "w23" } });
+        
+            
+            fireEvent.click(submitButton);
+        
+            
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
+        
+
+            expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" });
+        });
+
+
+        test("Submits successfully without any changes to school or term", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
+            // Keep both the school and term fields unchanged
+            fireEvent.change(schoolField, { target: { value: "UCSB" } }); 
+            fireEvent.change(termField, { target: { value: "f23" } }); 
+        
+            // Attempt to submit the form
+            fireEvent.click(submitButton);
+        
+            
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
+        
+            
+            await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" }));
+        });
+        
+        
     });
 });
 

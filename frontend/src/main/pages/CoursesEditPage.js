@@ -50,6 +50,17 @@ export default function CoursesEditPage({storybook=false}) {
   const { isSuccess } = mutation
 
   const onSubmit = async (data) => {
+    // Check if the school has been edited
+    if (data.school != course.school) {
+      // Check if the term has also been edited
+      if (data.term === course.term) {
+
+        toast("Error: Please update the term when changing the school.");
+        return; 
+      }
+    }
+  
+    // If validation passes, proceed with the mutation
     mutation.mutate(data);
   }
 
@@ -67,5 +78,7 @@ export default function CoursesEditPage({storybook=false}) {
       </div>
     </BasicLayout>
   )
+
+  
 }
 

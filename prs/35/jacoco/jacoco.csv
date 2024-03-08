@@ -17,7 +17,7 @@ organic,edu.ucsb.cs156.organic.controllers,ApiController,0,72,0,0,0,22,0,9,0,9
 organic,edu.ucsb.cs156.organic.controllers,ApiController.new JacksonAnnotationIntrospector() {...},0,16,0,4,0,2,0,4,0,2
 organic,edu.ucsb.cs156.organic.controllers,CSRFController,0,5,0,0,0,2,0,2,0,2
 organic,edu.ucsb.cs156.organic.controllers,JobsController,0,52,0,4,0,12,0,6,0,4
-organic,edu.ucsb.cs156.organic.controllers,CoursesController,4,360,2,10,1,76,2,24,0,20
+organic,edu.ucsb.cs156.organic.controllers,CoursesController,0,376,0,16,0,79,0,28,0,20
 organic,edu.ucsb.cs156.organic.controllers,UserInfoController,0,54,0,0,0,14,0,6,0,6
 organic,edu.ucsb.cs156.organic.controllers,SystemInfoController,0,7,0,0,0,2,0,2,0,2
 organic,edu.ucsb.cs156.organic.controllers,StudentsController,0,201,0,4,0,41,0,10,0,8

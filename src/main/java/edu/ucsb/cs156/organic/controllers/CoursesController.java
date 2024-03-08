@@ -183,7 +183,7 @@ public class CoursesController extends ApiController {
     // for the course
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
     @PutMapping("/update")
-    public Course updateCourse(
+    public Object updateCourse(
             @Parameter(name = "id") @RequestParam Long id,
             @Parameter(name = "name", description = "course name, e.g. CMPSC 156") @RequestParam String name,
             @Parameter(name = "school", description = "school abbreviation e.g. UCSB") @RequestParam String school,
@@ -192,6 +192,10 @@ public class CoursesController extends ApiController {
             @Parameter(name = "endDate", description = "in iso format, i.e. YYYY-mm-ddTHH:MM:SS; e.g. 2023-12-31T11:59:59 see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
             @Parameter(name = "githubOrg", description = "for example ucsb-cs156-f23") @RequestParam String githubOrg)
             throws JsonProcessingException {
+
+        if (startDate.isAfter(endDate) || startDate.isEqual(endDate)){
+                return ResponseEntity.badRequest().body("The value of Start Date should be lower than the value of End Date.");
+        }
 
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Course.class, id.toString()));

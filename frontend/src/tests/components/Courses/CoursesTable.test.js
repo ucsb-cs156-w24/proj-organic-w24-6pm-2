@@ -9,8 +9,8 @@ import { currentUserFixtures } from "fixtures/currentUserFixtures";
 const mockedNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => mockedNavigate
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedNavigate
 }));
 
 describe("UserTable tests", () => {
@@ -52,6 +52,9 @@ describe("UserTable tests", () => {
     const deleteButton = screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
     expect(deleteButton).not.toBeInTheDocument();
 
+    const joinButton = screen.queryByTestId(`${testId}-cell-row-0-col-Join-button`);
+    expect(joinButton).not.toBeInTheDocument();
+
   });
 
   test("renders empty table correctly", () => {
@@ -92,7 +95,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} />
+          <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -123,6 +126,9 @@ describe("UserTable tests", () => {
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
 
+    const joinButton = screen.queryByTestId(`CoursesTable-cell-row-0-col-Join-button`);
+    expect(joinButton).toBeInTheDocument();
+
   });
 
   test("Edit button navigates to the edit page for admin user", async () => {
@@ -132,7 +138,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} />
+          <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -157,7 +163,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} />
+          <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -170,6 +176,27 @@ describe("UserTable tests", () => {
 
     fireEvent.click(deleteButton);
 
+  });
+
+  test("Join button calls the callback", async () => {
+    const currentUser = currentUserFixtures.adminUser;
+    const onJoinClickMock = jest.fn();
+  
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} onJoinClick={onJoinClickMock} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+  
+    await waitFor(() => { expect(screen.getByTestId(`CoursesTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
+  
+    const joinButton = screen.getByTestId(`CoursesTable-cell-row-0-col-Join-button`);
+    expect(joinButton).toBeInTheDocument();
+  
+    fireEvent.click(joinButton);
+    expect(onJoinClickMock).toHaveBeenCalled();
   });
 
 });

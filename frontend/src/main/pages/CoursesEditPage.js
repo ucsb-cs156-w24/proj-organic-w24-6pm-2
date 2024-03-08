@@ -51,7 +51,7 @@ export default function CoursesEditPage({storybook=false}) {
 
   const onSubmit = async (data) => {
     // Check if the school has been edited
-    if (data.school != course.school) {
+    if (data.school !== course.school) {
       // Check if the term has also been edited
       if (data.term === course.term) {
 

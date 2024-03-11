@@ -238,7 +238,9 @@
 <a name='L173'></a><a href='#L173'>173</a>
 <a name='L174'></a><a href='#L174'>174</a>
 <a name='L175'></a><a href='#L175'>175</a>
-<a name='L176'></a><a href='#L176'>176</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -283,6 +285,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-yes">36x</span>
@@ -408,6 +411,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -457,145 +461,147 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, message }) =&gt; {
 // Stryker restore all 
 &nbsp;
 export default function UsersTable({ users, showToggleButtons = false }) {
-    // Stryker disable next-line all : TA told me to
-    const [InstructorConfirmationModalOpen, setInstructorConfirmationModalOpen] = useState(false);
-    const [AdminConfirmationModalOpen, setAdminConfirmationModalOpen] = useState(false);
-    const [selectedCell, setSelectedCell] = useState(null);
 &nbsp;
-    // toggleAdmin
-    function cellToAxiosParamsToggleAdmin(cell) {
-        return {
-            url: "/api/admin/users/toggleAdmin",
-            method: "POST",
-            params: {
-                githubId: cell.row.values.githubId
-            }
-        }
-    }
+  // Stryker disable next-line all : TA told me to
+  const [InstructorConfirmationModalOpen, setInstructorConfirmationModalOpen] = useState(false);
+  const [AdminConfirmationModalOpen, setAdminConfirmationModalOpen] = useState(false);
+  const [selectedCell, setSelectedCell] = useState(null);
 &nbsp;
-    // Stryker disable all : hard to test for query caching
-    const toggleAdminMutation = useBackendMutation(
-        cellToAxiosParamsToggleAdmin,
-        {},
-        ["/api/admin/users"]
-    );
-    // Stryker restore all 
+  // toggleAdmin
+  function cellToAxiosParamsToggleAdmin(cell) {
+      return {
+          url: "/api/admin/users/toggleAdmin",
+          method: "POST",
+          params: {
+              githubId: cell.row.values.githubId
+          }
+      }
+  }
 &nbsp;
-    // Stryker disable next-line all : TODO try to make a good test for this
-    const toggleAdminCallback = async (cell) =&gt; {
-        setSelectedCell(cell);
-        // Stryker disable next-line all : TA told me to
-        setAdminConfirmationModalOpen(true);
-      };
-    
-      const handleToggleAdminConfirmed = () =&gt; {
-        // Stryker disable next-line all : TA told me to
-        setAdminConfirmationModalOpen(false);
-        toggleAdminMutation.mutate(selectedCell);
+  // Stryker disable all : hard to test for query caching
+  const toggleAdminMutation = useBackendMutation(
+    cellToAxiosParamsToggleAdmin,
+    {},
+    ["/api/admin/users"]
+  );
+  // Stryker restore all
+&nbsp;
+  // Stryker disable next-line all : TODO try to make a good test for this
+  const toggleAdminCallback = async (cell) =&gt; {
+      setSelectedCell(cell);
+      // Stryker disable next-line all : TA told me to
+      setAdminConfirmationModalOpen(true);
     };
 &nbsp;
-    // toggleInstructor
-    function cellToAxiosParamsToggleInstructor(cell) {
-        return {
-            url: "/api/admin/users/toggleInstructor",
-            method: "POST",
-            params: {
-                githubId: cell.row.values.githubId
-            }
-        }
-    }
+    const handleToggleAdminConfirmed = () =&gt; {
+      // Stryker disable next-line all : TA told me to
+      setAdminConfirmationModalOpen(false);
+      toggleAdminMutation.mutate(selectedCell);
+  };
 &nbsp;
-    // Stryker disable all : hard to test for query caching
-    const toggleInstructorMutation = useBackendMutation(
-        cellToAxiosParamsToggleInstructor,
-        {},
-        ["/api/admin/users"]
-    );
-    // Stryker restore all 
+  // toggleInstructor
+  function cellToAxiosParamsToggleInstructor(cell) {
+    return {
+      url: "/api/admin/users/toggleInstructor",
+      method: "POST",
+      params: {
+        githubId: cell.row.values.githubId,
+      },
+    };
+  }
 &nbsp;
-    // Stryker disable next-line all : TODO try to make a good test for this
-    const toggleInstructorCallback = async (cell) =&gt; {
-        setSelectedCell(cell);
-        // Stryker disable next-line all : TA told me to
-        setInstructorConfirmationModalOpen(true);
-      };
-    
-      const handleToggleInstructorConfirmed = () =&gt; {
-        // Stryker disable next-line all : TA told me to
-        setInstructorConfirmationModalOpen(false);
-        toggleInstructorMutation.mutate(selectedCell);
+  // Stryker disable all : hard to test for query caching
+  const toggleInstructorMutation = useBackendMutation(
+    cellToAxiosParamsToggleInstructor,
+    {},
+    ["/api/admin/users"]
+  );
+  // Stryker restore all
+&nbsp;
+  // Stryker disable next-line all : TODO try to make a good test for this
+  const toggleInstructorCallback = async (cell) =&gt; {
+      setSelectedCell(cell);
+      // Stryker disable next-line all : TA told me to
+      setInstructorConfirmationModalOpen(true);
     };
 &nbsp;
-    const columns = [
-        {
-            Header: 'githubId',
-            accessor: 'githubId', // accessor is the "key" in the data
-        },
-        {
-            Header: 'githubLogin',
-            accessor: 'githubLogin', // accessor is the "key" in the data
-        },
-        {
-            Header: 'fullName',
-            accessor: 'fullName',
-        },
-        {
-            Header: 'Email',
-            accessor: 'email',
-        },
-        {
-            Header: 'Last Online',
-            id: 'lastOnline',
-            accessor: (row) =&gt; formatTime(row.lastOnline),
-        },
-        {
-            Header: 'Admin',
-            id: 'admin',
-            accessor: (row, _rowIndex) =&gt; String(row.admin) // hack needed for boolean values to show up
-        },
-        {
-            Header: 'Instructor',
-            id: 'instructor',
-            accessor: (row, _rowIndex) =&gt; String(row.instructor) // hack needed for boolean values to show up
-        },
-    ];
+    const handleToggleInstructorConfirmed = () =&gt; {
+      // Stryker disable next-line all : TA told me to
+      setInstructorConfirmationModalOpen(false);
+      toggleInstructorMutation.mutate(selectedCell);
+  };
 &nbsp;
-    const buttonColumn = [
-        ...columns,
-        ButtonColumn("toggle-admin", "primary", toggleAdminCallback, "UsersTable"),
-        ButtonColumn("toggle-instructor", "primary", toggleInstructorCallback, "UsersTable")
-    ]
-    return (
-        &lt;&gt;
-          &lt;OurTable
-            data={users}
-            columns={showToggleButtons ? buttonColumn : columns}
-            testid={"UsersTable"}
-          /&gt;
-          &lt;ConfirmationModal
-            isOpen={AdminConfirmationModalOpen}
-            // Stryker disable next-line all : TA told me to
-            onClose={() =&gt; setAdminConfirmationModalOpen(false)}
-            onConfirm={handleToggleAdminConfirmed}
-            message="Are you sure you want to toggle this user's admin role?"
-          /&gt;
-          &lt;ConfirmationModal
-            isOpen={InstructorConfirmationModalOpen}
-            // Stryker disable next-line all : TA told me to
-            onClose={() =&gt; setInstructorConfirmationModalOpen(false)}
-            onConfirm={handleToggleInstructorConfirmed}
-            message="Are you sure you want to toggle this user's instructor role?"
-          /&gt;
-        &lt;/&gt;
-      );
-};</pre></td></tr></table></pre>
+  const columns = [
+    {
+      Header: "githubId",
+      accessor: "githubId", // accessor is the "key" in the data
+    },
+    {
+      Header: "githubLogin",
+      accessor: "githubLogin", // accessor is the "key" in the data
+    },
+    {
+      Header: "fullName",
+      accessor: "fullName",
+    },
+    {
+      Header: "Email",
+      accessor: "email",
+    },
+    {
+      Header: "Last Online",
+      id: "lastOnline",
+      accessor: (row) =&gt; formatTime(row.lastOnline),
+    },
+    {
+      Header: "Admin",
+      id: "admin",
+      accessor: (row, _rowIndex) =&gt; String(row.admin), // hack needed for boolean values to show up
+    },
+    {
+      Header: "Instructor",
+      id: "instructor",
+      accessor: (row, _rowIndex) =&gt; String(row.instructor), // hack needed for boolean values to show up
+    },
+  ];
+&nbsp;
+  const buttonColumn = [
+      ...columns,
+      ButtonColumn("toggle-admin", "primary", toggleAdminCallback, "UsersTable"),
+      ButtonColumn("toggle-instructor", "primary", toggleInstructorCallback, "UsersTable")
+  ]
+  return (
+      &lt;&gt;
+        &lt;OurTable
+          data={users}
+          columns={showToggleButtons ? buttonColumn : columns}
+          testid={"UsersTable"}
+        /&gt;
+        &lt;ConfirmationModal
+          isOpen={AdminConfirmationModalOpen}
+          // Stryker disable next-line all : TA told me to
+          onClose={() =&gt; setAdminConfirmationModalOpen(false)}
+          onConfirm={handleToggleAdminConfirmed}
+          message="Are you sure you want to toggle this user's admin role?"
+        /&gt;
+        &lt;ConfirmationModal
+          isOpen={InstructorConfirmationModalOpen}
+          // Stryker disable next-line all : TA told me to
+          onClose={() =&gt; setInstructorConfirmationModalOpen(false)}
+          onConfirm={handleToggleInstructorConfirmed}
+          message="Are you sure you want to toggle this user's instructor role?"
+        /&gt;
+      &lt;/&gt;
+    );
+};
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Thu Mar 07 2024 01:49:06 GMT-0800 (Pacific Standard Time)
+                at Sun Mar 10 2024 22:54:34 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

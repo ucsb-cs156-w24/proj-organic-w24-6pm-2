@@ -22,7 +22,7 @@ Empty.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/schools/all', (_req, res, ctx) => {
+        rest.get('/api/school/all', (_req, res, ctx) => {
             return res(ctx.json(schoolsFixtures.threeSchools));
         }),
         rest.delete('/api/school', (req, res, ctx) => {

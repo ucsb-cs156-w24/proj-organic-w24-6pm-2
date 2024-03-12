@@ -184,7 +184,217 @@ describe("CoursesEditPage tests", () => {
 
         });
 
+        test("Shows an error message if the school is changed but the term is not", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
+            
+            fireEvent.change(schoolField, { target: { value: "UCSD" } });
+            fireEvent.change(termField, { target: { value: "f23" } });
+            fireEvent.click(submitButton);
+        
+
+            await waitFor(() => expect(mockToast).toBeCalledWith("Error: Please update the term when changing the school."));
+            expect(mockNavigate).not.toHaveBeenCalled();
+        });
+
+        test("Submits successfully if both the school and term are changed", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
+            // Change both the school and term fields
+            fireEvent.change(schoolField, { target: { value: "UCSD" } });
+            fireEvent.change(termField, { target: { value: "w23" } }); // Change to a different term
+            fireEvent.click(submitButton);
+        
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" });
+        });
+
+        test("Submits successfully if only the term is changed", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
+           
+            fireEvent.change(schoolField, { target: { value: "UCSB" } });
+        
+            
+            fireEvent.change(termField, { target: { value: "w23" } });
+        
+            
+            fireEvent.click(submitButton);
+        
+            
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+        
+
+            expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" });
+        });
+
+
+        test("Submits successfully without any changes to school or term", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
+            // Keep both the school and term fields unchanged
+            fireEvent.change(schoolField, { target: { value: "UCSB" } }); 
+            fireEvent.change(termField, { target: { value: "f23" } }); 
+        
+            // Attempt to submit the form
+            fireEvent.click(submitButton);
+        
+            
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+        
+            
+            await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" }));
+        });
+    
+        test("Shows an error if the term is in an incorrect format", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+
+            fireEvent.change(schoolField, { target: { value: "UCSD" } });
+            fireEvent.change(termField, { target: { value: "WrongFormat" } }); 
+            fireEvent.click(submitButton);
+
+            await waitFor(() => expect(mockToast).toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            expect(mockNavigate).not.toHaveBeenCalledWith({ "to": "/courses" });
+        });
+
+        test("Submits successfully with correct school and term without showing an error", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
+
+            fireEvent.change(schoolField, { target: { value: "UCSD" } });
+            fireEvent.change(termField, { target: { value: "w23" } }); 
+            fireEvent.click(submitButton);
+        
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+        
+            expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" });
+        });
+
+        test("Shows an error if the term does not start with W, S, or F followed by two digits after changing the school", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
+            fireEvent.change(schoolField, { target: { value: "UCSD" } });
+            fireEvent.change(termField, { target: { value: "aw23" } });
+            fireEvent.click(submitButton);
+        
+            await waitFor(() => expect(mockToast).toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            expect(mockNavigate).not.toHaveBeenCalledWith({ "to": "/courses" });
+        });
+
+        test("Shows an error if the term does not end with the year", async () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <CoursesEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        
+            await screen.findByTestId("CoursesForm-name");
+        
+            const schoolField = screen.getByTestId("CoursesForm-school");
+            const termField = screen.getByTestId("CoursesForm-term");
+            const submitButton = screen.getByTestId("CoursesForm-submit");
+        
        
+            fireEvent.change(schoolField, { target: { value: "UCSD" } });
+            fireEvent.change(termField, { target: { value: "w23a" } });
+            fireEvent.click(submitButton);
+        
+           
+            await waitFor(() => expect(mockToast).toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            expect(mockNavigate).not.toHaveBeenCalledWith({ "to": "/courses" });
+        });
+        
+        
     });
 });
 

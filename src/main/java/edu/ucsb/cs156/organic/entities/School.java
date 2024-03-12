@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Builder
 @Entity(name = "schools")
 public class School {
-    // is the @Id necessary?
   @Id
   private String abbreviation;
   private String name;

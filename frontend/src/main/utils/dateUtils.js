@@ -23,6 +23,10 @@ export function formatTime(timeString) {
         return "";
     }
 
+    if (typeof timeString === "number") {
+        timeString *= 1000;
+    }
+
     const now = new Date();
     const dateFromEpoch = new Date(timeString);
     const secondsPast = Math.floor((now - dateFromEpoch) / 1000);

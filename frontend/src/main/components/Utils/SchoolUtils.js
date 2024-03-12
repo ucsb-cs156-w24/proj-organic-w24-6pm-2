@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
          url: "/api/school/delete",
          method: "DELETE",
          params: {
-             id: cell.row.values.id
+             abbrev: cell.row.values.abbrev
          }
      }
 }

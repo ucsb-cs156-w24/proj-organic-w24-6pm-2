@@ -35,7 +35,7 @@ describe("SchoolUtils", () => {
   describe("cellToAxiosParamsDelete", () => {
     test("It returns the correct params", () => {
       // arrange
-      const cell = { row: { values: { id: 1 } } };
+      const cell = { row: { values: { abbrev: "ucsb" } } };
 
       // act s
       const result = cellToAxiosParamsDelete(cell);
@@ -44,7 +44,7 @@ describe("SchoolUtils", () => {
       expect(result).toEqual({
         url: "/api/school/delete",
         method: "DELETE",
-        params: { id: 1 },
+        params: { abbrev: "ucsb" },
       });
     });
   });

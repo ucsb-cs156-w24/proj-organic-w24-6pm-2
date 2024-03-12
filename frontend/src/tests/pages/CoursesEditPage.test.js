@@ -230,7 +230,7 @@ describe("CoursesEditPage tests", () => {
             fireEvent.click(submitButton);
         
             await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
-            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, s24, s24, f24."));
             expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" });
         });
 
@@ -260,7 +260,7 @@ describe("CoursesEditPage tests", () => {
         
             
             await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
-            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, w24, s24, f24."));
         
 
             expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" });
@@ -291,7 +291,7 @@ describe("CoursesEditPage tests", () => {
         
             
             await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
-            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, w24, s24, f24."));
         
             
             await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" }));
@@ -316,7 +316,7 @@ describe("CoursesEditPage tests", () => {
             fireEvent.change(termField, { target: { value: "WrongFormat" } }); 
             fireEvent.click(submitButton);
 
-            await waitFor(() => expect(mockToast).toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            await waitFor(() => expect(mockToast).toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, w24, s24, f24."));
             expect(mockNavigate).not.toHaveBeenCalledWith({ "to": "/courses" });
         });
 
@@ -341,7 +341,7 @@ describe("CoursesEditPage tests", () => {
             fireEvent.click(submitButton);
         
             await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: Please update the term when changing the school."));
-            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            await waitFor(() => expect(mockToast).not.toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, w24, s24, f24."));
         
             expect(mockNavigate).toHaveBeenCalledWith({ "to": "/courses" });
         });
@@ -365,7 +365,7 @@ describe("CoursesEditPage tests", () => {
             fireEvent.change(termField, { target: { value: "aw23" } });
             fireEvent.click(submitButton);
         
-            await waitFor(() => expect(mockToast).toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            await waitFor(() => expect(mockToast).toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, w24, s24, f24."));
             expect(mockNavigate).not.toHaveBeenCalledWith({ "to": "/courses" });
         });
 
@@ -390,7 +390,7 @@ describe("CoursesEditPage tests", () => {
             fireEvent.click(submitButton);
         
            
-            await waitFor(() => expect(mockToast).toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, W24, S24, F24."));
+            await waitFor(() => expect(mockToast).toBeCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, w24, s24, f24."));
             expect(mockNavigate).not.toHaveBeenCalledWith({ "to": "/courses" });
         });
         

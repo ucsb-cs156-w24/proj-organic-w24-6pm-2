@@ -58,6 +58,8 @@ import React from "react";
          columns.push(ButtonColumn("Join", undefined, joinCallBack, "SchoolTable"));
      }
 
+     console.log("School: ", school);
+
      return <OurTable
          data={school || []}
          columns={columns}

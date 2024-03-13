@@ -88,7 +88,7 @@ describe("CoursesEditPage tests", () => {
                 name: "CS 148",
                 school: "UCSB",
                 term: "w23",
-                startDate: "2024-01-10T00:00",
+                startDate: "2020-01-10T00:00",
                 endDate: "2023-03-12T00:00",
                 githubOrg: "ucsb-cs156-w23"
             });
@@ -169,7 +169,7 @@ describe("CoursesEditPage tests", () => {
             fireEvent.change(nameField, { target: { value: "CS 148" } })
             fireEvent.change(schoolField, { target: { value: "UCSB" } })
             fireEvent.change(termField, { target: { value: "w23" } })
-            fireEvent.change(startField, { target: { value: "2024-01-10T00:00" } })
+            fireEvent.change(startField, { target: { value: "2020-01-10T00:00" } })
             fireEvent.change(endField, { target: { value: "2023-03-12T00:00" } })
             fireEvent.change(githubOrgField, { target: { value: "ucsb-cs156-w23" } })
 
@@ -180,7 +180,7 @@ describe("CoursesEditPage tests", () => {
             expect(mockNavigate).toBeCalledWith({ "to": "/courses" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
-            expect(axiosMock.history.put[0].params).toEqual({ id: 17, name: "CS 148", endDate: "2023-03-12T00:00", startDate: "2024-01-10T00:00", school: "UCSB", term: "w23", githubOrg: "ucsb-cs156-w23" });
+            expect(axiosMock.history.put[0].params).toEqual({ id: 17, name: "CS 148", endDate: "2023-03-12T00:00", startDate: "2020-01-10T00:00", school: "UCSB", term: "w23", githubOrg: "ucsb-cs156-w23" });
 
         });
 

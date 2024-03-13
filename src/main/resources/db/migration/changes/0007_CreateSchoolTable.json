@@ -1,0 +1,63 @@
+{ "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "changeset-0007a",
+        "author": "MihirB",
+        "preConditions": [
+          {
+            "onFail": "MARK_RAN"
+          },
+          {
+            "not": [
+              {
+                "tableExists": {
+                  "tableName": "SCHOOLS"
+                }
+              }
+            ]
+          }
+        ],
+        "changes": [
+          {
+            "createTable": {
+              "columns": [
+                {
+                  "column": {
+                    "constraints": {
+                      "primaryKey": true,
+                      "nullable": false
+                    },
+                    "name": "ABBREV",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "NAME",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "TERMREGEX",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "TERMDESCRIPTION",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "TERMERROR",
+                    "type": "VARCHAR(255)"
+                  }
+                }],
+              "tableName": "SCHOOLS"
+            }
+          }]
+      }
+    }
+  ]}

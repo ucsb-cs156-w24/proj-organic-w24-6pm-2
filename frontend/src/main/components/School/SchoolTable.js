@@ -61,7 +61,7 @@ import React from "react";
      console.log("School: ", school);
 
      return <OurTable
-         data={school || []}
+         data={Array.isArray(school) ? [] : school}
          columns={columns}
          testid={"SchoolTable"} />;
     };

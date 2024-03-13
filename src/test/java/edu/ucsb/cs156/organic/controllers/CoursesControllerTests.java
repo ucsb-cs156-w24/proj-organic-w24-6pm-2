@@ -282,6 +282,24 @@ public class CoursesControllerTests extends ControllerTestCase {
         assertEquals(expectedJson, responseString);
     }
 
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void incorrect_course_dates_check_for_post_with_an_admin_user() throws Exception {
+        MvcResult response = mockMvc.perform(
+                post("/api/courses/post?name=CS16&school=UCSB&term=F23&startDate=2023-12-31T00:00:00&endDate=2023-09-01T00:00:00&githubOrg=ucsb-cs16-f23")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest()).andReturn();
+    }
+
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void incorrect_course_dates_check_2_for_post_with_an_admin_user() throws Exception {
+        MvcResult response = mockMvc.perform(
+                post("/api/courses/post?name=CS16&school=UCSB&term=F23&startDate=2023-12-31T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest()).andReturn();
+    }
+
     @WithMockUser(roles = { "INSTRUCTOR", "USER" })
     @Test
     public void an_instructor_user_can_post_a_new_course() throws Exception {
@@ -562,6 +580,50 @@ public class CoursesControllerTests extends ControllerTestCase {
         String expectedJson = mapper.writeValueAsString(courseAfter);
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
+    }
+
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void incorrect_course_dates_check_for_update_with_an_admin_user() throws Exception {
+        // arrange
+        Course courseBefore = course1;
+
+        Course courseAfter = course2;
+        courseAfter.setEndDate(LocalDateTime.parse("2020-09-01T00:00:00"));
+
+        when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+        when(courseRepository.save(eq(courseAfter))).thenReturn(courseAfter);
+
+        String urlTemplate = String.format(
+                "/api/courses/update?id=%d&name=%s&school=%s&term=%s&startDate=%s&endDate=%s&githubOrg=%s",
+                courseAfter.getId(), courseAfter.getName(), courseAfter.getSchool(), courseAfter.getTerm(),
+                courseAfter.getStartDate().toString(), courseAfter.getEndDate().toString(), courseAfter.getGithubOrg());
+        MvcResult response = mockMvc.perform(
+                put(urlTemplate)
+                        .with(csrf()))
+                .andExpect(status().isBadRequest()).andReturn();
+    }
+
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void incorrect_course_dates_check_2_for_update_with_an_admin_user() throws Exception {
+        // arrange
+        Course courseBefore = course1;
+
+        Course courseAfter = course2;
+        courseAfter.setEndDate(courseAfter.getStartDate());
+
+        when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+        when(courseRepository.save(eq(courseAfter))).thenReturn(courseAfter);
+
+        String urlTemplate = String.format(
+                "/api/courses/update?id=%d&name=%s&school=%s&term=%s&startDate=%s&endDate=%s&githubOrg=%s",
+                courseAfter.getId(), courseAfter.getName(), courseAfter.getSchool(), courseAfter.getTerm(),
+                courseAfter.getStartDate().toString(), courseAfter.getEndDate().toString(), courseAfter.getGithubOrg());
+        MvcResult response = mockMvc.perform(
+                put(urlTemplate)
+                        .with(csrf()))
+                .andExpect(status().isBadRequest()).andReturn();
     }
 
     // Instructor can update course if they are staff

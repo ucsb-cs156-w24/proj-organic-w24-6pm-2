@@ -16,6 +16,8 @@ function CoursesForm({ initialContents, submitAction, buttonLabel = "Create" }) 
 
     const navigate = useNavigate();
 
+    // console.log(errors);
+
     // Stryker disable next-line Regex
     const isodate_regex = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
 
@@ -101,10 +103,16 @@ function CoursesForm({ initialContents, submitAction, buttonLabel = "Create" }) 
                             id="startDate"
                             type="datetime-local"
                             isInvalid={Boolean(errors.startDate)}
-                            {...register("startDate", { required: true, pattern: isodate_regex })}
+                            {...register("startDate", { required: true, pattern: isodate_regex, validate: {
+                                validateDates: (_, formValues) => {
+                                if (formValues.startDate >= formValues.endDate){
+                                    return "Start Date is greater than or equal to End Date (should be less than End Date).";
+                                }
+                                return null;
+                            }}})}
                         />
                         <Form.Control.Feedback type="invalid">
-                            {errors.startDate && 'StartDate date is required. '}
+                            {errors.startDate && (errors.startDate.type === 'required' ? "StartDate date is required." : errors.startDate.message )}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
@@ -119,7 +127,7 @@ function CoursesForm({ initialContents, submitAction, buttonLabel = "Create" }) 
                             {...register("endDate", { required: true, pattern: isodate_regex })}
                         />
                         <Form.Control.Feedback type="invalid">
-                            {errors.endDate && 'EndDate date is required. '}
+                            {errors.endDate && 'EndDate date is required.'}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>

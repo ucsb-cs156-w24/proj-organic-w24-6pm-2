@@ -51,7 +51,7 @@ export default function CoursesEditPage({storybook=false}) {
 
   const onSubmit = async (data) => {
     // Check if the school has been edited
-    const termRegex = /^[wsf]\d{2}$/;
+    const termRegex = /^[wWsSfF]\d{2}$/;
     if (!termRegex.test(data.term)) {
       toast("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, w24, s24, f24.");
       return;

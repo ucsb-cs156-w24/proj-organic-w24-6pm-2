@@ -114,6 +114,113 @@ describe("CourseCreatePage tests", () => {
         expect(mockNavigate).toBeCalledWith({ "to": "/courses" });
     });
 
+    test("displays an error message when an incorrect term format is inputted", async () => {
+        const queryClient = new QueryClient();
+        render(
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <CoursesCreatePage />
+            </MemoryRouter>
+          </QueryClientProvider>
+        );
+      
+        await waitFor(() => {
+          expect(screen.getByTestId("CoursesForm-name")).toBeInTheDocument();
+        });
+      
+        const nameField = screen.getByTestId("CoursesForm-name");
+        const schoolField = screen.getByTestId("CoursesForm-school");
+        const termField = screen.getByTestId("CoursesForm-term");
+        const startDateField = screen.getByTestId("CoursesForm-startDate");
+        const endDateField = screen.getByTestId("CoursesForm-endDate");
+        const githubOrgField = screen.getByTestId("CoursesForm-githubOrg");
+        const submitButton = screen.getByTestId("CoursesForm-submit");
+      
+        fireEvent.change(nameField, { target: { value: 'CS156' } });
+        fireEvent.change(schoolField, { target: { value: 'UCSB' } });
+        fireEvent.change(termField, { target: { value: 'IncorrectTerm' } });
+        fireEvent.change(startDateField, { target: { value: '2023-09-24T12:00:00' } });
+        fireEvent.change(endDateField, { target: { value: '2023-12-15T12:00:00' } });
+        fireEvent.change(githubOrgField, { target: { value: 'ucsb-cs156-f23' } });
+      
+        fireEvent.click(submitButton);
+      
+        await waitFor(() => {
+          expect(mockToast).toHaveBeenCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, w24, s24, f24.");
+        });
+      });
+
+      test("displays an error message when term does not start with season", async () => {
+        const queryClient = new QueryClient();
+        render(
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <CoursesCreatePage />
+            </MemoryRouter>
+          </QueryClientProvider>
+        );
+      
+        await waitFor(() => {
+          expect(screen.getByTestId("CoursesForm-name")).toBeInTheDocument();
+        });
+      
+        const nameField = screen.getByTestId("CoursesForm-name");
+        const schoolField = screen.getByTestId("CoursesForm-school");
+        const termField = screen.getByTestId("CoursesForm-term");
+        const startDateField = screen.getByTestId("CoursesForm-startDate");
+        const endDateField = screen.getByTestId("CoursesForm-endDate");
+        const githubOrgField = screen.getByTestId("CoursesForm-githubOrg");
+        const submitButton = screen.getByTestId("CoursesForm-submit");
+      
+        fireEvent.change(nameField, { target: { value: 'CS156' } });
+        fireEvent.change(schoolField, { target: { value: 'UCSB' } });
+        fireEvent.change(termField, { target: { value: 'aw23' } });
+        fireEvent.change(startDateField, { target: { value: '2023-09-24T12:00:00' } });
+        fireEvent.change(endDateField, { target: { value: '2023-12-15T12:00:00' } });
+        fireEvent.change(githubOrgField, { target: { value: 'ucsb-cs156-f23' } });
+      
+        fireEvent.click(submitButton);
+      
+        await waitFor(() => {
+          expect(mockToast).toHaveBeenCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, w24, s24, f24.");
+        });
+      });
+
+      test("displays an error message when term does not end with year", async () => {
+        const queryClient = new QueryClient();
+        render(
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <CoursesCreatePage />
+            </MemoryRouter>
+          </QueryClientProvider>
+        );
+      
+        await waitFor(() => {
+          expect(screen.getByTestId("CoursesForm-name")).toBeInTheDocument();
+        });
+      
+        const nameField = screen.getByTestId("CoursesForm-name");
+        const schoolField = screen.getByTestId("CoursesForm-school");
+        const termField = screen.getByTestId("CoursesForm-term");
+        const startDateField = screen.getByTestId("CoursesForm-startDate");
+        const endDateField = screen.getByTestId("CoursesForm-endDate");
+        const githubOrgField = screen.getByTestId("CoursesForm-githubOrg");
+        const submitButton = screen.getByTestId("CoursesForm-submit");
+      
+        fireEvent.change(nameField, { target: { value: 'CS156' } });
+        fireEvent.change(schoolField, { target: { value: 'UCSB' } });
+        fireEvent.change(termField, { target: { value: 'w23a' } });
+        fireEvent.change(startDateField, { target: { value: '2023-09-24T12:00:00' } });
+        fireEvent.change(endDateField, { target: { value: '2023-12-15T12:00:00' } });
+        fireEvent.change(githubOrgField, { target: { value: 'ucsb-cs156-f23' } });
+      
+        fireEvent.click(submitButton);
+      
+        await waitFor(() => {
+          expect(mockToast).toHaveBeenCalledWith("Error: The term must be in the format of a season letter (w, s, or f) followed by a 2-digit year. For example, w24, s24, f24.");
+        });
+      });
 
 });
 

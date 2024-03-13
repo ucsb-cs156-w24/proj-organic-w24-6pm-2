@@ -6,12 +6,16 @@ import LoadingPage from "main/pages/LoadingPage";
 import LoginPage from "main/pages/LoginPage";
 import ProfilePage from "main/pages/ProfilePage";
 import CoursesEditPage from "main/pages/CoursesEditPage";
+import SchoolEditPage from "main/pages/SchoolEditPage";
 
 import AdminUsersPage from "main/pages/AdminUsersPage";
 import AdminJobsPage from "main/pages/AdminJobsPage";
 
 import CoursesCreatePage from "main/pages/CoursesCreatePage";
 import CourseIndexPage from "main/pages/CourseIndexPage";
+
+import SchoolCreatePage from "main/pages/SchoolCreatePage";
+import SchoolIndexPage from "main/pages/SchoolIndexPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 import NotFoundPage from "main/pages/NotFoundPage";
@@ -37,6 +41,14 @@ function App() {
       <Route path="/courses/create" element={<CoursesCreatePage />} />
       <Route path="/courses" element={<CourseIndexPage />} />
       <Route path="/courses/edit/:id" element={<CoursesEditPage />} />
+    </>
+  ) : null;
+
+  const schoolRoutes = (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR") || hasRole(currentUser, "ROLE_USER")) ? (
+    <>
+      <Route path="/school/create" element={<SchoolCreatePage />} />
+      <Route path="/school" element={<SchoolIndexPage />} />
+      <Route path="/school/edit/:id" element={<SchoolEditPage />} />
     </>
   ) : null;
 
@@ -79,6 +91,7 @@ function App() {
           {adminRoutes}
           {userRoutes}
           {courseRoutes}
+          {schoolRoutes}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       )}

@@ -87,66 +87,35 @@ describe("UserTable tests", () => {
     });
   });
 
-  // test("renders empty table when the school returns an undefined object", () => {
+  test("renders empty table when the school returns a NON-JSON object", () => {
 
-  //   // arrange
-  //   const currentUser = currentUserFixtures.adminUser;
+    // arrange
+    const currentUser = currentUserFixtures.adminUser;
 
-  //   const expectedHeaders = ["Abbrev", "Name", "Term Regex", "Term Description", "Term Error"];
-  //   const expectedFields = ["abbrev", "name", "termRegex", "termDescription", "termError"];
-  //   const testId = "SchoolTable";
+    const expectedHeaders = ["Abbrev", "Name", "Term Regex", "Term Description", "Term Error"];
+    const expectedFields = ["abbrev", "name", "termRegex", "termDescription", "termError"];
+    const testId = "SchoolTable";
 
-  //   // act
-  //   render(
-  //     <QueryClientProvider client={queryClient}>
-  //       <MemoryRouter>
-  //         <SchoolTable school={undefined} currentUser={currentUser} />
-  //       </MemoryRouter>
-  //     </QueryClientProvider>
-  //   );
+    // act
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <SchoolTable school={1} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
 
-  //   // assert
-  //   expectedHeaders.forEach((headerText) => {
-  //     const header = screen.getByText(headerText);
-  //     expect(header).toBeInTheDocument();
-  //   });
+    // assert
+    expectedHeaders.forEach((headerText) => {
+      const header = screen.getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
 
-  //   expectedFields.forEach((field) => {
-  //     const fieldElement = screen.queryByTestId(`${testId}-cell-row-0-col-${field}`);
-  //     expect(fieldElement).not.toBeInTheDocument();
-  //   });
-  // });
-
-  // test("renders empty table when the school returns a NON-JSON object", () => {
-
-  //   // arrange
-  //   const currentUser = currentUserFixtures.adminUser;
-
-  //   const expectedHeaders = ["Abbrev", "Name", "Term Regex", "Term Description", "Term Error"];
-  //   const expectedFields = ["abbrev", "name", "termRegex", "termDescription", "termError"];
-  //   const testId = "SchoolTable";
-
-  //   // act
-  //   render(
-  //     <QueryClientProvider client={queryClient}>
-  //       <MemoryRouter>
-  //         <SchoolTable school={"NON-JSON Object"} currentUser={currentUser} />
-  //       </MemoryRouter>
-  //     </QueryClientProvider>
-  //   );
-
-  //   // assert
-  //   expectedHeaders.forEach((headerText) => {
-  //     const header = screen.getByText(headerText);
-  //     expect(header).toBeInTheDocument();
-  //   });
-
-  //   expectedFields.forEach((field) => {
-  //     const fieldElement = screen.queryByTestId(`${testId}-cell-row-0-col-${field}`);
-  //     expect(fieldElement).not.toBeInTheDocument();
-  //   });
-  // });
-
+    expectedFields.forEach((field) => {
+      const fieldElement = screen.queryByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(fieldElement).not.toBeInTheDocument();
+    });
+  });
 
   test("Has the expected colum headers and content for adminUser", () => {
 

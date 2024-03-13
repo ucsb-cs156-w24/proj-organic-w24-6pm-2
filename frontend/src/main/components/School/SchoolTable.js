@@ -26,7 +26,7 @@ import React from "react";
      const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
 
      const joinCallBack = (cell) => {
-        onJoinClick(cell.row.values.id);
+        onJoinClick(cell.row.values.abbrev);
     };
 
      const columns = [
@@ -59,7 +59,7 @@ import React from "react";
      }
 
      return <OurTable
-         data={school}
+         data={school || []}
          columns={columns}
          testid={"SchoolTable"} />;
     };

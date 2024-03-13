@@ -58,10 +58,11 @@ import React from "react";
          columns.push(ButtonColumn("Join", undefined, joinCallBack, "SchoolTable"));
      }
 
-     console.log("School: ", school);
+    //  console.log("School: ", school);
 
      return <OurTable
-         data={Array.isArray(school) ? [] : school}
+        // data = {school}
+         data={!Array.isArray(school) ? [] : school}
          columns={columns}
          testid={"SchoolTable"} />;
     };
